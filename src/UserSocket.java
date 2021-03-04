@@ -44,6 +44,8 @@ public class UserSocket extends Thread{
         System.out.println(new String(data.data));
         //switch (data.protocol) {
         //}
+
+        buf = new byte[1000];  //clear buffer
       }
     }
     catch (Exception e){
