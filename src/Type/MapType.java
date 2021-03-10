@@ -6,4 +6,12 @@ public class MapType {
   public int    ObjectID;
   public int    HP;
   public int    MP;
+
+  public MapType(double longitude,double latitude,int objectID, int hp, int mp) {
+    Longitude = longitude;
+    Latitude = latitude;
+    ObjectID = objectID;
+    HP = hp;
+    MP = mp;
+  }
 }

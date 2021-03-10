@@ -38,14 +38,13 @@ public class UserSocket extends Thread{
 
       //read client action
       while (true) {
+        buf = new byte[1000];  //clear buffer
         in.read(buf);
         data = ProtocolType.ProtocolTrim(buf);
         System.out.println(data.protocol);
         System.out.println(new String(data.data));
         //switch (data.protocol) {
         //}
-
-        buf = new byte[1000];  //clear buffer
       }
     }
     catch (Exception e){
