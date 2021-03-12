@@ -13,7 +13,6 @@ public class UserSocket extends Thread{
   OutputStream  out;
 
   byte[]        buf = new byte[1000];
-  boolean       debug = false;         //debug時改成true
 
   public UserSocket(int ID, Socket sc){
     SocketID  = ID;
@@ -48,14 +47,14 @@ public class UserSocket extends Thread{
       }
     }
     catch (Exception e){
-      if (debug){
+      if (Server.debug){
         System.err.println(e);
       }
       //顯示離開ID
       if (PlayerID == -1){
         System.out.printf("Socket ID: %06d out\n", SocketID);
       } else {
-        System.out.printf("Socket ID: %06d out    ", SocketID);
+        System.out.printf("Socket ID: %06d out\t", SocketID);
         System.out.printf("Player ID: %06d out\n", PlayerID);
       }
     }

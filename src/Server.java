@@ -12,6 +12,7 @@ public class Server {
 
   public final static int ServerPort        = 6666;
   public final static int BroadcastPort     = 6667;
+  public static boolean   debug = false; //debug時改成true
 
   public static void main(String[] args)
   {
