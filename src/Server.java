@@ -27,6 +27,7 @@ public class Server {
         sc = serverSocket.accept();
         User.add(new SocketType(ID, sc));
         Thread userSocket = new Thread(new UserSocket(ID, sc));
+        userSocket.start();
         System.out.printf("ID: %06d in!\n", ID);
         ID++;
       }
