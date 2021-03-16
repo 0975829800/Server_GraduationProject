@@ -1,3 +1,6 @@
+package ServerMainBody;
+
+import ServerMainBody.UserSocket;
 import Type.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -5,7 +8,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Server {
-  public static Queue<SocketType> 	User  = new LinkedList<>();
+  public static Queue<SocketType> 	User        = new LinkedList<>();
   public static Queue<TeamType> 	Team        = new LinkedList<>();
   public static Queue<MapType>      Map         = new LinkedList<>();
   public static Queue<ActionType>   Action      = new LinkedList<>();
@@ -22,7 +25,7 @@ public class Server {
 
     try {
       serverSocket = new ServerSocket(ServerPort);
-      System.out.println("Server Waiting Request...");
+      System.out.println("ServerMainBody.Server Waiting Request...");
       Thread broadcast = new Thread(new Broadcast());
       while (true){
         sc = serverSocket.accept();

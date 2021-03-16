@@ -1,3 +1,6 @@
+package ServerMainBody;
+
+import ServerMainBody.Server;
 import Type.*;
 import java.io.OutputStream;
 
@@ -9,7 +12,14 @@ public class Broadcast extends Thread{
         for (SocketType socketType : Server.User){
           out = socketType.socket.getOutputStream();
 
-          //write Broadcast message to every Player
+          //write ServerMainBody.Broadcast message to every Player
+          //Action
+          if(!Server.Action.isEmpty()){
+
+          }
+
+          //Map information
+
 
         }
         sleep(1);
