@@ -36,7 +36,7 @@ public class PackageType {
   }
 
   public static byte[] MapTypeToByte(){
-    byte[] buf = new byte[Server.Map.size() * MapType.MapTypeSize]; //One MapType Size is 36 Bytes
+    byte[] buf = new byte[Server.Map.size() * MapType.MapTypeSize]; //One MapType Size is 40 Bytes
     byte[] temp4 = new byte[4]; //save int
     byte[] temp8 = new byte[8]; //save double
     int start = 0;
@@ -46,18 +46,20 @@ public class PackageType {
       System.arraycopy(buf,start,temp4,0,4);
       ByteBuffer.wrap(temp4,0,4).putInt(mapType.BelongID);  //write BelongID
       System.arraycopy(buf,start+4,temp4,0,4);
-      ByteBuffer.wrap(temp4,0,4).putInt(mapType.HP); //write HP
+      ByteBuffer.wrap(temp4,0,4).putInt(mapType.Level); //write HP
       System.arraycopy(buf,start+8,temp4,0,4);
-      ByteBuffer.wrap(temp4,0,4).putInt(mapType.MP); //write MP
+      ByteBuffer.wrap(temp4,0,4).putInt(mapType.HP); //write HP
       System.arraycopy(buf,start+12,temp4,0,4);
-      ByteBuffer.wrap(temp4,0,4).putInt(mapType.state); //write state
+      ByteBuffer.wrap(temp4,0,4).putInt(mapType.MP); //write MP
       System.arraycopy(buf,start+16,temp4,0,4);
+      ByteBuffer.wrap(temp4,0,4).putInt(mapType.state); //write state
+      System.arraycopy(buf,start+20,temp4,0,4);
       ByteBuffer.wrap(temp8,0,8).putDouble(mapType.Longitude); //write Longitude
-      System.arraycopy(buf,start+20,temp8,0,8);
+      System.arraycopy(buf,start+24,temp8,0,8);
       ByteBuffer.wrap(temp8,0,8).putDouble(mapType.Latitude); //write Latitude
-      System.arraycopy(buf,start+28,temp8,0,8);
+      System.arraycopy(buf,start+32,temp8,0,8);
 
-      start += 28;
+      start += MapType.MapTypeSize;
     }
 
     return buf;
