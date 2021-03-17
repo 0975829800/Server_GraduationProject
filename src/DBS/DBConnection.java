@@ -3,63 +3,117 @@ package DBS;
 import java.sql.*;
 
 public class DBConnection {
+  static Connection con = null;
+  Encryption encryption = new Encryption();
+  public DBConnection() throws ClassNotFoundException, SQLException {
+    boolean connection = false;
 
-  public static void main(String[] args) {
-    //宣告Connection物件
-    Connection con;
-    //驅動程式名
-    String driver = "com.mysql.jdbc.Driver";
-    //URL指向要訪問的資料庫名mydata
-    String url = "jdbc:mysql://localhost:3306/bookshop";
-    //MySQL配置時的使用者名稱
-    String user = "root";
-    //MySQL配置時的密碼
-    String password = "1234";
-    //遍歷查詢結果集
-    try {
-      //載入驅動程式
-      Class.forName("com.mysql.jdbc.Driver");
-      //1.getConnection()方法，連線MySQL資料庫！！
-      con = DriverManager.getConnection(url,user,password);
-      if(!con.isClosed())
-        System.out.println("Succeeded connecting to the Database!");
-      //2.建立statement類物件，用來執行SQL語句！！
-      Statement statement = con.createStatement();
-      //要執行的SQL語句
-      String sql = "select * from author";
-      //3.ResultSet類，用來存放獲取的結果集！！
-      ResultSet rs = statement.executeQuery(sql);
+    String url = "jdbc:mysql://220.132.211.121:3306/dungeondatabase";
+    String user = "Admin";
+    String password = "Zi8xkHTckRmweytR";
 
+    Class.forName("com.mysql.jdbc.Driver");
 
-      String n=null;
-      String p=null;
-      while(rs.next()) {
+    con = DriverManager.getConnection(url,user,password);
 
-        //獲取name列的數
+    if(!con.isClosed()){
+      System.out.println("Succeeded connecting to the Database!");
+      connection = true;
 
-        n=rs.getString("ISBN");
-
-        //獲取password列的資料
-
-        p=rs.getString("Author");
-        System.out.println(n+"\t"+p);
-      }
-
-      rs.close();
-      con.close();
-    } catch(ClassNotFoundException e) {
-      //資料庫驅動類異常處理
-      System.out.println("Sorry,can`t find the Driver!");
-      e.printStackTrace();
-    } catch(SQLException e) {
-      //資料庫連線失敗異常處理
-      e.printStackTrace();
-    }catch (Exception e) {
-      // TODO: handle exception
-      e.printStackTrace();
-    }finally{
-      System.out.println("資料庫資料成功獲取！！");
+//      con.close();
     }
+
   }
 
+  public boolean isConnected() throws SQLException {
+    return con != null && !con.isClosed();
+  }
+
+  public String[] getAccountInform(String PID) throws SQLException {
+    String[] result = null;
+    if(con != null && !con.isClosed()){
+      Statement statement = con.createStatement();
+      String sql = "select * from account where PlayID = " + PID;
+      System.out.println(sql);
+      ResultSet rs = statement.executeQuery(sql);
+
+      String account=null;
+      String password=null;
+      while (rs.next()){
+        account=rs.getString("Account");
+        password=rs.getString("Password");
+      }
+      result = new String[]{account, password};
+//      System.out.println(result);
+
+      rs.close();
+      return result;
+    }
+    return null;
+  }
+
+  public int login(String account,String password) throws Exception {
+    int PID = -1;
+    String getPass = "";
+
+    if(con != null && !con.isClosed()){
+      Statement statement = con.createStatement();
+      String sql = "select * from account where Account = " + account;
+      System.out.println(sql);
+      ResultSet rs = statement.executeQuery(sql);
+      password = encryption.Encryption(password);
+      if (rs.next()) {
+        PID = Integer.parseInt(rs.getString("PlayID"));
+        getPass = rs.getString("Password");
+      }
+      else
+        return -3;
+      rs.close();
+      if (!password.equals(getPass))
+        return -2;
+    }
+    if(PID != -1)
+      System.out.println("login success");
+    else
+      System.out.println("login fail");
+    return PID;
+  }
+
+  public int register(String account,String password,String name) throws Exception {  //throws SQLException or encryption's exception
+    int PID = -1;
+    if(con != null && !con.isClosed()){
+      Statement statement = con.createStatement();
+      String sql = "select * from account where Account = " + account;
+
+
+      System.out.println(sql);
+      ResultSet rs = statement.executeQuery(sql);
+
+      if (rs.next()){   //has same account
+        return -2;
+      }
+
+
+      /*
+      * account.PID -> player.PID
+      * insert player data first
+      * */
+      do {  //insert new player
+        PID = (int) (Math.random()*1000000000)+1;
+        sql = "INSERT INTO `player` (`PlayID`, `Name`, `TeamID`) VALUES ('"+ PID + "', '"+ name + "', NULL)";
+        System.out.println(sql);
+      }while (statement.executeUpdate(sql) <= 0);
+
+      //insert new account
+      sql = "INSERT INTO `account` (`PlayID`, `Account`, `Password`) VALUES ('"+ PID + "', '"+ account + "', '"+encryption.Encryption(password) + "')";
+      System.out.println(sql);
+
+      if(statement.executeUpdate(sql) > 0)
+        System.out.println("register success");
+      else
+        System.out.println("register fail");
+      rs.close();
+    }
+    return PID;
+  }
 }
