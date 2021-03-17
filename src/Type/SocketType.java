@@ -4,9 +4,13 @@ import java.net.Socket;
 
 public class SocketType {
   public int ID;
-  public Socket socket;
-  public SocketType(int ID, Socket socket){
+  public Socket Socket;
+  public Socket ActionSocket;
+  public Socket MapSocket;
+  public SocketType(int ID, Socket socket, Socket actionSocket, Socket mapSocket){
     this.ID = ID;
-    this.socket = socket;
+    Socket = socket;
+    ActionSocket = actionSocket;
+    MapSocket = mapSocket;
   }
 }

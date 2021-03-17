@@ -13,24 +13,31 @@ public class Server {
   public static Queue<MapType>      Map         = new LinkedList<>();
   public static Queue<ActionType>   Action      = new LinkedList<>();
 
-  public final static int ServerPort        = 6666;
-  public final static int BroadcastPort     = 6667;
+  public final static int ServerPort = 6666;
+  public final static int ActionPort = 6667;
+  public final static int MapPort    = 6668;
   public static boolean   debug = false; //debug時改成true
 
   public static void main(String[] args)
   {
     ServerSocket  serverSocket;
-    Socket        sc;
+    ServerSocket  actionSocket;
+    ServerSocket  mapSocket;
+    Socket        ss,as,ms;
     int ID = 0;
 
     try {
       serverSocket = new ServerSocket(ServerPort);
+      actionSocket = new ServerSocket(ActionPort);
+      mapSocket = new ServerSocket(MapPort);
       System.out.println("ServerMainBody.Server Waiting Request...");
       Thread broadcast = new Thread(new Broadcast());
       while (true){
-        sc = serverSocket.accept();
-        User.add(new SocketType(ID, sc));
-        Thread userSocket = new Thread(new UserSocket(ID, sc));
+        ss = serverSocket.accept();
+        as = serverSocket.accept();
+        ms = serverSocket.accept();
+        User.add(new SocketType(ID, ss, as, ms));
+        Thread userSocket = new Thread(new UserSocket(ID, ss));
         userSocket.start();
         System.out.printf("ID: %06d in!\n", ID);
         ID++;
