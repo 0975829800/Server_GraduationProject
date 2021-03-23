@@ -5,7 +5,7 @@ import java.util.Base64;
 
 public class Encryption {
   static final String ALGORITHM_SHA = "SHA";
-  public String Encryption(String source) throws Exception {
+  public static String encryption(String source) throws Exception {
     // SHA加密
     return printBase64(encryptionSHA(source));
   }

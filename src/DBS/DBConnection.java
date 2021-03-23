@@ -65,7 +65,7 @@ public class DBConnection {
         String sql = "select * from account where Account = " + account;
         System.out.println(sql);
         ResultSet rs = statement.executeQuery(sql);
-        password = encryption.Encryption(password);
+        password = Encryption.encryption(password);
         if (rs.next()) {
           PID = Integer.parseInt(rs.getString("PlayID"));
           getPass = rs.getString("Password");
@@ -114,7 +114,7 @@ public class DBConnection {
         }while (statement.executeUpdate(sql) <= 0);
 
         //insert new account
-        sql = "INSERT INTO `account` (`PlayID`, `Account`, `Password`) VALUES ('"+ PID + "', '"+ account + "', '"+encryption.Encryption(password) + "')";
+        sql = "INSERT INTO `account` (`PlayID`, `Account`, `Password`) VALUES ('"+ PID + "', '"+ account + "', '"+Encryption.encryption(password) + "')";
         System.out.println(sql);
 
         if(statement.executeUpdate(sql) > 0)
@@ -191,4 +191,38 @@ public class DBConnection {
     }
     return false;
   }
+
+  public ArrayList <Item_bag> getItem_bag(int PID)throws SQLException {
+    ArrayList <Item_bag> result = new ArrayList<>();
+    if (con != null && !con.isClosed()) {
+      Statement statement = con.createStatement();
+      String sql = "SELECT * FROM `item bag` WHERE PlayID = " + PID;
+      System.out.println(sql);
+      ResultSet rs = statement.executeQuery(sql);
+
+      while (rs.next()) {
+        int Item_ID = Integer.parseInt(rs.getString("Item ID"));
+        int Rarity = Integer.parseInt(rs.getString("Rarity"));
+        int Amount = Integer.parseInt(rs.getString("Amount"));
+        result.add(new Item_bag(PID,Item_ID,Rarity,Amount));
+      }
+      rs.close();
+      return result;
+    }
+    return null;
+  }
+
+  public boolean setItem_bag(int PlayerID, int Equipment_ID, int Rarity, int Amount)throws SQLException {
+    ArrayList <Equipment_bag> result = new ArrayList<>();
+    if (con != null && !con.isClosed()) {
+      Statement statement = con.createStatement();
+      String sql = "INSERT INTO `equipment bag` (`PlayerID`, `Equipment ID`, `Rarity`, `Part`, `Level`, `Equipping`, `Skill ID 1`, `Skill ID 2`) VALUES" +
+              " ('"+PlayerID+"', '"+Equipment_ID+"', '"+Rarity+"', '"+Amount+"');";
+      System.out.println(sql);
+      return statement.executeUpdate(sql) > 0;
+    }
+    return false;
+  }
+
+
 }
