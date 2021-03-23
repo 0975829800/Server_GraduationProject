@@ -3,10 +3,14 @@ package Type;
 import java.net.Socket;
 
 public class SocketType {
-  int ID;
-  Socket socket;
-  public SocketType(int ID, Socket socket){
+  public int ID;
+  public Socket Socket;
+  public Socket ActionSocket;
+  public Socket MapSocket;
+  public SocketType(int ID, Socket socket, Socket actionSocket, Socket mapSocket){
     this.ID = ID;
-    this.socket = socket;
+    Socket = socket;
+    ActionSocket = actionSocket;
+    MapSocket = mapSocket;
   }
 }

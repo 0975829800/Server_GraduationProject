@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.io.*;
 public class test {
   public static void main(String[] args) {
-    Socket client;
+    Socket client, action, map;
     OutputStream out;
     int port = 6666;
     int protocol;
@@ -16,6 +16,8 @@ public class test {
     //寫一段數字和字串發送
     try {
       client = new Socket("127.0.0.1",6666);
+      action = new Socket("127.0.0.1", 6667);
+      map = new Socket("127.0.0.1", 6668);
       out = client.getOutputStream();
       while (true) {
         protocol = scanner.nextInt();

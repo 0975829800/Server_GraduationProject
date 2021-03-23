@@ -1,3 +1,5 @@
+package ServerMainBody;
+
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.io.InputStream;
@@ -13,7 +15,6 @@ public class UserSocket extends Thread{
   OutputStream  out;
 
   byte[]        buf = new byte[1000];
-  boolean       debug = false;         //debug時改成true
 
   public UserSocket(int ID, Socket sc){
     SocketID  = ID;
@@ -38,23 +39,23 @@ public class UserSocket extends Thread{
 
       //read client action
       while (true) {
+        buf = new byte[1000];  //clear buffer
         in.read(buf);
         data = ProtocolType.ProtocolTrim(buf);
-        System.out.println(data.protocol);
-        System.out.println(new String(data.data));
+        System.out.println(data.protocol + " " + new String(data.data));
         //switch (data.protocol) {
         //}
       }
     }
     catch (Exception e){
-      if (debug){
+      if (Server.debug){
         System.err.println(e);
       }
       //顯示離開ID
       if (PlayerID == -1){
         System.out.printf("Socket ID: %06d out\n", SocketID);
       } else {
-        System.out.printf("Socket ID: %06d out    ", SocketID);
+        System.out.printf("Socket ID: %06d out\t", SocketID);
         System.out.printf("Player ID: %06d out\n", PlayerID);
       }
     }
