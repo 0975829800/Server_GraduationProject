@@ -34,8 +34,8 @@ public class Server {
       Thread broadcast = new Thread(new Broadcast());
       while (true){
         ss = serverSocket.accept();
-        as = serverSocket.accept();
-        ms = serverSocket.accept();
+        as = actionSocket.accept();
+        ms = mapSocket.accept();
         User.add(new SocketType(ID, ss, as, ms));
         Thread userSocket = new Thread(new UserSocket(ID, ss));
         userSocket.start();

@@ -21,6 +21,7 @@ public class Broadcast extends Thread{
           out = socketType.MapSocket.getOutputStream();
           byte[] map = PackageType.MapTypeToByte();
           out.write(map);
+
         }
         sleep(1);
       } catch (Exception e) {

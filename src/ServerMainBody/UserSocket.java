@@ -42,8 +42,7 @@ public class UserSocket extends Thread{
         buf = new byte[1000];  //clear buffer
         in.read(buf);
         data = ProtocolType.ProtocolTrim(buf);
-        System.out.println(data.protocol);
-        System.out.println(new String(data.data));
+        System.out.println(data.protocol + " " + new String(data.data));
         //switch (data.protocol) {
         //}
       }
