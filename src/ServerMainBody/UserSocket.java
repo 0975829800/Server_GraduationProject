@@ -1,12 +1,11 @@
 package ServerMainBody;
 
 import java.net.Socket;
-import java.nio.ByteBuffer;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.IOException;
-import Type.*;
-import DBS.*;
+
+import Tools.*;
+
 public class UserSocket extends Thread{
   int           SocketID;
   int           PlayerID = -1;
@@ -28,10 +27,10 @@ public class UserSocket extends Thread{
 
       //read login message
       in.read(buf);
-      ProtocolType data = ProtocolType.ProtocolTrim(buf);
-      if (data.protocol == ProtocolType.LOGIN){
+      ProtocolTool data = ProtocolTool.ProtocolTrim(buf);
+      if (data.protocol == ProtocolTool.LOGIN){
         System.out.println(1);
-      } else if (data.protocol == ProtocolType.REGISTER){
+      } else if (data.protocol == ProtocolTool.REGISTER){
         System.out.println(2);
       } else {
         System.out.println(3);
@@ -41,8 +40,8 @@ public class UserSocket extends Thread{
       while (true) {
         buf = new byte[1000];  //clear buffer
         in.read(buf);
-        data = ProtocolType.ProtocolTrim(buf);
-        System.out.println(data.protocol + " " + new String(data.data));
+        data = ProtocolTool.ProtocolTrim(buf);
+        System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
         //switch (data.protocol) {
         //}
       }

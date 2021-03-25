@@ -1,10 +1,12 @@
-package Type;
+package Tools;
 
 import ServerMainBody.Server;
+import Type.ActionType;
+import Type.MapType;
 
 import java.nio.ByteBuffer;
 
-public class PackageType {
+public class PackageTool {
 
   //transform Action list to Byte list
   public static byte[] ActionListToByte(){
@@ -42,17 +44,17 @@ public class PackageType {
     int start = 0;
     MapType mapType;
     while ((mapType = Server.Map.peek()) != null) {
-      ByteBuffer.wrap(temp4,0,4).putInt(mapType.TypeID); //write TypeID
+      temp4 = ToCSharpTool.ToCSharp(mapType.TypeID);                    //write TypeID
       System.arraycopy(buf,start,temp4,0,4);
-      ByteBuffer.wrap(temp4,0,4).putInt(mapType.BelongID);  //write BelongID
+      temp4 = ToCSharpTool.ToCSharp(mapType.BelongID);                  //write BelongID
       System.arraycopy(buf,start+4,temp4,0,4);
-      ByteBuffer.wrap(temp4,0,4).putInt(mapType.Level); //write HP
+      temp4 = ToCSharpTool.ToCSharp(mapType.Level);                     //write HP
       System.arraycopy(buf,start+8,temp4,0,4);
-      ByteBuffer.wrap(temp4,0,4).putInt(mapType.HP); //write HP
+      temp4 = ToCSharpTool.ToCSharp(mapType.HP);                        //write HP
       System.arraycopy(buf,start+12,temp4,0,4);
-      ByteBuffer.wrap(temp4,0,4).putInt(mapType.MP); //write MP
+      temp4 = ToCSharpTool.ToCSharp(mapType.MP);                        //write MP
       System.arraycopy(buf,start+16,temp4,0,4);
-      ByteBuffer.wrap(temp4,0,4).putInt(mapType.state); //write state
+      temp4 = ToCSharpTool.ToCSharp(mapType.state);                     //write state
       System.arraycopy(buf,start+20,temp4,0,4);
       ByteBuffer.wrap(temp8,0,8).putDouble(mapType.Longitude); //write Longitude
       System.arraycopy(buf,start+24,temp8,0,8);

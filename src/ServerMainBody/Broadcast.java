@@ -1,5 +1,6 @@
 package ServerMainBody;
 
+import Tools.*;
 import Type.*;
 import java.io.OutputStream;
 
@@ -13,13 +14,13 @@ public class Broadcast extends Thread{
           //Action
           if(!Server.Action.isEmpty()){
             out = socketType.ActionSocket.getOutputStream();
-            byte[] action = PackageType.ActionListToByte();
+            byte[] action = PackageTool.ActionListToByte();
             out.write(action);
           }
 
           //Map information
           out = socketType.MapSocket.getOutputStream();
-          byte[] map = PackageType.MapTypeToByte();
+          byte[] map = PackageTool.MapTypeToByte();
           out.write(map);
 
         }

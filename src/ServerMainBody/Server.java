@@ -13,9 +13,9 @@ public class Server {
   public static Queue<MapType>      Map         = new LinkedList<>();
   public static Queue<ActionType>   Action      = new LinkedList<>();
 
-  public final static int ServerPort = 6666;
-  public final static int ActionPort = 6667;
-  public final static int MapPort    = 6668;
+  public final static int ServerPort = 8001;
+  public final static int ActionPort = 8002;
+  public final static int MapPort    = 8003;
   public static boolean   debug = false; //debug時改成true
 
   public static void main(String[] args)
