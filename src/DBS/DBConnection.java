@@ -31,7 +31,7 @@ public class DBConnection {
   }
 
 
-  public String[] getAccountInform(String PID) throws SQLException {
+  public String[] getAccountInform(int PID) throws SQLException {
     String[] result = null;
     if(con != null && !con.isClosed()){
       Statement statement = con.createStatement();
@@ -154,6 +154,23 @@ public class DBConnection {
     return false;
   }
 
+  public boolean setTeam(int PID,String TeamID)  {  //throws SQLException or encryption's exception
+    try {
+      if(con != null && !con.isClosed()){
+        Statement statement = con.createStatement();
+        String sql = "UPDATE `player` SET `TeamID` = '"+ TeamID + "' WHERE `player`.`PlayID` = " + PID;
+        //insert new account
+        System.out.println(sql);
+
+        return statement.executeUpdate(sql) > 0;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+
 
   public ArrayList <Equipment_bag> getEquipment_bag(int PID)throws SQLException {
     ArrayList <Equipment_bag> result = new ArrayList<>();
@@ -192,6 +209,9 @@ public class DBConnection {
     return false;
   }
 
+
+
+
   public ArrayList <Item_bag> getItem_bag(int PID)throws SQLException {
     ArrayList <Item_bag> result = new ArrayList<>();
     if (con != null && !con.isClosed()) {
@@ -212,12 +232,12 @@ public class DBConnection {
     return null;
   }
 
-  public boolean setItem_bag(int PlayerID, int Equipment_ID, int Rarity, int Amount)throws SQLException {
+  public boolean setItem_bag(int PlayerID, int ItemID, int Rarity, int Amount)throws SQLException {
     ArrayList <Equipment_bag> result = new ArrayList<>();
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
-      String sql = "INSERT INTO `equipment bag` (`PlayerID`, `Equipment ID`, `Rarity`, `Part`, `Level`, `Equipping`, `Skill ID 1`, `Skill ID 2`) VALUES" +
-              " ('"+PlayerID+"', '"+Equipment_ID+"', '"+Rarity+"', '"+Amount+"');";
+      String sql = "INSERT INTO `item bag` (`PlayerID`, `ItemID`, `Rarity`, `Amount`) VALUES" +
+              " ('"+PlayerID+"', '"+ItemID+"', '"+Rarity+"', '"+Amount+"');";
       System.out.println(sql);
       return statement.executeUpdate(sql) > 0;
     }
@@ -225,4 +245,124 @@ public class DBConnection {
   }
 
 
+
+
+  public ArrayList<Integer> getFriend(int PID) throws SQLException {
+    ArrayList<Integer> result = new ArrayList<Integer>();
+    if(con != null && !con.isClosed()){
+      Statement statement = con.createStatement();
+      String sql = "select * from friend where PlayID = " + PID;
+      System.out.println(sql);
+      ResultSet rs = statement.executeQuery(sql);
+
+      String FID=null;
+      while (rs.next()){
+        FID=rs.getString("Friend ID");
+        result.add(Integer.parseInt(FID));
+      }
+//      System.out.println(result);
+
+      rs.close();
+      return result;
+    }
+    return null;
+  }
+
+  public boolean addFriend(int PID,int FID) throws SQLException {
+    if (con != null && !con.isClosed()) {
+      Statement statement = con.createStatement();
+      String sql = "INSERT INTO `friend` (`PlayID`, `Friend ID`) VALUES ('"+PID+"', '"+FID+"');";
+      System.out.println(sql);
+      return statement.executeUpdate(sql) > 0;
+    }
+    return false;
+  }
+
+  public boolean delFriend(int PID,int FID) throws SQLException {
+    if (con != null && !con.isClosed()) {
+      Statement statement = con.createStatement();
+      String sql = "DELETE FROM `friend` WHERE `PlayID` = '"+PID+"' AND 'Friend ID' = '"+FID;
+      System.out.println(sql);
+      return statement.executeUpdate(sql) > 0;
+    }
+    return false;
+  }
+
+
+
+  public Status getStatus(int PID) throws SQLException {
+    Status result = null;
+    if(con != null && !con.isClosed()){
+      Statement statement = con.createStatement();
+      String sql = "select * from player status where PlayID = " + PID;
+      System.out.println(sql);
+      ResultSet rs = statement.executeQuery(sql);
+
+      String FID=null;
+      while (rs.next()){
+        int HP= Integer.parseInt(rs.getString("HP"));
+        int MAX_HP= Integer.parseInt(rs.getString("MAX HP"));
+        int MP= Integer.parseInt(rs.getString("MP"));
+        int MAX_MP= Integer.parseInt(rs.getString("MAX MP"));
+        int STR= Integer.parseInt(rs.getString("STR"));
+        int MG= Integer.parseInt(rs.getString("MG"));
+        int AGI= Integer.parseInt(rs.getString("AGI"));
+        int LUC= Integer.parseInt(rs.getString("LUC"));
+        int level= Integer.parseInt(rs.getString("Level"));
+        int skill_point= Integer.parseInt(rs.getString("Skill Point"));
+
+        result = new Status(PID, HP, MAX_HP, MP, MAX_MP, STR, MG, AGI,  LUC, level, skill_point);
+      }
+//      System.out.println(result);
+
+      rs.close();
+      return result;
+    }
+    return null;
+  }
+
+  public boolean setStatus(int playID, int HP, int MAX_HP, int MP, int MAX_MP, int STR, int MG, int AGI, int LUC, int Level, int skill_point)  {  //throws SQLException or encryption's exception
+    try {
+      if(con != null && !con.isClosed()){
+        Statement statement = con.createStatement();
+        String sql = "INSERT INTO `player status` (`PlayID`, `HP`, `MAX HP`, `MP`, `MAX MP`, `STR`, `MG`, `AGI`, `LUC`, `Level`, `Skill Point`) VALUES ('"+playID+"', '"+HP+"', '"+MAX_HP+"', '"+MP+"', '"+MAX_MP+"', '"+STR+"', '"+MG+"', '"+AGI+"', '"+LUC+"', '"+Level+"', '"+skill_point+"');";
+        //insert new account
+        System.out.println(sql);
+
+        return statement.executeUpdate(sql) > 0;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+
+
+
+  public boolean addProgress(int PID,int MID) throws SQLException {
+    if (con != null && !con.isClosed()) {
+      Statement statement = con.createStatement();
+      String sql = "INSERT INTO `progress` (`PlayID`, `Mission ID`, `Progress Status`) VALUES ('"+PID+"', '"+MID+"', '0');";
+      System.out.println(sql);
+      return statement.executeUpdate(sql) > 0;
+    }
+    return false;
+  }
+
+  public boolean setProgress(int PID,int MID)  {  //throws SQLException or encryption's exception
+    try {
+      if(con != null && !con.isClosed()){
+        Statement statement = con.createStatement();
+        String sql = "UPDATE `progress` SET `Progress Status` = '"+ 1 + "' WHERE `PlayID` = '"+PID+"' AND `Mission ID` = "+ MID;
+        //insert new account
+        System.out.println(sql);
+
+        return statement.executeUpdate(sql) > 0;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
 }
