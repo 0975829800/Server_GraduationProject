@@ -281,7 +281,7 @@ public class DBConnection {
   public boolean delFriend(int PID,int FID) throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
-      String sql = "DELETE FROM `friend` WHERE `friend`.`PlayID` = 0031240985";
+      String sql = "DELETE FROM `friend` WHERE `PlayID` = '"+PID+"' AND 'Friend ID' = '"+FID;
       System.out.println(sql);
       return statement.executeUpdate(sql) > 0;
     }
@@ -336,6 +336,9 @@ public class DBConnection {
     }
     return false;
   }
+
+
+
 
   public boolean addProgress(int PID,int MID) throws SQLException {
     if (con != null && !con.isClosed()) {
