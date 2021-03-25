@@ -1,14 +1,14 @@
 package DBS;
 
 public class Equipment_bag {
-  int PlayerID;
-	int Equipment_ID;
-	int Rarity;
-	int Part;
-	int Level;
-	boolean Equipping;
-	int Skill_ID_1;
-	int Skill_ID_2;
+  public int PlayerID;
+	public int Equipment_ID;
+	public int Rarity;
+	public int Part;
+	public int Level;
+	public boolean Equipping;
+	public int Skill_ID_1;
+	public int Skill_ID_2;
 	public Equipment_bag(int PlayerID, int Equipment_ID, int Rarity, int Part, int Level, boolean Equipping, int Skill_ID_1, int Skill_ID_2){
 	  this.PlayerID = PlayerID;
 	  this.Equipment_ID = Equipment_ID;
