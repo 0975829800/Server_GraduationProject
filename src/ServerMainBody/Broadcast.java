@@ -8,6 +8,7 @@ public class Broadcast extends Thread{
   OutputStream out;
   public void run() {
     while (true){
+      System.out.print(".");
       try {
         for (SocketType socketType : Server.User){
           //write ServerMainBody.Broadcast message to every Player
@@ -24,7 +25,7 @@ public class Broadcast extends Thread{
           out.write(map);
 
         }
-        sleep(1);
+        sleep(1000);
       } catch (Exception e) {
         e.printStackTrace();
       }

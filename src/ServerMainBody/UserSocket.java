@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import Tools.*;
+import Type.ActionType;
 
 public class UserSocket extends Thread{
   int           SocketID;
@@ -42,8 +43,11 @@ public class UserSocket extends Thread{
         in.read(buf);
         data = ProtocolTool.ProtocolTrim(buf);
         System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
-        //switch (data.protocol) {
-        //}
+        switch (data.protocol) {
+          case 3:
+            Server.Action.add(new ActionType(1,2,3,12,13));
+            break;
+        }
       }
     }
     catch (Exception e){

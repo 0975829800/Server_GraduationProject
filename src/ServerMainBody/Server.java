@@ -32,6 +32,7 @@ public class Server {
       mapSocket = new ServerSocket(MapPort);
       System.out.println("ServerMainBody.Server Waiting Request...");
       Thread broadcast = new Thread(new Broadcast());
+      broadcast.start();
       while (true){
         ss = serverSocket.accept();
         as = actionSocket.accept();
