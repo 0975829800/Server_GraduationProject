@@ -21,6 +21,4 @@ public class MapType {
     HP = hp;
     MP = mp;
   }
-
-
 }

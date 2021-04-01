@@ -6,6 +6,7 @@ import java.io.OutputStream;
 
 import Tools.*;
 import Type.ActionType;
+import Type.MapType;
 
 public class UserSocket extends Thread{
   int           SocketID;
@@ -44,6 +45,9 @@ public class UserSocket extends Thread{
         data = ProtocolTool.ProtocolTrim(buf);
         System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
         switch (data.protocol) {
+          case 2:
+            Server.Map.add(new MapType(1000,1000,10,3,3,3,3));
+            break;
           case 3:
             Server.Action.add(new ActionType(1,2,3,12,13));
             break;
@@ -54,6 +58,7 @@ public class UserSocket extends Thread{
       if (Server.debug){
         System.err.println(e);
       }
+      DisconnectTool.PlayerDisconnect(SocketID);
       //顯示離開ID
       if (PlayerID == -1){
         System.out.printf("Socket ID: %06d out\n", SocketID);
