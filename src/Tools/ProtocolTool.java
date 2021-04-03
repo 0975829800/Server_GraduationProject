@@ -17,8 +17,4 @@ public class ProtocolTool {
     System.arraycopy(buf,4,data,0, data.length);
     return new ProtocolTool(protocol,data);
   }
-
-  //Protocol define
-  public static final int LOGIN     = 1;
-  public static final int REGISTER  = 2;
 }

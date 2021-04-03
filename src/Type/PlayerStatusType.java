@@ -12,4 +12,5 @@ public class PlayerStatusType {
   public int INT;
   public int AGI;
   public int LUC;
+  public int State;
 }

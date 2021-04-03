@@ -1,0 +1,21 @@
+package Action;
+
+import ID.TypeID;
+import ServerMainBody.Server;
+import Tools.ByteArrayTransform;
+import Type.*;
+
+public class LoginLocation {
+  public static void Login_Location (byte[] data, PlayerStatusType status){
+    MapType new_information = new MapType();
+    new_information.Longitude = ByteArrayTransform.ToDouble(data,0);
+    new_information.Latitude = ByteArrayTransform.ToDouble(data,8);
+    new_information.Level = status.Level;
+    new_information.TypeID = TypeID.PLAYER;
+    new_information.BelongID = status.PID;
+    new_information.HP = status.HP;
+    new_information.MP = status.MP;
+    new_information.state = status.State;
+    Server.Map.add(new_information);
+  }
+}
