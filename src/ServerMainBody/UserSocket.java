@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import Action.LoginLocation;
+import Action.Move;
 import Tools.*;
 import Type.*;
 import ID.*;
@@ -50,8 +51,8 @@ public class UserSocket extends Thread{
           case ProtocolID.LOGIN_LOCATION:
             LoginLocation.Login_Location(data.data,Status);
             break;
-          case 3:
-            Server.Action.add(new ActionType(1,2,3,12,13));
+          case ProtocolID.MOVE:
+            Move.move(PlayerID, data.data);
             break;
         }
       }

@@ -24,14 +24,13 @@ public class Broadcast extends Thread{
             byte[] action = PackageTool.ActionListToByte(temp);
             out.write(action);
           }
+          temp.clear();
 
           //Map information
           out = socketType.MapSocket.getOutputStream();
           byte[] map = PackageTool.MapTypeToByte();
           out.write(map);
         }
-
-        temp.clear();
 
         sleep(1000);
       } catch (Exception e) {
