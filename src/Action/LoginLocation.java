@@ -6,6 +6,7 @@ import Tools.ByteArrayTransform;
 import Type.*;
 
 public class LoginLocation {
+  //when login add Map information to Server.Map
   public static void Login_Location (byte[] data, PlayerStatusType status){
     MapType new_information = new MapType();
     new_information.Longitude = ByteArrayTransform.ToDouble(data,0);

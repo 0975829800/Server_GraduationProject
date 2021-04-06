@@ -33,7 +33,11 @@ public class UserSocket extends Thread{
       //read login message
       in.read(buf);
       ProtocolTool data = ProtocolTool.ProtocolTrim(buf);
+
+      //should login First
+      //to connect database and get information of player
       if (data.protocol == ProtocolID.LOGIN){
+        //have to return PID to UserSocket
         System.out.println(1);
       } else if (data.protocol == ProtocolID.REGISTER){
         System.out.println(2);

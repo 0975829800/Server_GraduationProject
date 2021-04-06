@@ -4,6 +4,8 @@ import java.nio.ByteBuffer;
 
 public class ToCSharpTool {
 
+  //when want to send to CSharp transform data to byte array
+
   public static byte[] ToCSharp(int data){
     byte[] trans = new byte[4];
     byte tmp;

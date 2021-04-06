@@ -3,6 +3,7 @@ package Tools;
 import java.nio.ByteBuffer;
 
 public class ByteArrayTransform {
+  //use to transform byte array
 
   public static double ToDouble(byte[] Data, int StartPos){
     byte[] buf = new byte[8];
