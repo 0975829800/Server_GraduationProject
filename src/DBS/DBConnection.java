@@ -154,7 +154,8 @@ public class DBConnection {
     return false;
   }
 
-  public boolean setTeam(int PID,String TeamID)  {  //throws SQLException or encryption's exception
+
+  public boolean setTeam(int PID,int TeamID)  {  //throws SQLException or encryption's exception
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
@@ -185,7 +186,7 @@ public class DBConnection {
         int Rarity = Integer.parseInt(rs.getString("Rarity"));
         int Part = Integer.parseInt(rs.getString("Part"));
         int Level = Integer.parseInt(rs.getString("Level"));
-        boolean Equipping = Boolean.parseBoolean(rs.getString("Equipping"));
+        int Equipping = Integer.parseInt(rs.getString("Equipping"));
         int Skill_ID_1 = Integer.parseInt(rs.getString("Skill ID 1"));
         int Skill_ID_2 = Integer.parseInt(rs.getString("Skill ID 2"));
         result.add(new Equipment_bag(PID,Equipment_ID,Rarity,Part,Level,Equipping,Skill_ID_1,Skill_ID_2));
@@ -197,7 +198,7 @@ public class DBConnection {
     return null;
   }
 
-  public boolean setEquipment_bag(int PlayerID, int Equipment_ID, int Rarity, int Part, int Level, boolean Equipping, int Skill_ID_1, int Skill_ID_2)throws SQLException {
+  public boolean setEquipment_bag(int PlayerID, int Equipment_ID, int Rarity, int Part, int Level, int Equipping, int Skill_ID_1, int Skill_ID_2)throws SQLException {
     ArrayList <Equipment_bag> result = new ArrayList<>();
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
@@ -211,7 +212,6 @@ public class DBConnection {
 
 
 
-
   public ArrayList <Item_bag> getItem_bag(int PID)throws SQLException {
     ArrayList <Item_bag> result = new ArrayList<>();
     if (con != null && !con.isClosed()) {
@@ -221,7 +221,7 @@ public class DBConnection {
       ResultSet rs = statement.executeQuery(sql);
 
       while (rs.next()) {
-        int Item_ID = Integer.parseInt(rs.getString("Item ID"));
+        int Item_ID = Integer.parseInt(rs.getString("ItemID"));
         int Rarity = Integer.parseInt(rs.getString("Rarity"));
         int Amount = Integer.parseInt(rs.getString("Amount"));
         result.add(new Item_bag(PID,Item_ID,Rarity,Amount));
@@ -236,14 +236,13 @@ public class DBConnection {
     ArrayList <Equipment_bag> result = new ArrayList<>();
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
-      String sql = "INSERT INTO `item bag` (`PlayerID`, `ItemID`, `Rarity`, `Amount`) VALUES" +
+      String sql = "INSERT INTO `item bag` (`PlayID`, `ItemID`, `Rarity`, `Amount`) VALUES" +
               " ('"+PlayerID+"', '"+ItemID+"', '"+Rarity+"', '"+Amount+"');";
       System.out.println(sql);
       return statement.executeUpdate(sql) > 0;
     }
     return false;
   }
-
 
 
 
@@ -281,7 +280,7 @@ public class DBConnection {
   public boolean delFriend(int PID,int FID) throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
-      String sql = "DELETE FROM `friend` WHERE `PlayID` = '"+PID+"' AND 'Friend ID' = '"+FID;
+      String sql = "DELETE FROM `friend` WHERE `friend`.`PlayID` = '"+PID+"' AND `friend`.`Friend ID` = '"+FID+"'";
       System.out.println(sql);
       return statement.executeUpdate(sql) > 0;
     }
@@ -294,11 +293,10 @@ public class DBConnection {
     Status result = null;
     if(con != null && !con.isClosed()){
       Statement statement = con.createStatement();
-      String sql = "select * from player status where PlayID = " + PID;
+      String sql = "select * from `player status` WHERE `PlayID` = " + PID;
       System.out.println(sql);
       ResultSet rs = statement.executeQuery(sql);
 
-      String FID=null;
       while (rs.next()){
         int HP= Integer.parseInt(rs.getString("HP"));
         int MAX_HP= Integer.parseInt(rs.getString("MAX HP"));
