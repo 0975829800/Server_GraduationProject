@@ -38,11 +38,11 @@ public class UserSocket extends Thread{
       //to connect database and get information of player
       if (data.protocol == ProtocolID.LOGIN){
         //have to return PID to UserSocket
-        System.out.println(1);
+        System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
       } else if (data.protocol == ProtocolID.REGISTER){
-        System.out.println(2);
+        System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
       } else {
-        System.out.println(3);
+        System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
       }
 
       //read client action
