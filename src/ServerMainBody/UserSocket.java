@@ -1,14 +1,16 @@
 package ServerMainBody;
 
-import java.net.Socket;
-import java.io.InputStream;
-import java.io.OutputStream;
-
+import Action.Login;
 import Action.LoginLocation;
 import Action.Move;
-import Tools.*;
-import Type.*;
-import ID.*;
+import ID.ProtocolID;
+import Tools.DisconnectTool;
+import Tools.ProtocolTool;
+import Type.Status;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 
 public class UserSocket extends Thread{
   int           SocketID;
@@ -16,7 +18,7 @@ public class UserSocket extends Thread{
   Socket        socket;
   InputStream   in;
   OutputStream  out;
-  PlayerStatusType Status = new PlayerStatusType();
+  Status Status = new Status();
 
   byte[]        buf = new byte[1000];
 
@@ -27,23 +29,27 @@ public class UserSocket extends Thread{
 
   //thread running
   public void run(){
+    ProtocolTool data = null;
     try {
       in = socket.getInputStream();
       out = socket.getOutputStream();
-      //read login message
-      in.read(buf);
-      ProtocolTool data = ProtocolTool.ProtocolTrim(buf);
 
-      //should login First
-      //to connect database and get information of player
-      if (data.protocol == ProtocolID.LOGIN){
-        //have to return PID to UserSocket
-        System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
-      } else if (data.protocol == ProtocolID.REGISTER){
-        System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
-      } else {
-        System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
-      }
+      do {
+        //read login message
+        in.read(buf);
+        data = ProtocolTool.ProtocolTrim(buf);
+
+        //should login First
+        //to connect database and get information of player
+        if (data.protocol == ProtocolID.LOGIN){
+          //have to return PID to UserSocket
+          PlayerID = Login.login(out,data.data);
+        } else if (data.protocol == ProtocolID.REGISTER){
+          System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
+        } else {
+          System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
+        }
+      }while(PlayerID == -1);
 
       //read client action
       while (true) {

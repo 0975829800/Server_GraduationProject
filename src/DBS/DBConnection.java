@@ -1,5 +1,7 @@
 package DBS;
 
+import Type.Status;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -308,8 +310,8 @@ public class DBConnection {
         int LUC= Integer.parseInt(rs.getString("LUC"));
         int level= Integer.parseInt(rs.getString("Level"));
         int skill_point= Integer.parseInt(rs.getString("Skill Point"));
-
-        result = new Status(PID, HP, MAX_HP, MP, MAX_MP, STR, MG, AGI,  LUC, level, skill_point);
+        int state = Integer.parseInt(rs.getString("State"));
+        result = new Status(PID, HP, MAX_HP, MP, MAX_MP, STR, MG, AGI,  LUC, level, skill_point,state);
       }
 //      System.out.println(result);
 

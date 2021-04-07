@@ -1,4 +1,4 @@
-package DBS;
+package Type;
 
 public class Status {
 
@@ -13,8 +13,11 @@ public class Status {
 	public int LUC;
 	public int Level;
 	public int Skill_Point;
+	public int State;
+	public Status(){
 
-	public Status(int playID, int HP, int MAX_HP, int MP, int MAX_MP, int STR, int MG, int AGI, int LUC, int level, int skill_point) {
+	}
+	public Status(int playID, int HP, int MAX_HP, int MP, int MAX_MP, int STR, int MG, int AGI, int LUC, int level, int skill_point, int state) {
 		this.PlayID = playID;
 		this.HP = HP;
 		this.MAX_HP = MAX_HP;
@@ -26,5 +29,6 @@ public class Status {
 		this.LUC = LUC;
 		this.Level = level;
 		this.Skill_Point = skill_point;
+		this.State = state;
 	}
 }
