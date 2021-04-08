@@ -15,6 +15,7 @@ import java.net.Socket;
 public class UserSocket extends Thread{
   int           SocketID;
   int           PlayerID = -1;
+  String        name = null;
   Socket        socket;
   InputStream   in;
   OutputStream  out;
@@ -42,14 +43,27 @@ public class UserSocket extends Thread{
         //should login First
         //to connect database and get information of player
         if (data.protocol == ProtocolID.LOGIN){
+          System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
           //have to return PID to UserSocket
           PlayerID = Login.login(out,data.data);
+//          name = Login.get_name(PlayerID);
         } else if (data.protocol == ProtocolID.REGISTER){
           System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
+          PlayerID = Login.register(out,data.data);
+//          name = Login.get_name(PlayerID);
         } else {
           System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
         }
       }while(PlayerID == -1);
+
+//      while(name == null){  //set name
+//        in.read(buf);
+//        data = ProtocolTool.ProtocolTrim(buf);
+//        if (Login.set_name(out,PlayerID,data.data)){
+//          System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
+//        }
+//      }
+
 
       //read client action
       while (true) {
