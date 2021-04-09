@@ -19,7 +19,7 @@ public class UserSocket extends Thread{
   Socket        socket;
   InputStream   in;
   OutputStream  out;
-  Status Status = new Status();
+  Status status = new Status();
 
   byte[]        buf = new byte[1000];
 
@@ -73,7 +73,7 @@ public class UserSocket extends Thread{
         System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
         switch (data.protocol) {
           case ProtocolID.LOGIN_LOCATION:
-            LoginLocation.Login_Location(data.data,Status);
+            LoginLocation.Login_Location(data.data,status);
             break;
           case ProtocolID.MOVE:
             Move.move(PlayerID, data.data);

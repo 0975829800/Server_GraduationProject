@@ -9,7 +9,7 @@ public class test {
 //      System.out.println(Arrays.toString(c.getAccountInform("2")));
       try {
 //        Thread.sleep(7000);
-//        System.out.println(con.register("4568","zzzz","e04"));
+        System.out.println(con.register("4568","zzzz","e04"));
 //        System.out.println(con.login("456789","zzzzzz"));
 //        System.out.println(con.setName(31240985,"????"));
 

@@ -119,8 +119,19 @@ public class DBConnection {
         sql = "INSERT INTO `account` (`PlayID`, `Account`, `Password`) VALUES ('"+ PID + "', '"+ account + "', '"+Encryption.encryption(password) + "')";
         System.out.println(sql);
 
-        if(statement.executeUpdate(sql) > 0)
-          System.out.println("register success");
+        if(statement.executeUpdate(sql) > 0){
+          //initialize status
+          if(this.addStatus(PID,100,100,100,100,1,1,1,1,1,0,0)){
+            System.out.println("register success");
+          }
+          else{
+            System.out.println("register fail");
+            sql = "DELETE FROM `player` WHERE `player`.`PlayID` = '"+PID+"'"; //if insert account fail, del player too
+            System.out.println(sql);
+            statement.executeUpdate(sql);
+            PID = -1;
+          }
+        }
         else{
           System.out.println("register fail");
           sql = "DELETE FROM `player` WHERE `player`.`PlayID` = '"+PID+"'"; //if insert account fail, del player too
@@ -350,7 +361,6 @@ public class DBConnection {
   }
 
 
-
   public Status getStatus(int PID) throws SQLException {
     Status result = null;
     if(con != null && !con.isClosed()){
@@ -386,7 +396,6 @@ public class DBConnection {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
         String sql = "INSERT INTO `player status` (`PlayID`, `HP`, `MAX HP`, `MP`, `MAX MP`, `STR`, `MG`, `AGI`, `LUC`, `Level`, `Skill Point`,`State`) VALUES ('"+playID+"', '"+HP+"', '"+MAX_HP+"', '"+MP+"', '"+MAX_MP+"', '"+STR+"', '"+MG+"', '"+AGI+"', '"+LUC+"', '"+Level+"', '"+skill_point+"',"+state+");";
-        //insert new account
         System.out.println(sql);
 
         return statement.executeUpdate(sql) > 0;
