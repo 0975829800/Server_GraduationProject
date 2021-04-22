@@ -1,6 +1,7 @@
 package Action;
 
 import DBS.DBConnection;
+import Tools.ToCSharpTool;
 import Type.Status;
 
 import java.io.OutputStream;
@@ -21,7 +22,7 @@ public class Login {
       int get = con.login(account,password);
       if (get >= 0){
         System.out.println(get + " login");
-        ByteBuffer.wrap(buf).putInt(get);
+        buf = ToCSharpTool.ToCSharp(get);
         out.write(buf);
         return get;
       }
@@ -48,7 +49,7 @@ public class Login {
       int get = con.register(account,password,name);
       if (get >= 0){
         System.out.println(get + " register");
-        ByteBuffer.wrap(buf).putInt(get);
+        buf = ToCSharpTool.ToCSharp(get);
         out.write(buf);
         return get;
       }
@@ -96,7 +97,15 @@ public class Login {
 //    }
 //    return null;
 //  }
-
+  public static Status getStatus(int PID){
+    try {
+      DBConnection con = new DBConnection();
+      return con.getStatus(PID);
+    }catch (Exception e){
+      System.err.println(e);
+    }
+    return null;
+  }
 
   public static void sendStatus(OutputStream out,int PID){
     try {

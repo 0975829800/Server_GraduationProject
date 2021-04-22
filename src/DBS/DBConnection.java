@@ -64,7 +64,7 @@ public class DBConnection {
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
-        String sql = "select * from account where Account = " + account;
+        String sql = "select * from account where Account = '" + account+ "'";
         System.out.println(sql);
         ResultSet rs = statement.executeQuery(sql);
         password = Encryption.encryption(password);

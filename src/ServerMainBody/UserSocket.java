@@ -19,7 +19,7 @@ public class UserSocket extends Thread{
   Socket        socket;
   InputStream   in;
   OutputStream  out;
-  Status status = new Status();
+  Status status;
 
   byte[]        buf = new byte[1000];
 
@@ -55,7 +55,7 @@ public class UserSocket extends Thread{
           System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
         }
       }while(PlayerID == -1);
-
+      status = Login.getStatus(PlayerID);
       Login.sendStatus(out,PlayerID);
 
 
