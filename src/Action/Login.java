@@ -1,13 +1,13 @@
 package Action;
 
 import DBS.DBConnection;
+import Type.Status;
 
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.sql.SQLException;
 
 public class Login {
-
   public static int login (OutputStream out, byte[] data) throws SQLException{
     try {
       DBConnection con = new DBConnection();
@@ -97,4 +97,15 @@ public class Login {
 //    return null;
 //  }
 
+
+  public static void sendStatus(OutputStream out,int PID){
+    try {
+      DBConnection con = new DBConnection();
+      Status status = con.getStatus(PID);
+      byte[] buf = status.getByte();
+      out.write(buf);
+    }catch (Exception e){
+      System.err.println(e);
+    }
+  }
 }

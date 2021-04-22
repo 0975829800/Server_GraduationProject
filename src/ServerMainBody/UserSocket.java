@@ -56,13 +56,7 @@ public class UserSocket extends Thread{
         }
       }while(PlayerID == -1);
 
-//      while(name == null){  //set name
-//        in.read(buf);
-//        data = ProtocolTool.ProtocolTrim(buf);
-//        if (Login.set_name(out,PlayerID,data.data)){
-//          System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
-//        }
-//      }
+      Login.sendStatus(out,PlayerID);
 
 
       //read client action

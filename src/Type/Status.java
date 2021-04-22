@@ -1,7 +1,9 @@
 package Type;
 
+import Tools.ToCSharpTool;
+
 public class Status {
-  public static final int SendSize = 0;
+  public static final int SendSize = 48;
 
   public int PlayID;
   public int HP;
@@ -32,5 +34,34 @@ public class Status {
   	this.Level = level;
   	this.Skill_Point = skill_point;
   	this.State = state;
+  }
+  public byte[] getByte(){
+    byte[] temp;
+    byte[] ans  = new byte[SendSize];
+    temp = ToCSharpTool.ToCSharp(PlayID);
+    System.arraycopy(temp,0,ans,0,4);
+    temp = ToCSharpTool.ToCSharp(HP);
+    System.arraycopy(temp,0,ans,4,4);
+    temp = ToCSharpTool.ToCSharp(MAX_HP);
+    System.arraycopy(temp,0,ans,8,4);
+    temp = ToCSharpTool.ToCSharp(MP);
+    System.arraycopy(temp,0,ans,12,4);
+    temp = ToCSharpTool.ToCSharp(MAX_MP);
+    System.arraycopy(temp,0,ans,16,4);
+    temp = ToCSharpTool.ToCSharp(STR);
+    System.arraycopy(temp,0,ans,20,4);
+    temp = ToCSharpTool.ToCSharp(MG);
+    System.arraycopy(temp,0,ans,24,4);
+    temp = ToCSharpTool.ToCSharp(AGI);
+    System.arraycopy(temp,0,ans,28,4);
+    temp = ToCSharpTool.ToCSharp(LUC);
+    System.arraycopy(temp,0,ans,32,4);
+    temp = ToCSharpTool.ToCSharp(Level);
+    System.arraycopy(temp,0,ans,36,4);
+    temp = ToCSharpTool.ToCSharp(Skill_Point);
+    System.arraycopy(temp,0,ans,40,4);
+    temp = ToCSharpTool.ToCSharp(State);
+    System.arraycopy(temp,0,ans,44,4);
+    return ans;
   }
 }
