@@ -71,6 +71,7 @@ public class UserSocket extends Thread{
         in.read(buf);
         data = ProtocolTool.ProtocolTrim(buf);
         System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
+
         switch (data.protocol) {
           case ProtocolID.LOGIN_LOCATION:
             LoginLocation.Login_Location(data.data,status);
