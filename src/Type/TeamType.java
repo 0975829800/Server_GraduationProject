@@ -2,6 +2,7 @@ package Type;
 
 public class TeamType {
   int[] PlayerID;
+  Boolean[] online;
   int TeamID;
   String TeamName;
 

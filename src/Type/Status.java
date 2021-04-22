@@ -1,6 +1,7 @@
 package Type;
 
 public class Status {
+  public static final int SendSize = 0;
 
   public int PlayID;
   public int HP;
@@ -14,6 +15,7 @@ public class Status {
   public int Level;
   public int Skill_Point;
   public int State;
+
   public Status(){
 
   }
