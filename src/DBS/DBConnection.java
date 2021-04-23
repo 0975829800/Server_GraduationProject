@@ -1,6 +1,6 @@
 package DBS;
 
-import Type.Status;
+import Type.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -210,8 +210,8 @@ public class DBConnection {
 
 
 
-  public ArrayList <Equipment_bag> getEquipment_bag(int PID)throws SQLException {
-    ArrayList <Equipment_bag> result = new ArrayList<>();
+  public ArrayList <EquipmentBoxType> getEquipment_bag(int PID)throws SQLException {
+    ArrayList <EquipmentBoxType> result = new ArrayList<>();
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
       String sql = "SELECT * FROM `equipment bag` WHERE PlayerID = " + PID;
@@ -226,7 +226,7 @@ public class DBConnection {
         int Equipping = Integer.parseInt(rs.getString("Equipping"));
         int Skill_ID_1 = Integer.parseInt(rs.getString("Skill ID 1"));
         int Skill_ID_2 = Integer.parseInt(rs.getString("Skill ID 2"));
-        result.add(new Equipment_bag(PID,Equipment_ID,Rarity,Part,Level,Equipping,Skill_ID_1,Skill_ID_2));
+        result.add(new EquipmentBoxType(PID,Equipment_ID,Rarity,Part,Level,Equipping,Skill_ID_1,Skill_ID_2));
       }
 //     System.out.println(result);
       rs.close();

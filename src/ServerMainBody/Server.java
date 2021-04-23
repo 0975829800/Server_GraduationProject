@@ -17,6 +17,8 @@ public class Server {
   public final static int ServerPort = 8001;
   public final static int ActionPort = 8002;
   public final static int MapPort    = 8003;
+
+
   public static boolean   debug = false; //debug時改成true
 
   public static void main(String[] args)

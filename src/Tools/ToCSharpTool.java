@@ -21,6 +21,7 @@ public class ToCSharpTool {
   public static byte[] ToCSharp(String data){
     return data.getBytes();
   }
+
   public static byte[] ToCSharp(double data){
     byte[] trans = new byte[8];
     byte tmp;
@@ -32,4 +33,5 @@ public class ToCSharpTool {
     }
     return trans;
   }
+
 }

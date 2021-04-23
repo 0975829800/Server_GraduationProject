@@ -6,8 +6,8 @@ public class ItemType{
   public static final int SendSize = 20;
 
   public int PlayerID;
-  public int ItemBox_ID;
-  public int Item_ID;
+  public int ItemBox_ID;  //每個Player的道具箱排列順序(以這個來限制道具多寡
+  public int Item_ID;     //道具編號
   public int Rarity;
   public int Amount;
 
@@ -21,6 +21,7 @@ public class ItemType{
   public  ItemType() {
 
   }
+
   public byte[] getByte(){
     byte[] temp;
     byte[] ans  = new byte[SendSize];

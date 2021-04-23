@@ -1,5 +1,6 @@
 package Action;
 
+import ID.ActionID;
 import ID.TypeID;
 import ServerMainBody.Server;
 import Tools.ByteArrayTransform;
@@ -18,6 +19,7 @@ public class Move {
         act.MoverMapID = m.MapObjectID;
       }
     }
+    act.ActionID = ActionID.MOVE;
     act.MoverID = PID;
     act.TargetMapID = 0;
     act.TargetID = 0;

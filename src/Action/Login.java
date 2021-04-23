@@ -12,7 +12,7 @@ public class Login {
   public static int login (OutputStream out, byte[] data) throws SQLException{
     try {
       DBConnection con = new DBConnection();
-      byte[] buf = new byte[4];
+      byte[] buf;
 
       String info = new String(data);
       String account = info.substring(0,9).trim();
@@ -27,7 +27,7 @@ public class Login {
         return get;
       }
       else{
-        ByteBuffer.wrap(buf).putInt(get);
+        buf = ToCSharpTool.ToCSharp(get);
         out.write(buf);
       }
     }catch (Exception e){
@@ -39,7 +39,7 @@ public class Login {
   public static int register (OutputStream out, byte[] data) throws SQLException{
     try {
       DBConnection con = new DBConnection();
-      byte[] buf = new byte[4];
+      byte[] buf;
 
       String info = new String(data);
       String account = info.substring(0,9).trim();
@@ -54,7 +54,7 @@ public class Login {
         return get;
       }
       else{
-        ByteBuffer.wrap(buf).putInt(get);
+        buf = ToCSharpTool.ToCSharp(get);
         out.write(buf);
       }
     }catch (Exception e){
