@@ -18,8 +18,9 @@ public class EquipmentBoxType {
   public EquipmentBoxType(){
 
   }
-  public EquipmentBoxType(int PlayerID, int Equipment_ID, int Rarity, int Part, int Level, int Equipping, int Skill_ID_1, int Skill_ID_2){
+  public EquipmentBoxType(int PlayerID,int EquipmentBoxID, int Equipment_ID, int Rarity, int Part, int Level, int Equipping, int Skill_ID_1, int Skill_ID_2){
     this.PlayerID = PlayerID;
+    this.EquipmentBox_ID = EquipmentBoxID;
     this.Equipment_ID = Equipment_ID;
     this.Rarity = Rarity;
     this.Part = Part;

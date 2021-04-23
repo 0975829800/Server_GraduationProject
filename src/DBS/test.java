@@ -9,21 +9,21 @@ public class test {
 //      System.out.println(Arrays.toString(c.getAccountInform("2")));
       try {
 //        Thread.sleep(7000);
-        System.out.println(con.register("4568","zzzz","e04"));
+//        System.out.println(con.register("4568","zzzz","e04"));
 //        System.out.println(con.login("456789","zzzzzz"));
 //        System.out.println(con.setName(31240985,"????"));
 
 //        System.out.println(con.setTeam(31240985,11));
 
-//        System.out.println(con.addEquipment_bag(31240985,1,1,1,1,0,0,0));
-//        System.out.println(con.getEquipment_bag(31240985).get(0).PlayerID);
-//        System.out.println(con.updateEquipment_bag(146937808,1,1,1,1,1,1,1));
-//        System.out.println(con.delEquipment_bag(146937808,1));
+//        System.out.println(con.addEquipment_bag(663828321,1,1,1,1,1,0,0,0));
+//        System.out.println(con.getEquipment_bag(663828321).get(0).EquipmentBox_ID);
+//        System.out.println(con.updateEquipment_bag(663828321,1,3,4,5,1,1,1,1));
+//        System.out.println(con.delEquipment_bag(663828321,1));
 
-//        System.out.println(con.addItem_bag(31240985,1,1,1));
-//        System.out.println(con.getItem_bag(31240985).get(0).PlayerID);
-//        System.out.println(con.updateItem_bag(31240985,2,1,1));
-//        System.out.println(con.delItem_bag(31240985,2));
+//        System.out.println(con.addItem_bag(663828321,1,2,3,4));
+//        System.out.println(con.getItem_bag(663828321).get(0).PlayerID);
+//        System.out.println(con.updateItem_bag(663828321,1,4,5,3));
+//        System.out.println(con.delItem_bag(663828321,1));
 
 //        System.out.println(con.addFriend(31240985,2));  //one way , add*2 for two account addFriend
 //        System.out.println(con.delFriend(31240985,2));
