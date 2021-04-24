@@ -134,6 +134,7 @@ public class Login {
   public static void sendItem(OutputStream out, int PID){
     ArrayList<ItemType> item = getItem(PID);
     byte[] send = new byte[ItemType.SendSize * item.size()];
+    if(item.size() == 0) send = new byte[1];
     for(int i = 0; i < item.size(); i++){
       byte[] temp = item.get(i).getByte();
       System.arraycopy(temp,0,send,i*ItemType.SendSize,ItemType.SendSize);
@@ -158,6 +159,7 @@ public class Login {
   public static void sendEquipment(OutputStream out, int PID){
     ArrayList<EquipmentBoxType> Equipment = getEquipment(PID);
     byte[] send = new byte[EquipmentBoxType.SendSize * Equipment.size()];
+    if(Equipment.size() == 0) send = new byte[1];
     for(int i = 0; i < Equipment.size(); i++){
       byte[] temp = Equipment.get(i).getByte();
       System.arraycopy(temp,0,send,i*EquipmentBoxType.SendSize, EquipmentBoxType.SendSize);
