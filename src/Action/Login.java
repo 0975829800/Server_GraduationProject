@@ -2,11 +2,14 @@ package Action;
 
 import DBS.DBConnection;
 import Tools.ToCSharpTool;
+import Type.EquipmentBoxType;
+import Type.ItemType;
 import Type.Status;
 
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Login {
   public static int login (OutputStream out, byte[] data) throws SQLException{
@@ -104,7 +107,7 @@ public class Login {
     }catch (Exception e){
       System.err.println(e);
     }
-    return null;
+    return new Status();
   }
 
   public static void sendStatus(OutputStream out,int PID){
@@ -117,4 +120,59 @@ public class Login {
       System.err.println(e);
     }
   }
+
+  public static ArrayList<ItemType> getItem(int PID){
+    try{
+      DBConnection con = new DBConnection();
+      return con.getItem_bag(PID);
+    }catch (Exception e){
+      System.err.println(e);
+    }
+    return new ArrayList<ItemType>();
+  }
+
+  public static void sendItem(OutputStream out, int PID){
+    ArrayList<ItemType> item = getItem(PID);
+    byte[] send = new byte[ItemType.SendSize * item.size()];
+    for(int i = 0; i < item.size(); i++){
+      byte[] temp = item.get(i).getByte();
+      System.arraycopy(temp,0,send,i*ItemType.SendSize,ItemType.SendSize);
+    }
+    try {
+      out.write(send);
+    }catch (Exception e){
+      System.err.println(e);
+    }
+  }
+
+  public static ArrayList<EquipmentBoxType> getEquipment(int PID){
+    try{
+      DBConnection con = new DBConnection();
+      return con.getEquipment_bag(PID);
+    }catch (Exception e){
+      System.err.println(e);
+    }
+    return new ArrayList<EquipmentBoxType>();
+  }
+
+  public static void sendEquipment(OutputStream out, int PID){
+    ArrayList<EquipmentBoxType> Equipment = getEquipment(PID);
+    byte[] send = new byte[EquipmentBoxType.SendSize * Equipment.size()];
+    for(int i = 0; i < Equipment.size(); i++){
+      byte[] temp = Equipment.get(i).getByte();
+      System.arraycopy(temp,0,send,i*EquipmentBoxType.SendSize, EquipmentBoxType.SendSize);
+    }
+    try {
+      out.write(send);
+    }catch (Exception e){
+      System.err.println(e);
+    }
+  }
+
+  public static void Login_Send(OutputStream out, int PID){
+    sendStatus(out,PID);
+    sendItem(out,PID);
+    sendEquipment(out,PID);
+  }
+
 }

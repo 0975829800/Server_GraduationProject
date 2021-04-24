@@ -1,16 +1,20 @@
 package ServerMainBody;
 
+import Action.Equip;
 import Action.Login;
 import Action.LoginLocation;
 import Action.Move;
 import ID.ProtocolID;
 import Tools.DisconnectTool;
 import Tools.ProtocolTool;
+import Type.EquipmentBoxType;
+import Type.ItemType;
 import Type.Status;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class UserSocket extends Thread{
   int           SocketID;
@@ -19,7 +23,10 @@ public class UserSocket extends Thread{
   Socket        socket;
   InputStream   in;
   OutputStream  out;
+
   Status status;
+  ArrayList<ItemType> item;
+  ArrayList<EquipmentBoxType> equipment;
 
   byte[]        buf = new byte[1000];
 
@@ -55,9 +62,10 @@ public class UserSocket extends Thread{
           System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
         }
       }while(PlayerID == -1);
-      status = Login.getStatus(PlayerID);
-      Login.sendStatus(out,PlayerID);
-
+      status    = Login.getStatus(PlayerID);
+      item      = Login.getItem(PlayerID);
+      equipment = Login.getEquipment(PlayerID);
+      Login.Login_Send(out,PlayerID);
 
       //read client action
       while (true) {
