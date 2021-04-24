@@ -121,7 +121,7 @@ public class DBConnection {
 
         if(statement.executeUpdate(sql) > 0){
           //initialize status
-          if(this.addStatus(PID,100,100,100,100,1,1,1,1,1,0,0)){
+          if(this.addStatus(PID,100,100,100,100,1,1,1,1,1,0,0,0)){
             System.out.println("register success");
           }
           else{
@@ -381,9 +381,10 @@ public class DBConnection {
         int AGI= Integer.parseInt(rs.getString("AGI"));
         int LUC= Integer.parseInt(rs.getString("LUC"));
         int level= Integer.parseInt(rs.getString("Level"));
+        int coin= Integer.parseInt(rs.getString("Coin"));
         int skill_point= Integer.parseInt(rs.getString("Skill Point"));
         int state = Integer.parseInt(rs.getString("State"));
-        result = new Status(PID, HP, MAX_HP, MP, MAX_MP, STR, MG, AGI,  LUC, level, skill_point,state);
+        result = new Status(PID, HP, MAX_HP, MP, MAX_MP, STR, MG, AGI,  LUC, level,coin, skill_point,state);
       }
 //      System.out.println(result);
 
@@ -393,11 +394,11 @@ public class DBConnection {
     return null;
   }
 
-  public boolean addStatus(int playID, int HP, int MAX_HP, int MP, int MAX_MP, int STR, int MG, int AGI, int LUC, int Level, int skill_point,int state)  {  //throws SQLException or encryption's exception
+  public boolean addStatus(int playID, int HP, int MAX_HP, int MP, int MAX_MP, int STR, int MG, int AGI, int LUC, int Level,int coin, int skill_point,int state)  {  //throws SQLException or encryption's exception
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
-        String sql = "INSERT INTO `player status` (`PlayID`, `HP`, `MAX HP`, `MP`, `MAX MP`, `STR`, `MG`, `AGI`, `LUC`, `Level`, `Skill Point`,`State`) VALUES ('"+playID+"', '"+HP+"', '"+MAX_HP+"', '"+MP+"', '"+MAX_MP+"', '"+STR+"', '"+MG+"', '"+AGI+"', '"+LUC+"', '"+Level+"', '"+skill_point+"',"+state+");";
+        String sql = "INSERT INTO `player status` (`PlayID`, `HP`, `MAX HP`, `MP`, `MAX MP`, `STR`, `MG`, `AGI`, `LUC`, `Level`, `Coin`, `Skill Point`,`State`) VALUES ('"+playID+"', '"+HP+"', '"+MAX_HP+"', '"+MP+"', '"+MAX_MP+"', '"+STR+"', '"+MG+"', '"+AGI+"', '"+LUC+"', '"+Level+"','"+coin+"', '"+skill_point+"',"+state+");";
         System.out.println(sql);
 
         return statement.executeUpdate(sql) > 0;
