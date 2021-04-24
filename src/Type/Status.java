@@ -18,7 +18,6 @@ public class Status {
   public int coin;
   public int Skill_Point;
   public int State;
-  public int coin;
 
   public Status(){
 

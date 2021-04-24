@@ -1,6 +1,7 @@
 package Action;
 
 import DBS.DBConnection;
+import ServerMainBody.Server;
 import Tools.ToCSharpTool;
 import Type.EquipmentBoxType;
 import Type.ItemType;
@@ -12,6 +13,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Login {
+
+  public static Boolean isOnline(int PID){
+    for(int i : Server.online){
+      if(i == PID) return true;
+    }
+    return false;
+  }
+
   public static int login (OutputStream out, byte[] data) throws SQLException{
     try {
       DBConnection con = new DBConnection();
@@ -23,11 +32,15 @@ public class Login {
 
       System.out.println(account +"."+ password);
       int get = con.login(account,password);
-      if (get >= 0){
+      if (get >= 0 && !isOnline(get)){
         System.out.println(get + " login");
         buf = ToCSharpTool.ToCSharp(get);
         out.write(buf);
         return get;
+      }
+      else if(isOnline(get)){
+        buf = ToCSharpTool.ToCSharp(-2);
+        out.write(buf);
       }
       else{
         buf = ToCSharpTool.ToCSharp(get);

@@ -53,15 +53,17 @@ public class UserSocket extends Thread{
           System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
           //have to return PID to UserSocket
           PlayerID = Login.login(out,data.data);
+          Server.online.add(PlayerID);
 //          name = Login.get_name(PlayerID);
         } else if (data.protocol == ProtocolID.REGISTER){
           System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
           PlayerID = Login.register(out,data.data);
+          Server.online.add(PlayerID);
 //          name = Login.get_name(PlayerID);
         } else {
           System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
         }
-      }while(PlayerID == -1);
+      }while(PlayerID < 0);
       status    = Login.getStatus(PlayerID);
       item      = Login.getItem(PlayerID);
       equipment = Login.getEquipment(PlayerID);
