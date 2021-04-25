@@ -1,4 +1,4 @@
-package DBS;
+package Type;
 
 public class Progress {
   public int PlayID;

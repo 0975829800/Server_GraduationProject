@@ -1,14 +1,12 @@
 package ServerMainBody;
 
-import Action.Equip;
-import Action.Login;
-import Action.LoginLocation;
-import Action.Move;
+import Action.*;
 import ID.ProtocolID;
 import Tools.DisconnectTool;
 import Tools.ProtocolTool;
 import Type.EquipmentBoxType;
 import Type.ItemType;
+import Type.PlayerInformation;
 import Type.Status;
 
 import java.io.InputStream;
@@ -24,9 +22,7 @@ public class UserSocket extends Thread{
   InputStream   in;
   OutputStream  out;
 
-  Status status;
-  ArrayList<ItemType> item;
-  ArrayList<EquipmentBoxType> equipment;
+  PlayerInformation playerInformation = new PlayerInformation();
 
   byte[]        buf = new byte[1000];
 
@@ -64,9 +60,10 @@ public class UserSocket extends Thread{
           System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
         }
       }while(PlayerID < 0);
-      status    = Login.getStatus(PlayerID);
-      item      = Login.getItem(PlayerID);
-      equipment = Login.getEquipment(PlayerID);
+      playerInformation.PID = PlayerID;
+      playerInformation.status = Login.getStatus(PlayerID);
+      playerInformation.item      = Login.getItem(PlayerID);
+      playerInformation.equipment = Login.getEquipment(PlayerID);
       Login.Login_Send(out,PlayerID);
 
       //read client action
@@ -78,10 +75,13 @@ public class UserSocket extends Thread{
 
         switch (data.protocol) {
           case ProtocolID.LOGIN_LOCATION:
-            LoginLocation.Login_Location(data.data,status);
+            LoginLocation.Login_Location(data.data,playerInformation.status);
             break;
           case ProtocolID.MOVE:
             Move.move(PlayerID, data.data);
+            break;
+          case ProtocolID.BUY_ITEM:
+            BuyItem.BuyItem(out,playerInformation,data.data);
             break;
         }
       }
@@ -90,13 +90,13 @@ public class UserSocket extends Thread{
       if (Server.debug){
         System.err.println(e);
       }
-      DisconnectTool.PlayerDisconnect(SocketID,PlayerID);
       //顯示離開ID
       if (PlayerID == -1){
         System.out.printf("Socket ID: %06d out\n", SocketID);
-      } else {
+      } else {  //玩家退出連線
         System.out.printf("Socket ID: %06d out\t", SocketID);
         System.out.printf("Player ID: %06d out\n", PlayerID);
+        DisconnectTool.PlayerDisconnect(SocketID,PlayerID, playerInformation);
       }
     }
   }

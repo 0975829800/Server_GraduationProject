@@ -267,6 +267,15 @@ public class DBConnection {
     return false;
   }
 
+  public boolean delEquipment_bag(int PlayerID)throws SQLException {
+    if (con != null && !con.isClosed()) {
+      Statement statement = con.createStatement();
+      String sql = "DELETE FROM `equipment bag` WHERE `equipment bag`.`PlayerID` = "+PlayerID+"";
+      System.out.println(sql);
+      return statement.executeUpdate(sql) > 0;
+    }
+    return false;
+  }
 
   public ArrayList <ItemType> getItem_bag(int PID)throws SQLException {
     ArrayList <ItemType> result = new ArrayList<>();
@@ -319,7 +328,15 @@ public class DBConnection {
     }
     return false;
   }
-
+  public boolean delItem_bag(int PlayerID)throws SQLException {
+    if (con != null && !con.isClosed()) {
+      Statement statement = con.createStatement();
+      String sql = "DELETE FROM `item bag` WHERE `item bag`.`PlayID` = "+PlayerID+"";
+      System.out.println(sql);
+      return statement.executeUpdate(sql) > 0;
+    }
+    return false;
+  }
 
   public ArrayList<Integer> getFriend(int PID) throws SQLException {
     ArrayList<Integer> result = new ArrayList<Integer>();
@@ -425,12 +442,12 @@ public class DBConnection {
     return false;
   }
 
-  public boolean updateStatus(int playID, int HP, int MAX_HP, int MP, int MAX_MP, int STR, int MG, int AGI, int LUC, int Level, int skill_point,int state)  {  //throws SQLException or encryption's exception
+  public boolean updateStatus(int playID, int HP, int MAX_HP, int MP, int MAX_MP, int STR, int MG, int AGI, int LUC, int Level, int skill_point,int state,int Coin)  {  //throws SQLException or encryption's exception
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
         String sql = "UPDATE `player status` SET `HP` = '"+HP+"', `MAX HP` = '"+MAX_HP+"', `MP` = '"+MP+"', `MAX MP` = '"+MAX_MP+"', `STR` = '"+STR+"'," +
-                " `MG` = '"+MG+"', `AGI` = '"+AGI+"', `LUC` = '"+LUC+"', `Level` = '"+Level+"', `Skill Point` = '"+skill_point+"', `State` = '"+state+"' WHERE `player status`.`PlayID` = "+playID+";";
+                " `MG` = '"+MG+"', `AGI` = '"+AGI+"', `LUC` = '"+LUC+"', `Level` = '"+Level+"', `Skill Point` = '"+skill_point+"', `State` = '"+state+"', `Coin` = '"+Coin+"' WHERE `player status`.`PlayID` = "+playID+";";
         //insert new account
         System.out.println(sql);
 

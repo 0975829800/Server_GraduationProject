@@ -1,5 +1,6 @@
 package ServerMainBody;
 
+import ID.ShopID;
 import ServerMainBody.UserSocket;
 import Type.*;
 import java.net.ServerSocket;
@@ -29,6 +30,8 @@ public class Server {
     ServerSocket  mapSocket;
     Socket        ss,as,ms;
     int ID = 0;
+
+    ShopID.SetShop();
 
     try {
       serverSocket = new ServerSocket(ServerPort);
