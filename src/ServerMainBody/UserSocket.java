@@ -83,6 +83,9 @@ public class UserSocket extends Thread{
           case ProtocolID.BUY_ITEM:
             BuyItem.BuyItem(out,playerInformation,data.data);
             break;
+          case ProtocolID.BUY_EQUIPMENT:
+            BuyEquipment.BuyEquipment(out,playerInformation,data.data);
+            break;
         }
       }
     }

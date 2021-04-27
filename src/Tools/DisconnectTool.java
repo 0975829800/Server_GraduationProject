@@ -46,9 +46,9 @@ public class DisconnectTool {
       con.delEquipment_bag(PID);
       for(EquipmentBoxType e : equipments){
         if(e.Equipping)
-          con.updateEquipment_bag(e.PlayerID,e.EquipmentBox_ID,e.Equipment_ID,e.Rarity,e.Part,e.Level,1,e.Skill_ID_1,e.Skill_ID_2);
+          con.addEquipment_bag(e.PlayerID,e.EquipmentBox_ID,e.Equipment_ID,e.Rarity,e.Part,e.Level,1,e.Skill_ID_1,e.Skill_ID_2);
         else
-          con.updateEquipment_bag(e.PlayerID,e.EquipmentBox_ID,e.Equipment_ID,e.Rarity,e.Part,e.Level,0,e.Skill_ID_1,e.Skill_ID_2);
+          con.addEquipment_bag(e.PlayerID,e.EquipmentBox_ID,e.Equipment_ID,e.Rarity,e.Part,e.Level,0,e.Skill_ID_1,e.Skill_ID_2);
       }
     }catch (Exception e){
       System.err.println(e);

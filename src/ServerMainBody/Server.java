@@ -31,6 +31,7 @@ public class Server {
     int ID = 0;
 
     ShopID.SetItemShop();
+    ShopID.SetEquipmentShop();
 
     try {
       serverSocket = new ServerSocket(ServerPort);
