@@ -36,9 +36,6 @@ public class BuyItem {
             hasSame = true;
             break;
           }
-          else {
-            i.Amount+=amount;
-          }
           hasSame = true;
         }
       }
