@@ -1,7 +1,6 @@
 package ServerMainBody;
 
 import ID.ShopID;
-import ServerMainBody.UserSocket;
 import Type.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -31,7 +30,8 @@ public class Server {
     Socket        ss,as,ms;
     int ID = 0;
 
-    ShopID.SetShop();
+    ShopID.SetItemShop();
+    ShopID.SetEquipmentShop();
 
     try {
       serverSocket = new ServerSocket(ServerPort);

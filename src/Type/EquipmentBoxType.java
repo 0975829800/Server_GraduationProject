@@ -30,7 +30,8 @@ public class EquipmentBoxType {
     if(Equipping == 0)  this.Equipping = false;
     else                this.Equipping = true;
   }
-  public EquipmentBoxType(int EquipmentBox_ID, int Equipment_ID, int Rarity, int Part, int Level, int Skill1, int Skill2){
+  public EquipmentBoxType(int PID,int EquipmentBox_ID, int Equipment_ID, int Rarity, int Part, int Level, int Skill1, int Skill2){
+    this.PlayerID = PID;
     this.EquipmentBox_ID = EquipmentBox_ID;
     this.Equipment_ID = Equipment_ID;
     this.Level = Level;

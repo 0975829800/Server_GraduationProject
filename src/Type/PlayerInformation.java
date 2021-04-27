@@ -23,4 +23,17 @@ public class PlayerInformation {
     }
     return -1;
   }
+
+  public int getEmptyEquipmentBoxIndex(){
+    boolean[] full = new boolean[50];
+    for(EquipmentBoxType i : equipment){
+      full[i.EquipmentBox_ID] = true;
+    }
+    for(int i = 0; i < 50; i++){
+      if(!full[i]){
+        return i;
+      }
+    }
+    return -1;
+  }
 }
