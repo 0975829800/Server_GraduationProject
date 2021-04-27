@@ -29,7 +29,7 @@ public class test {
 //        System.out.println(con.delFriend(31240985,2));
 //        System.out.println(con.getFriend(31240985));
 
-//        System.out.println(con.addStatus(31240985,1,2,3,4,5,6,7,8,9,10));
+//        System.out.println(con.addStatus(663828321,1,2,3,4,5,6,7,8,9,10,11,0));
 //        System.out.println(con.getStatus(31240985).MAX_MP);
 //        System.out.println(con.updateStatus(146937808,1,2,3,4,5,6,7,8,9,10,11));
 //        System.out.println(con.delStatus(146937808));

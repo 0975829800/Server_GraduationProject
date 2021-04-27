@@ -338,18 +338,20 @@ public class DBConnection {
     return false;
   }
 
-  public ArrayList<Integer> getFriend(int PID) throws SQLException {
-    ArrayList<Integer> result = new ArrayList<Integer>();
+  public ArrayList<FriendType> getFriend(int PID) throws SQLException {
+    ArrayList<FriendType> result = new ArrayList<FriendType>();
     if(con != null && !con.isClosed()){
       Statement statement = con.createStatement();
       String sql = "select * from friend where PlayID = " + PID;
       System.out.println(sql);
       ResultSet rs = statement.executeQuery(sql);
 
-      String FID=null;
+      int FID = -1;
+      int State = -1;
       while (rs.next()){
-        FID=rs.getString("Friend ID");
-        result.add(Integer.parseInt(FID));
+        FID= Integer.parseInt(rs.getString("Friend ID"));
+        State= Integer.parseInt(rs.getString("State"));
+        result.add(new FriendType(PID,FID,State));
       }
 //      System.out.println(result);
 
@@ -362,7 +364,7 @@ public class DBConnection {
   public boolean addFriend(int PID,int FID) throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
-      String sql = "INSERT INTO `friend` (`PlayID`, `Friend ID`) VALUES ('"+PID+"', '"+FID+"');";
+      String sql = "INSERT INTO `friend` (`PlayID`, `Friend ID`, `State`) VALUES ('"+PID+"', '"+FID+"', '"+0+"');";
       System.out.println(sql);
       return statement.executeUpdate(sql) > 0;
     }
