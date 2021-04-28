@@ -59,7 +59,7 @@ public class Login {
       String password = info.substring(10,19).trim();
       String name = info.substring(20,29).trim();
       System.out.println(account +"."+ password+'.'+name);
-      int get = DBConnection.register(account,password,name);
+      int get = con.register(account,password,name);
       if (get >= 0){
         System.out.println(get + " register");
         buf = ToCSharpTool.ToCSharp(get);
@@ -112,7 +112,8 @@ public class Login {
 //  }
   public static Status getStatus(int PID){
     try {
-      return DBConnection.getStatus(PID);
+      DBConnection con = new DBConnection();
+      return con.getStatus(PID);
     }catch (Exception e){
       System.err.println(e);
     }
@@ -121,7 +122,8 @@ public class Login {
 
   public static void sendStatus(OutputStream out,int PID){
     try {
-      Status status = DBConnection.getStatus(PID);
+      DBConnection con = new DBConnection();
+      Status status = con.getStatus(PID);
       byte[] buf = status.getByte();
       out.write(buf);
       out.flush();
@@ -132,7 +134,8 @@ public class Login {
 
   public static ArrayList<ItemType> getItem(int PID){
     try{
-      return DBConnection.getItem_bag(PID);
+      DBConnection con = new DBConnection();
+      return con.getItem_bag(PID);
     }catch (Exception e){
       System.err.println(e);
     }
@@ -157,7 +160,8 @@ public class Login {
 
   public static ArrayList<EquipmentBoxType> getEquipment(int PID){
     try{
-      return DBConnection.getEquipment_bag(PID);
+      DBConnection con = new DBConnection();
+      return con.getEquipment_bag(PID);
     }catch (Exception e){
       System.err.println(e);
     }

@@ -22,6 +22,8 @@ public class DBConnection {
     if(!con.isClosed()){
       System.out.println("Succeeded connecting to the Database!");
       connection = true;
+
+//      con.close();
     }
 
   }
@@ -31,7 +33,7 @@ public class DBConnection {
   }
 
 
-  public static String[] getAccountInform(int PID) throws SQLException {
+  public String[] getAccountInform(int PID) throws SQLException {
     String[] result = null;
     if(con != null && !con.isClosed()){
       Statement statement = con.createStatement();
@@ -87,7 +89,7 @@ public class DBConnection {
   }
 
 
-  public static int register(String account,String password,String name)  {  //throws SQLException or encryption's exception
+  public int register(String account,String password,String name)  {  //throws SQLException or encryption's exception
     int PID = -1;
     try {
       if(con != null && !con.isClosed()){
@@ -104,9 +106,9 @@ public class DBConnection {
 
 
         /*
-        * account.PID -> player.PID
-        * insert player data first
-        * */
+         * account.PID -> player.PID
+         * insert player data first
+         * */
         do {  //insert new player
           PID = (int) (Math.random()*1000000000)+1;
           sql = "INSERT INTO `player` (`PlayID`, `Name`) VALUES ('"+ PID + "','"+name+"')";
@@ -119,7 +121,7 @@ public class DBConnection {
 
         if(statement.executeUpdate(sql) > 0){
           //initialize status
-          if(addStatus(PID,100,100,100,100,1,1,1,1,1,0,0,0)){
+          if(this.addStatus(PID,100,100,100,100,1,1,1,1,1,0,0,0)){
             System.out.println("register success");
           }
           else{
@@ -147,7 +149,7 @@ public class DBConnection {
     return PID;
   }
 
-  public static String getName(int PID)  {  //throws SQLException or encryption's exception
+  public String getName(int PID)  {  //throws SQLException or encryption's exception
     String name = null;
     try {
       if(con != null && !con.isClosed()){
@@ -166,7 +168,7 @@ public class DBConnection {
     return null;
   }
 
-  public static boolean setName(int PID,String name)  {  //throws SQLException or encryption's exception
+  public boolean setName(int PID,String name)  {  //throws SQLException or encryption's exception
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
@@ -190,7 +192,7 @@ public class DBConnection {
   }
 
 
-  public static boolean setTeam(int PID,int TeamID)  {  //throws SQLException or encryption's exception
+  public boolean setTeam(int PID,int TeamID)  {  //throws SQLException or encryption's exception
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
@@ -208,7 +210,7 @@ public class DBConnection {
 
 
 
-  public static ArrayList <EquipmentBoxType> getEquipment_bag(int PID)throws SQLException {
+  public ArrayList <EquipmentBoxType> getEquipment_bag(int PID)throws SQLException {
     ArrayList <EquipmentBoxType> result = new ArrayList<>();
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
@@ -234,7 +236,7 @@ public class DBConnection {
     return null;
   }
 
-  public static boolean addEquipment_bag(int PlayerID,int EquipmentBoxID, int Equipment_ID, int Rarity, int Part, int Level, int Equipping, int Skill_ID_1, int Skill_ID_2)throws SQLException {
+  public boolean addEquipment_bag(int PlayerID,int EquipmentBoxID, int Equipment_ID, int Rarity, int Part, int Level, int Equipping, int Skill_ID_1, int Skill_ID_2)throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
       String sql = "INSERT INTO `equipment bag` (`PlayerID`,`EquipmentBoxID`, `Equipment ID`, `Rarity`, `Part`, `Level`, `Equipping`, `Skill ID 1`, `Skill ID 2`) VALUES" +
@@ -245,7 +247,7 @@ public class DBConnection {
     return false;
   }
 
-  public static boolean updateEquipment_bag(int PlayerID,int EquipmentBoxID, int Equipment_ID, int Rarity, int Part, int Level, int Equipping, int Skill_ID_1, int Skill_ID_2)throws SQLException {
+  public boolean updateEquipment_bag(int PlayerID,int EquipmentBoxID, int Equipment_ID, int Rarity, int Part, int Level, int Equipping, int Skill_ID_1, int Skill_ID_2)throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
       String sql = "UPDATE `equipment bag` SET `Equipment ID` = '"+Equipment_ID+"',`Rarity` = '"+Rarity+"', `Part` = '"+Part+"', `Level` = '"+Level+"', `Equipping` = '"+Equipping+"', `Skill ID 1` = '"+Skill_ID_1+"', `Skill ID 2` = '"+Skill_ID_2+"' WHERE `equipment bag`.`PlayerID` = "+PlayerID+" AND `equipment bag`.`EquipmentBoxID` = "+EquipmentBoxID+";";
@@ -255,7 +257,7 @@ public class DBConnection {
     return false;
   }
 
-  public static boolean delEquipment_bag(int PlayerID, int EquipmentBoxID)throws SQLException {
+  public boolean delEquipment_bag(int PlayerID, int EquipmentBoxID)throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
       String sql = "DELETE FROM `equipment bag` WHERE `equipment bag`.`PlayerID` = "+PlayerID+" AND `equipment bag`.`EquipmentBoxID` = "+EquipmentBoxID+"";
@@ -265,7 +267,7 @@ public class DBConnection {
     return false;
   }
 
-  public static boolean delEquipment_bag(int PlayerID)throws SQLException {
+  public boolean delEquipment_bag(int PlayerID)throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
       String sql = "DELETE FROM `equipment bag` WHERE `equipment bag`.`PlayerID` = "+PlayerID+"";
@@ -275,7 +277,7 @@ public class DBConnection {
     return false;
   }
 
-  public static ArrayList <ItemType> getItem_bag(int PID)throws SQLException {
+  public ArrayList <ItemType> getItem_bag(int PID)throws SQLException {
     ArrayList <ItemType> result = new ArrayList<>();
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
@@ -296,7 +298,7 @@ public class DBConnection {
     return null;
   }
 
-  public static boolean addItem_bag(int PlayerID,int ItemboxID, int ItemID, int Rarity, int Amount)throws SQLException {
+  public boolean addItem_bag(int PlayerID,int ItemboxID, int ItemID, int Rarity, int Amount)throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
       String sql = "INSERT INTO `item bag` (`PlayID`, `ItemID`, `Rarity`, `Amount`,`ItemboxID`) VALUES" +
@@ -307,7 +309,7 @@ public class DBConnection {
     return false;
   }
 
-  public static boolean updateItem_bag(int PlayerID,int ItemboxID, int ItemID, int Rarity, int Amount)throws SQLException {
+  public boolean updateItem_bag(int PlayerID,int ItemboxID, int ItemID, int Rarity, int Amount)throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
       String sql = "UPDATE `item bag` SET `ItemID` = '"+ItemID+"',`Rarity` = '"+Rarity+"', `Amount` = '"+Amount+"' WHERE `item bag`.`PlayID` = "+PlayerID+" AND `item bag`.`ItemboxID` = '"+ItemboxID+"';";
@@ -317,7 +319,7 @@ public class DBConnection {
     return false;
   }
 
-  public static boolean delItem_bag(int PlayerID, int ItemboxID)throws SQLException {
+  public boolean delItem_bag(int PlayerID, int ItemboxID)throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
       String sql = "DELETE FROM `item bag` WHERE `item bag`.`PlayID` = "+PlayerID+" AND `item bag`.`ItemboxID` = "+ItemboxID+"";
@@ -326,7 +328,7 @@ public class DBConnection {
     }
     return false;
   }
-  public static boolean delItem_bag(int PlayerID)throws SQLException {
+  public boolean delItem_bag(int PlayerID)throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
       String sql = "DELETE FROM `item bag` WHERE `item bag`.`PlayID` = "+PlayerID+"";
@@ -336,7 +338,7 @@ public class DBConnection {
     return false;
   }
 
-  public static ArrayList<FriendType> getFriend(int PID) throws SQLException {
+  public ArrayList<FriendType> getFriend(int PID) throws SQLException {
     ArrayList<FriendType> result = new ArrayList<FriendType>();
     if(con != null && !con.isClosed()){
       Statement statement = con.createStatement();
@@ -359,17 +361,7 @@ public class DBConnection {
     return null;
   }
 
-  public static boolean addFriend(int PID,int FID) throws SQLException {
-    if (con != null && !con.isClosed()) {
-      Statement statement = con.createStatement();
-      String sql = "INSERT INTO `friend` (`PlayID`, `Friend ID`, `State`) VALUES ('"+PID+"', '"+FID+"', '"+0+"');";
-      System.out.println(sql);
-      return statement.executeUpdate(sql) > 0;
-    }
-    return false;
-  }
-
-  public static boolean acceptFriend(int PID,int FID)  {
+  public boolean acceptFriend(int PID,int FID)  {
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
@@ -383,7 +375,17 @@ public class DBConnection {
     return false;
   }
 
-  public static boolean delFriend(int PID,int FID) throws SQLException {
+  public boolean addFriend(int PID,int FID) throws SQLException {
+    if (con != null && !con.isClosed()) {
+      Statement statement = con.createStatement();
+      String sql = "INSERT INTO `friend` (`PlayID`, `Friend ID`, `State`) VALUES ('"+PID+"', '"+FID+"', '"+0+"');";
+      System.out.println(sql);
+      return statement.executeUpdate(sql) > 0;
+    }
+    return false;
+  }
+
+  public boolean delFriend(int PID,int FID) throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
       String sql = "DELETE FROM `friend` WHERE `friend`.`PlayID` = '"+PID+"' AND `friend`.`Friend ID` = '"+FID+"'";
@@ -394,7 +396,7 @@ public class DBConnection {
   }
 
 
-  public static Status getStatus(int PID) throws SQLException {
+  public Status getStatus(int PID) throws SQLException {
     Status result = null;
     if(con != null && !con.isClosed()){
       Statement statement = con.createStatement();
@@ -425,7 +427,7 @@ public class DBConnection {
     return null;
   }
 
-  public static boolean addStatus(int playID, int HP, int MAX_HP, int MP, int MAX_MP, int STR, int MG, int AGI, int LUC, int Level,int coin, int skill_point,int state)  {  //throws SQLException or encryption's exception
+  public boolean addStatus(int playID, int HP, int MAX_HP, int MP, int MAX_MP, int STR, int MG, int AGI, int LUC, int Level,int coin, int skill_point,int state)  {  //throws SQLException or encryption's exception
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
@@ -440,7 +442,7 @@ public class DBConnection {
     return false;
   }
 
-  public static boolean delStatus(int playID)  {  //throws SQLException or encryption's exception
+  public boolean delStatus(int playID)  {  //throws SQLException or encryption's exception
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
@@ -456,7 +458,7 @@ public class DBConnection {
     return false;
   }
 
-  public static boolean updateStatus(int playID, int HP, int MAX_HP, int MP, int MAX_MP, int STR, int MG, int AGI, int LUC, int Level, int skill_point,int state,int Coin)  {  //throws SQLException or encryption's exception
+  public boolean updateStatus(int playID, int HP, int MAX_HP, int MP, int MAX_MP, int STR, int MG, int AGI, int LUC, int Level, int skill_point,int state,int Coin)  {  //throws SQLException or encryption's exception
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
@@ -474,7 +476,7 @@ public class DBConnection {
   }
 
 
-  public static boolean addProgress(int PID,int MID) throws SQLException {
+  public boolean addProgress(int PID,int MID) throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
       String sql = "INSERT INTO `progress` (`PlayID`, `Mission ID`, `Progress Status`) VALUES ('"+PID+"', '"+MID+"', '0');";
@@ -484,7 +486,7 @@ public class DBConnection {
     return false;
   }
 
-  public static boolean setProgress(int PID,int MID)  {  //throws SQLException or encryption's exception
+  public boolean setProgress(int PID,int MID)  {  //throws SQLException or encryption's exception
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
@@ -500,7 +502,7 @@ public class DBConnection {
     return false;
   }
 
-  public static ArrayList<Progress> getProgress(int PID)  {  //throws SQLException or encryption's exception
+  public ArrayList<Progress> getProgress(int PID)  {  //throws SQLException or encryption's exception
     ArrayList<Progress> progress = new ArrayList<>();
     try {
       if(con != null && !con.isClosed()){

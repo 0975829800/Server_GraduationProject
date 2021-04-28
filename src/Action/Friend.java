@@ -11,7 +11,8 @@ public class Friend {
 
   public static ArrayList<FriendType> getFriend(int PID){
     try {
-      return DBConnection.getFriend(PID);
+      DBConnection con = new DBConnection();
+      return con.getFriend(PID);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -38,7 +39,8 @@ public class Friend {
     int FID = Integer.parseInt(new String(data).trim());
     try {
       byte[] buf;
-      if (DBConnection.addFriend(PID,FID) && DBConnection.addFriend(FID,PID)){
+      DBConnection con = new DBConnection();
+      if (con.addFriend(PID,FID) && con.addFriend(FID,PID)){
         buf = ToCSharpTool.ToCSharp(1);
       }
       else{
@@ -55,7 +57,8 @@ public class Friend {
     int FID = Integer.parseInt(new String(data).trim());
     try {
       byte[] buf;
-      if (DBConnection.delFriend(PID,FID) && DBConnection.delFriend(FID,PID)){
+      DBConnection con = new DBConnection();
+      if (con.delFriend(PID,FID) && con.delFriend(FID,PID)){
         buf = ToCSharpTool.ToCSharp(1);
       }
       else{
@@ -72,7 +75,8 @@ public class Friend {
     int FID = Integer.parseInt(new String(data).trim());
     try {
       byte[] buf;
-      if (DBConnection.acceptFriend(PID,FID) && DBConnection.acceptFriend(FID,PID)){
+      DBConnection con = new DBConnection();
+      if (con.acceptFriend(PID,FID) && con.acceptFriend(FID,PID)){
         buf = ToCSharpTool.ToCSharp(1);
       }
       else{
