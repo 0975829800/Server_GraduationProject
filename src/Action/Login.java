@@ -1,11 +1,10 @@
 package Action;
 
 import DBS.DBConnection;
+import ID.ShopID;
 import ServerMainBody.Server;
 import Tools.ToCSharpTool;
-import Type.EquipmentBoxType;
-import Type.ItemType;
-import Type.Status;
+import Type.*;
 
 import java.io.OutputStream;
 import java.sql.SQLException;
@@ -125,6 +124,7 @@ public class Login {
       Status status = DBConnection.getStatus(PID);
       byte[] buf = status.getByte();
       out.write(buf);
+      out.flush();
     }catch (Exception e){
       System.err.println(e);
     }
@@ -149,6 +149,7 @@ public class Login {
     }
     try {
       out.write(send);
+      out.flush();
     }catch (Exception e){
       System.err.println(e);
     }
@@ -173,6 +174,29 @@ public class Login {
     }
     try {
       out.write(send);
+      out.flush();
+    }catch (Exception e){
+      System.err.println(e);
+    }
+  }
+
+  public static void sendShopInformation(OutputStream out){
+    byte[] send = new byte[8 + ShopItem.SendSize * ShopID.shopItem.size() + ShopEquipment.SendSize * ShopID.shopEquipment.size()];
+    System.arraycopy(ToCSharpTool.ToCSharp(ShopID.shopItem.size()),0,send,0,4);
+    int start = 4;
+    for(int i = 0; i < ShopID.shopItem.size(); i++){
+      System.arraycopy(ShopID.shopItem.get(i).getByte(),0,send,start,ShopItem.SendSize);
+      start+=ShopItem.SendSize;
+    }
+    System.arraycopy(ToCSharpTool.ToCSharp(ShopID.shopEquipment.size()),0,send,start,4);
+    start += 4;
+    for(int i = 0; i < ShopID.shopEquipment.size(); i++){
+      System.arraycopy(ShopID.shopEquipment.get(i).getByte(),0,send,start,ShopEquipment.SendSize);
+      start+=ShopEquipment.SendSize;
+    }
+    try {
+      out.write(send);
+      out.flush();
     }catch (Exception e){
       System.err.println(e);
     }
@@ -182,6 +206,7 @@ public class Login {
     sendStatus(out,PID);
     sendItem(out,PID);
     sendEquipment(out,PID);
+    sendShopInformation(out);
   }
 
 }
