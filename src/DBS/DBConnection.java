@@ -55,7 +55,7 @@ public class DBConnection {
   }
 
 
-  public static int login(String account,String password) {
+  public int login(String account,String password) {
     int PID = -1;
     String getPass = "";
 

@@ -22,13 +22,13 @@ public class Login {
   public static int login (OutputStream out, byte[] data) throws SQLException{
     try {
       byte[] buf;
-
+      DBConnection con = new DBConnection();
       String info = new String(data);
       String account = info.substring(0,9).trim();
       String password = info.substring(10,19).trim();
 
       System.out.println(account +"."+ password);
-      int get = DBConnection.login(account,password);
+      int get = con.login(account,password);
       if (get >= 0 && !isOnline(get)){
         System.out.println(get + " login");
         buf = ToCSharpTool.ToCSharp(get);
