@@ -25,9 +25,10 @@ public class test {
 //        System.out.println(con.updateItem_bag(663828321,1,4,5,3));
 //        System.out.println(con.delItem_bag(663828321,1));
 
-//        System.out.println(con.addFriend(31240985,2));  //one way , add*2 for two account addFriend
-//        System.out.println(con.delFriend(31240985,2));
-//        System.out.println(con.getFriend(31240985));
+//        System.out.println(con.addFriend(663828321,144906270));
+//        System.out.println(con.confirmFriend(663828321,144906270));
+//        System.out.println(con.delFriend(663828321,144906270));
+//        System.out.println(con.getFriend(663828321).get(0).State);
 
 //        System.out.println(con.addStatus(663828321,1,2,3,4,5,6,7,8,9,10,11,0));
 //        System.out.println(con.getStatus(31240985).MAX_MP);

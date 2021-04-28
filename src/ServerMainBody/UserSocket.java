@@ -4,15 +4,11 @@ import Action.*;
 import ID.ProtocolID;
 import Tools.DisconnectTool;
 import Tools.ProtocolTool;
-import Type.EquipmentBoxType;
-import Type.ItemType;
 import Type.PlayerInformation;
-import Type.Status;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class UserSocket extends Thread{
   int           SocketID;
@@ -85,6 +81,18 @@ public class UserSocket extends Thread{
             break;
           case ProtocolID.BUY_EQUIPMENT:
             BuyEquipment.BuyEquipment(out,playerInformation,data.data);
+            break;
+          case ProtocolID.GET_FRIEND:
+            Friend.sendFriend(out,PlayerID);
+            break;
+          case ProtocolID.ADD_FRIEND:
+            Friend.addFriend(out,PlayerID,data.data);
+            break;
+          case ProtocolID.DELETE_FRIEND:
+            Friend.delFriend(out,PlayerID,data.data);
+            break;
+          case ProtocolID.ACCEPT_FRIEND:
+            Friend.acceptFriend(out,PlayerID,data.data);
             break;
         }
       }

@@ -5,10 +5,8 @@ import Tools.ByteArrayTransform;
 import Tools.ToCSharpTool;
 import Type.ItemType;
 import Type.PlayerInformation;
-import Type.Status;
 
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
 
 public class BuyItem {
 
@@ -34,7 +32,7 @@ public class BuyItem {
               playerInformation.item.add(new ItemType(playerInformation.PID, EmptyIndex, i.Item_ID, i.Rarity, i.Amount % 99));
             }else {
               buf = new byte[4];
-              buf = ToCSharpTool.ToCSharp(-1);
+              buf = ToCSharpTool.ToCSharp(-2);
               isFull = true;
               break;
             }
