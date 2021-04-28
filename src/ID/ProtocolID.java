@@ -13,6 +13,6 @@ public class ProtocolID {
   public static final int DISEQUIP = 45;
   public static final int ATTACK = 46;
 
-  public static final int BUY_ITEM = 52;
-  public static final int BUY_EQUIPMENT = 53;
+  public static final int BUY_ITEM = 53;
+  public static final int BUY_EQUIPMENT = 54;
 }
