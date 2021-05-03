@@ -25,7 +25,6 @@ public class DBConnection {
 
 //      con.close();
     }
-
   }
 
   public boolean isConnected() throws SQLException {
@@ -375,10 +374,10 @@ public class DBConnection {
     return false;
   }
 
-  public boolean addFriend(int PID,int FID) throws SQLException {
+  public boolean addFriend(int PID,int FID,int State) throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
-      String sql = "INSERT INTO `friend` (`PlayID`, `Friend ID`, `State`) VALUES ('"+PID+"', '"+FID+"', '"+0+"');";
+      String sql = "INSERT INTO `friend` (`PlayID`, `Friend ID`, `State`) VALUES ('"+PID+"', '"+FID+"', '"+State+"');";
       System.out.println(sql);
       return statement.executeUpdate(sql) > 0;
     }

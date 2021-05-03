@@ -10,7 +10,7 @@ import java.util.Queue;
 public class Server {
   public static Queue<SocketType> 	User        = new LinkedList<>();
   public static Queue<Integer> 	    online      = new LinkedList<>();
-  public static Queue<TeamType> 	Team        = new LinkedList<>();
+  public static Queue<TeamType> 	  Team        = new LinkedList<>();
   public static Queue<MapType>      Map         = new LinkedList<>();
   public static Queue<ActionType>   Action      = new LinkedList<>();
   public static Queue<MonsterType>  Monster     = new LinkedList<>();

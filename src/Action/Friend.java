@@ -40,13 +40,14 @@ public class Friend {
     try {
       byte[] buf;
       DBConnection con = new DBConnection();
-      if (con.addFriend(PID,FID) && con.addFriend(FID,PID)){
+      //state 0: show waiting for their acceptance
+      //state 2: show accept/reject button
+      if (con.addFriend(PID,FID,0) && con.addFriend(FID,PID,2)){
         buf = ToCSharpTool.ToCSharp(1);
       }
       else{
         buf = ToCSharpTool.ToCSharp(-1);
       }
-
       out.write(buf);
     } catch (Exception e) {
       e.printStackTrace();
