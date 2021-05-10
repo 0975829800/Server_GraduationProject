@@ -7,7 +7,7 @@ import Type.FriendType;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-public class Friend {
+public class Community {
 
   public static ArrayList<FriendType> getFriend(int PID){
     try {
@@ -84,6 +84,57 @@ public class Friend {
         buf = ToCSharpTool.ToCSharp(-1);
       }
 
+      out.write(buf);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void createTeam(OutputStream out, int PID,byte[] data){
+    String teamName = new String(data).trim();
+    try {
+      byte[] buf;
+      DBConnection con = new DBConnection();
+      if (con.createTeam(PID,teamName)){
+        buf = ToCSharpTool.ToCSharp(1);
+      }
+      else{
+        buf = ToCSharpTool.ToCSharp(-1);
+      }
+
+      out.write(buf);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void addTeam(OutputStream out, int PID,byte[] data){
+    int teamID = Integer.parseInt(new String(data).trim());
+    try {
+      byte[] buf;
+      DBConnection con = new DBConnection();
+      if (con.setTeam(PID,teamID)){
+        buf = ToCSharpTool.ToCSharp(1);
+      }
+      else{
+        buf = ToCSharpTool.ToCSharp(-1);
+      }
+      out.write(buf);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+  public static void delTeam(OutputStream out, int PID,byte[] data){
+    int teamID = Integer.parseInt(new String(data).trim());
+    try {
+      byte[] buf;
+      DBConnection con = new DBConnection();
+      if (con.setTeam(PID,teamID)){
+        buf = ToCSharpTool.ToCSharp(1);
+      }
+      else{
+        buf = ToCSharpTool.ToCSharp(-1);
+      }
       out.write(buf);
     } catch (Exception e) {
       e.printStackTrace();

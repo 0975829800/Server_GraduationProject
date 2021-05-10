@@ -190,13 +190,51 @@ public class DBConnection {
     return false;
   }
 
+  public boolean createTeam(int PID,String Name)  {  //throws SQLException or encryption's exception
+    try {
+      if(con != null && !con.isClosed()){
+        Statement statement = con.createStatement();
+        String sql = "INSERT INTO `team` (`TeamID`, `Name`) VALUES ('"+PID+"', '"+Name+"');";
+        System.out.println(sql);
+        if(statement.executeUpdate(sql) > 0){
+          sql = "UPDATE `player` SET `TeamID` = '"+ PID + "' WHERE `player`.`PlayID` = " + PID;
+          System.out.println(sql);
+          return statement.executeUpdate(sql) > 0;
+        }
+        return false;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
 
-  public boolean setTeam(int PID,int TeamID)  {  //throws SQLException or encryption's exception
+  public boolean delTeam(int TeamID)  {
+    try {
+      if(con != null && !con.isClosed()){
+        Statement statement = con.createStatement();
+        String sql = "DELETE FROM `team` WHERE `team`.`TeamID` = '"+TeamID+"' ";
+        System.out.println(sql);
+        if (statement.executeUpdate(sql) > 0){
+          sql = "UPDATE `player` SET `TeamID`=NULL WHERE`player`.`TeamID` = '"+TeamID+"'";
+          return statement.executeUpdate(sql) > 0;
+        }
+        return statement.executeUpdate(sql) > 0;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  public boolean setTeam(int PID,int TeamID)  {  //TeamID = 0 to quit
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
         String sql = "UPDATE `player` SET `TeamID` = '"+ TeamID + "' WHERE `player`.`PlayID` = " + PID;
-        //insert new account
+        if (TeamID == 0){
+          sql = "UPDATE `player` SET `TeamID` = NULL WHERE `player`.`PlayID` = " + PID;
+        }
         System.out.println(sql);
 
         return statement.executeUpdate(sql) > 0;

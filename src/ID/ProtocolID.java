@@ -18,6 +18,10 @@ public class ProtocolID {
   public static final int ACCEPT_FRIEND = 49;
   public static final int GET_FRIEND = 56;
 
+  public static final int CREATE_TEAM = 50;
+  public static final int ADD_TEAM = 51;
+  public static final int DELETE_TEAM = 52;
+
   public static final int BUY_ITEM = 53;
   public static final int BUY_EQUIPMENT = 54;
 }

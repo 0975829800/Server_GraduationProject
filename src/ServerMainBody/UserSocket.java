@@ -83,16 +83,25 @@ public class UserSocket extends Thread{
             BuyEquipment.BuyEquipment(out,playerInformation,data.data);
             break;
           case ProtocolID.GET_FRIEND:
-            Friend.sendFriend(out,PlayerID);
+            Community.sendFriend(out,PlayerID);
             break;
           case ProtocolID.ADD_FRIEND:
-            Friend.addFriend(out,PlayerID,data.data);
+            Community.addFriend(out,PlayerID,data.data);
             break;
           case ProtocolID.DELETE_FRIEND:
-            Friend.delFriend(out,PlayerID,data.data);
+            Community.delFriend(out,PlayerID,data.data);
             break;
           case ProtocolID.ACCEPT_FRIEND:
-            Friend.acceptFriend(out,PlayerID,data.data);
+            Community.acceptFriend(out,PlayerID,data.data);
+            break;
+          case ProtocolID.CREATE_TEAM:
+            Community.createTeam(out,PlayerID,data.data);
+            break;
+          case ProtocolID.ADD_TEAM:
+            Community.addTeam(out,PlayerID,data.data);
+            break;
+          case ProtocolID.DELETE_TEAM:
+            Community.acceptFriend(out,PlayerID,data.data);
             break;
         }
       }

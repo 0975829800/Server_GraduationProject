@@ -13,7 +13,9 @@ public class test {
 //        System.out.println(con.login("456789","zzzzzz"));
 //        System.out.println(con.setName(31240985,"????"));
 
-//        System.out.println(con.setTeam(31240985,11));
+//        System.out.println(con.createTeam(31240985,"吃屎"));
+//        System.out.println(con.setTeam(142176825,0));
+//        System.out.println(con.delTeam(142176825));
 
 //        System.out.println(con.addEquipment_bag(663828321,4,8,2,3,100,1,1,0));
 //        System.out.println(con.getEquipment_bag(663828321).get(0).EquipmentBox_ID);
