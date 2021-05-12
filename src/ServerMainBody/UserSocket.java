@@ -65,6 +65,8 @@ public class UserSocket extends Thread{
       playerInformation.equipment = Login.getEquipment(PlayerID);
       Login.Login_Send(out,PlayerID);
 
+      Server.Information.add(playerInformation);
+
       //read client action
       while (true) {
         buf = new byte[1000];  //clear buffer
@@ -109,9 +111,16 @@ public class UserSocket extends Thread{
             Community.addTeam(out,PlayerID,data.data);
             break;
           case ProtocolID.DELETE_TEAM:
-            Community.acceptFriend(out,PlayerID,data.data);
+            Community.delTeam(out,PlayerID,data.data);
             break;
         }
+
+        for (PlayerInformation p : Server.Information){
+          if (p.PID == playerInformation.PID){
+            p = playerInformation;
+          }
+        }
+
       }
     }
     catch (Exception e){

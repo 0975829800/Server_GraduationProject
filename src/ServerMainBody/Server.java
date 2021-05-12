@@ -14,6 +14,7 @@ public class Server {
   public static Queue<MapType>      Map         = new LinkedList<>();
   public static Queue<ActionType>   Action      = new LinkedList<>();
   public static Queue<MonsterType>  Monster     = new LinkedList<>();
+  public static Queue<PlayerInformation> Information = new LinkedList<>();
 
   public final static int ServerPort = 8001;
   public final static int ActionPort = 8002;

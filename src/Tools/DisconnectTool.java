@@ -13,6 +13,7 @@ public class DisconnectTool {
     Server.online.removeIf(id -> id == PID);
     Server.User.removeIf(socket -> socket.ID == SocketID);                      //remove socket about player
     Server.Map.removeIf(m -> m.TypeID == TypeID.PLAYER && m.BelongID == PID);   //remove map information about player
+    Server.Information.removeIf(p->p.PID == playerInformation.PID);
     StatusUpdate(PID,playerInformation.status);
     ItemUpdate(PID, playerInformation.item);
     EquipmentUpdate(PID,playerInformation.equipment);
