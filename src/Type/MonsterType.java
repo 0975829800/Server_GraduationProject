@@ -12,8 +12,8 @@ public class MonsterType {
 
   public int    HatredPlayer;     //仇恨對象
 
-  public int[]  DamagePID;        //傷害統計(計算哪個人打了多少血，最多的設為仇恨對象
-  public int[]  DamageStatistic;
+  public int[]  DamagePID = new int[10];        //傷害統計(計算哪個人打了多少血，最多的設為仇恨對象
+  public int[]  DamageStatistic = new int[10];
 
   public int    HP;
   public int    MaxHP;

@@ -36,9 +36,12 @@ public class UserSocket extends Thread{
 
       do {
         //read login message
-        in.read(buf);
-        data = ProtocolTool.ProtocolTrim(buf);
+        int len = in.read(buf);
 
+        if(len < 0){
+          throw new Exception("Disconnect"); //中斷連線
+        }
+        data = ProtocolTool.ProtocolTrim(buf);
         //should login First
         //to connect database and get information of player
         if (data.protocol == ProtocolID.LOGIN){
@@ -65,7 +68,12 @@ public class UserSocket extends Thread{
       //read client action
       while (true) {
         buf = new byte[1000];  //clear buffer
-        in.read(buf);
+        int len = in.read(buf);
+
+        if(len < 0){
+          throw new Exception("Disconnect"); //中斷連線
+        }
+
         data = ProtocolTool.ProtocolTrim(buf);
         System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
 
@@ -77,10 +85,10 @@ public class UserSocket extends Thread{
             Move.move(PlayerID, data.data);
             break;
           case ProtocolID.BUY_ITEM:
-            BuyItem.BuyItem(out,playerInformation,data.data);
+            Buy.BuyItem(out,playerInformation,data.data);
             break;
           case ProtocolID.BUY_EQUIPMENT:
-            BuyEquipment.BuyEquipment(out,playerInformation,data.data);
+            Buy.BuyEquipment(out,playerInformation,data.data);
             break;
           case ProtocolID.GET_FRIEND:
             Community.sendFriend(out,PlayerID);

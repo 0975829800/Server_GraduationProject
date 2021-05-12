@@ -35,12 +35,12 @@ public class Login {
         out.write(buf);
         return get;
       }
-      else if(isOnline(get)){
-        buf = ToCSharpTool.ToCSharp(-2);
+      else if(!isOnline(get)){
+        buf = ToCSharpTool.ToCSharp(-1);
         out.write(buf);
       }
       else{
-        buf = ToCSharpTool.ToCSharp(get);
+        buf = ToCSharpTool.ToCSharp(-2);
         out.write(buf);
       }
     }catch (Exception e){
