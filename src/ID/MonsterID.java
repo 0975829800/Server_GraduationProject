@@ -14,7 +14,7 @@ public class MonsterID {
 
   public static void GetMonsterInformation(){
     try{
-      InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream("C:\\Users\\USER\\IdeaProjects\\Server_GraduationProject\\src\\ID\\Monster.csv"));
+      InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream("src\\ID\\Monster.csv"));
       BufferedReader reader = new BufferedReader(inputStreamReader);
 
       String line = null;
