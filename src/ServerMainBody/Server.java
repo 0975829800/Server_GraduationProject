@@ -1,5 +1,6 @@
 package ServerMainBody;
 
+import ID.MonsterID;
 import ID.ShopID;
 import Type.*;
 import java.net.ServerSocket;
@@ -33,7 +34,7 @@ public class Server {
 
     ShopID.SetItemShop();
     ShopID.SetEquipmentShop();
-
+    MonsterID.GetMonsterInformation();
     try {
       serverSocket = new ServerSocket(ServerPort);
       actionSocket = new ServerSocket(ActionPort);
