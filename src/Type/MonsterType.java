@@ -21,7 +21,7 @@ public class MonsterType {
   public double MAX_HP;
   public double MP;
   public double MAX_MP;
-  public double State;
+  public int State;
   public double Attack;
   public double Defence;
   public double Critical;

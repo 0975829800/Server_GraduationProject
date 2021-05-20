@@ -1,6 +1,7 @@
 package ID;
 
 
+import ServerMainBody.Server;
 import Type.MonsterType;
 
 import java.io.BufferedReader;
@@ -11,6 +12,7 @@ import java.util.Queue;
 
 public class MonsterID {
   public static Queue<MonsterType> MonsterInformation = new LinkedList<>();
+  public static int length;
 
   public static void GetMonsterInformation(){
     try{
@@ -26,8 +28,12 @@ public class MonsterID {
     }catch (Exception e){
       System.out.println(e);
     }
-    for(MonsterType m : MonsterInformation){
-      System.out.println(String.format("%d %s %.1f %.1f ",m.MonsterID,m.MonsterName,m.MAX_HP,m.MAX_MP));
+    length = MonsterInformation.size();
+
+    if(Server.debug){
+      for(MonsterType m : MonsterInformation){
+        System.out.println(String.format("%d %s %.1f %.1f ",m.MonsterID,m.MonsterName,m.MAX_HP,m.MAX_MP));
+      }
     }
   }
 }

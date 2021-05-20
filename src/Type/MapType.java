@@ -1,5 +1,7 @@
 package Type;
 
+import ID.*;
+
 public class MapType {
   public static final int MapTypeSize = 44; //total bytes
   public static int MapIDCounter = 0;
@@ -27,7 +29,18 @@ public class MapType {
     MP = mp;
     this.state = state;
   }
+  public MapType(MonsterType m){
+    MapObjectID = MapIDCounter;
+    MapIDCounter++;
+    TypeID = ID.TypeID.MONSTER;
+    BelongID = m.MonsterID;
+    Longitude = m.Longitude;
+    Latitude = m.Latitude;
+    HP = (int)m.HP;
+    MP = (int)m.MP;
+    state = m.State;
 
+  }
   public MapType() {
     MapObjectID = MapIDCounter;
     MapIDCounter++;

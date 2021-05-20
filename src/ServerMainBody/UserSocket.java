@@ -59,6 +59,7 @@ public class UserSocket extends Thread{
           System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
         }
       }while(PlayerID < 0);
+      playerInformation.sc        = socket;
       playerInformation.PID       = PlayerID;
       playerInformation.status    = Login.getStatus(PlayerID);
       playerInformation.item      = Login.getItem(PlayerID);

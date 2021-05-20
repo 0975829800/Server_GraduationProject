@@ -11,7 +11,7 @@ import java.util.Queue;
 public class Server {
   public static Queue<SocketType> 	User        = new LinkedList<>();
   public static Queue<Integer> 	    online      = new LinkedList<>();
-  public static Queue<TeamType> 	  Team        = new LinkedList<>();
+  public static Queue<TeamType> 	Team        = new LinkedList<>();
   public static Queue<MapType>      Map         = new LinkedList<>();
   public static Queue<ActionType>   Action      = new LinkedList<>();
   public static Queue<MonsterType>  Monster     = new LinkedList<>();
@@ -21,6 +21,7 @@ public class Server {
   public final static int ActionPort = 8002;
   public final static int MapPort    = 8003;
 
+  public static int[] LocationSum = new int[8];
 
   public static boolean   debug = false; //debug時改成true
 
