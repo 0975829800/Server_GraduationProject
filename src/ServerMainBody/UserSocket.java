@@ -1,15 +1,12 @@
 package ServerMainBody;
-
 import Action.*;
 import ID.ProtocolID;
 import Tools.DisconnectTool;
 import Tools.ProtocolTool;
 import Type.PlayerInformation;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-
 public class UserSocket extends Thread{
   int           SocketID;
   int           PlayerID = -1;
@@ -17,27 +14,21 @@ public class UserSocket extends Thread{
   Socket        socket;
   InputStream   in;
   OutputStream  out;
-
   PlayerInformation playerInformation = new PlayerInformation();
-
   byte[]        buf = new byte[1000];
-
   public UserSocket(int ID, Socket sc){
     SocketID  = ID;
     socket    = sc;
   }
-
   //thread running
   public void run(){
     ProtocolTool data = null;
     try {
       in = socket.getInputStream();
       out = socket.getOutputStream();
-
       do {
         //read login message
         int len = in.read(buf);
-
         if(len < 0){
           throw new Exception("Disconnect"); //中斷連線
         }
@@ -72,14 +63,11 @@ public class UserSocket extends Thread{
       while (true) {
         buf = new byte[1000];  //clear buffer
         int len = in.read(buf);
-
         if(len < 0){
           throw new Exception("Disconnect"); //中斷連線
         }
-
         data = ProtocolTool.ProtocolTrim(buf);
         System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
-
         switch (data.protocol) {
           case ProtocolID.LOGIN_LOCATION:
             LoginLocation.Login_Location(data.data,playerInformation.status);
@@ -108,11 +96,17 @@ public class UserSocket extends Thread{
           case ProtocolID.CREATE_TEAM:
             Community.createTeam(out,PlayerID,data.data);
             break;
-          case ProtocolID.ADD_TEAM:
-            Community.addTeam(out,PlayerID,data.data);
+          case ProtocolID.JOIN_TEAM:
+            Community.joinTeam(out,PlayerID,data.data);
             break;
           case ProtocolID.DELETE_TEAM:
             Community.delTeam(out,PlayerID,data.data);
+            break;
+          case ProtocolID.LEAVE_TEAM:
+            Community.leaveTeam(out,PlayerID);
+            break;
+          case ProtocolID.GET_TEAM:
+            Community.getTeam(out,PlayerID,data.data);
             break;
         }
 

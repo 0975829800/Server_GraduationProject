@@ -153,7 +153,7 @@ public class DBConnection {
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
-        String sql = "SELECT `player` WHERE `PlayID` = " + PID;
+        String sql = "SELECT * FROM `player` WHERE `PlayID` = " + PID;
         System.out.println(sql);
         ResultSet rs = statement.executeQuery(sql);
 
@@ -188,6 +188,47 @@ public class DBConnection {
       e.printStackTrace();
     }
     return false;
+  }
+
+  public String[] getTeam(int PID)  {  //throws SQLException or encryption's exception
+    try {
+      if(con != null && !con.isClosed()){
+        Statement statement = con.createStatement();
+        String sql = "SELECT * FROM `player` WHERE `PlayID` = '" + PID+"'";
+        System.out.println(sql);
+        ResultSet rs = statement.executeQuery(sql);
+
+        if (rs.next()){
+          sql = "SELECT * FROM `team` WHERE `TeamID` = '" + rs.getString("TeamID")+"'";
+          rs = statement.executeQuery(sql);
+          if(rs.next()){
+            return new String[] {rs.getString("TeamID"),rs.getString("Name")};
+          }
+          return null;
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  public int getTeamNum(int TID)  {  //throws SQLException or encryption's exception
+    try {
+      if(con != null && !con.isClosed()){
+        Statement statement = con.createStatement();
+        String sql = "SELECT COUNT(TeamID) FROM player WHERE TeamID = "+TID;
+        System.out.println(sql);
+        ResultSet rs = statement.executeQuery(sql);
+
+        if (rs.next()){   //has same account
+          return Integer.parseInt(rs.getString("COUNT(TeamID)"));
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return -1;
   }
 
   public boolean createTeam(int PID,String Name)  {  //throws SQLException or encryption's exception
@@ -244,6 +285,31 @@ public class DBConnection {
     }
     return false;
   }
+
+  public boolean replaceTeamLeader(int TeamID) throws SQLException {
+    try {
+      if (con != null && !con.isClosed()) {
+        Statement statement = con.createStatement();
+        String sql = "SELECT * FROM `player` WHERE `TeamID` = '" + TeamID + "'";
+        System.out.println(sql);
+        ResultSet rs = statement.executeQuery(sql);
+        if (rs.next()) {
+          String newID = rs.getString("PlayID"); //get first result as new TeamID
+          sql = "UPDATE `player` SET `TeamID`='"+newID+"' WHERE`player`.`TeamID` = '" + TeamID + "'";
+          if(statement.executeUpdate(sql) > 0){
+            sql = "UPDATE `team` SET `TeamID`='"+newID+"' WHERE`team`.`TeamID` = '" + TeamID + "'";
+            return statement.executeUpdate(sql) > 0;
+          }
+        }
+        return false;
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
 
 
 

@@ -1,10 +1,12 @@
 package Tools;
 
-import Action.Equip;
 import DBS.DBConnection;
 import ID.TypeID;
-import Type.*;
-import ServerMainBody.*;
+import ServerMainBody.Server;
+import Type.EquipmentBoxType;
+import Type.ItemType;
+import Type.PlayerInformation;
+import Type.Status;
 
 import java.util.ArrayList;
 
@@ -51,6 +53,15 @@ public class DisconnectTool {
         else
           con.addEquipment_bag(e.PlayerID,e.EquipmentBox_ID,e.Equipment_ID,e.Rarity,e.Part,e.Level,0,e.Skill_ID_1,e.Skill_ID_2);
       }
+    }catch (Exception e){
+      System.err.println(e);
+    }
+  }
+
+  public static void leaveTeam(int PID){
+    try{
+      DBConnection con = new DBConnection();
+//      con.setTeam(PID,0);
     }catch (Exception e){
       System.err.println(e);
     }

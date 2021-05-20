@@ -108,13 +108,14 @@ public class Community {
     }
   }
 
-  public static void addTeam(OutputStream out, int PID,byte[] data){
+  public static void joinTeam(OutputStream out, int PID,byte[] data){
     int teamID = Integer.parseInt(new String(data).trim());
     try {
       byte[] buf;
       DBConnection con = new DBConnection();
       if (con.setTeam(PID,teamID)){
-        buf = ToCSharpTool.ToCSharp(1);
+        buf = ToCSharpTool.ToCSharp(con.getTeam(teamID)[1]);
+//        buf = ToCSharpTool.ToCSharp(1);
       }
       else{
         buf = ToCSharpTool.ToCSharp(-1);
@@ -129,8 +130,68 @@ public class Community {
     try {
       byte[] buf;
       DBConnection con = new DBConnection();
-      if (con.setTeam(PID,teamID)){
+      if (con.delTeam(teamID)){
         buf = ToCSharpTool.ToCSharp(1);
+      }
+      else{
+        buf = ToCSharpTool.ToCSharp(-1);
+      }
+      out.write(buf);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void leaveTeam(OutputStream out, int PID){
+    try {
+      byte[] buf = new byte[0];
+      DBConnection con = new DBConnection();
+      String[] teamInfo = con.getTeam(PID); //[0] = teamID ,[1] = teamName
+      if (teamInfo != null){
+        if (PID == Integer.parseInt(teamInfo[0])){ //leader
+          if (con.getTeamNum(Integer.parseInt(teamInfo[0])) > 1){ //not only 1 member
+            if (con.setTeam(PID,0) && con.replaceTeamLeader(PID)){
+              buf = ToCSharpTool.ToCSharp(1);
+            }
+            else{
+              buf = ToCSharpTool.ToCSharp(-1);
+            }
+          }
+          else{
+            if(con.delTeam(PID)){
+              buf = ToCSharpTool.ToCSharp(1);
+            }
+            else{
+              buf = ToCSharpTool.ToCSharp(-1);
+            }
+          }
+
+        }
+        else{ //member
+          if (con.setTeam(PID,0)){
+            buf = ToCSharpTool.ToCSharp(2);
+          }
+          else {
+            buf = ToCSharpTool.ToCSharp(-1);  //leave fail
+          }
+        }
+      }
+      else{
+        buf = ToCSharpTool.ToCSharp(-2);  //have no team
+      }
+      out.write(buf);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void getTeam(OutputStream out, int PID,byte[] data){
+    try {
+      byte[] buf;
+      DBConnection con = new DBConnection();
+      String[] team = con.getTeam(PID);
+      if (team != null){
+        buf = ToCSharpTool.ToCSharp(team[0]+' '+team[1]);
       }
       else{
         buf = ToCSharpTool.ToCSharp(-1);
