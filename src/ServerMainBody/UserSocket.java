@@ -112,7 +112,8 @@ public class UserSocket extends Thread{
 
         for (PlayerInformation p : Server.Information){
           if (p.PID == playerInformation.PID){
-            p = playerInformation;
+            Server.Information.removeIf(Player->Player.PID == playerInformation.PID);
+            Server.Information.add(playerInformation);
           }
         }
 
