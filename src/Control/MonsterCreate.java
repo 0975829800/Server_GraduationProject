@@ -14,7 +14,7 @@ public class MonsterCreate extends Thread{
       Server.LocationSum[m.Location]++;
     }
 
-    for(int i = 1; i < 8; i++){
+    for(int i = 1; i < Server.LocationSum.length; i++){
       while(Server.LocationSum[i] < 50){
         CreateMonster(i);
         Server.LocationSum[i]++;
@@ -24,20 +24,17 @@ public class MonsterCreate extends Thread{
 
   //怪物生成數值賦予(需在map上同步
   public void CreateMonster(int Location){
-    int rand = (int)Math.random()*MonsterID.length;
-    MonsterType newMonster = null;
-
+    MonsterType newMonster;
     for(MonsterType m : MonsterID.MonsterInformation){
-      if(m.MonsterID == rand){
+      if(m.MonsterID == Location){
         newMonster = m;
-        m.HP = m.MAX_HP;
-        m.MP = m.MAX_MP;
-        m.State = 0; //common
-        m.Location = Location;
-        Server.Monster.add(newMonster);
+        newMonster.MapObjectID = MapType.MapIDCounter + 1;
+        newMonster.HP = m.MAX_HP;
+        newMonster.MP = m.MAX_MP;
+        newMonster.State = 0; //common
+        newMonster.Location = Location;
+        Server.Map.add(new MapType(newMonster));
       }
     }
-
-    Server.Map.add(new MapType(newMonster));
   }
 }

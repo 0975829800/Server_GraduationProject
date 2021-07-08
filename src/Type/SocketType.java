@@ -7,10 +7,12 @@ public class SocketType {
   public Socket Socket;
   public Socket ActionSocket;
   public Socket MapSocket;
-  public SocketType(int ID, Socket socket, Socket actionSocket, Socket mapSocket){
+  public Socket MessageSocket;
+  public SocketType(int ID, Socket socket, Socket actionSocket, Socket mapSocket, Socket messageSocket){
     this.ID = ID;
     Socket = socket;
     ActionSocket = actionSocket;
     MapSocket = mapSocket;
+    MessageSocket = messageSocket;
   }
 }

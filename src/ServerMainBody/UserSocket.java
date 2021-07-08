@@ -12,13 +12,15 @@ public class UserSocket extends Thread{
   int           PlayerID = -1;
   String        name = null;
   Socket        socket;
+  Socket        MessageSocket;
   InputStream   in;
   OutputStream  out;
   PlayerInformation playerInformation = new PlayerInformation();
   byte[]        buf = new byte[1000];
-  public UserSocket(int ID, Socket sc){
+  public UserSocket(int ID, Socket sc, Socket mss){
     SocketID  = ID;
     socket    = sc;
+    MessageSocket = mss;
   }
   //thread running
   public void run(){
@@ -51,6 +53,7 @@ public class UserSocket extends Thread{
         }
       }while(PlayerID < 0);
       playerInformation.sc        = socket;
+      playerInformation.mss       = MessageSocket;
       playerInformation.PID       = PlayerID;
       playerInformation.status    = Login.getStatus(PlayerID);
       playerInformation.item      = Login.getItem(PlayerID);
@@ -108,13 +111,6 @@ public class UserSocket extends Thread{
           case ProtocolID.GET_TEAM:
             Community.getTeam(out,PlayerID,data.data);
             break;
-        }
-
-        for (PlayerInformation p : Server.Information){
-          if (p.PID == playerInformation.PID){
-            Server.Information.removeIf(Player->Player.PID == playerInformation.PID);
-            Server.Information.add(playerInformation);
-          }
         }
 
       }

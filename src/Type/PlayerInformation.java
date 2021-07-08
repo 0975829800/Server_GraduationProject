@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class PlayerInformation {
   public int PID;
   public Socket sc;
+  public Socket mss;
   public Status status;
   public ArrayList<ItemType> item;
   public ArrayList<EquipmentBoxType> equipment;

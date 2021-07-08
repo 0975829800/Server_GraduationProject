@@ -1,5 +1,6 @@
 package ID;
 
+import Type.EquipmentType;
 import Type.ShopEquipment;
 import Type.ShopItem;
 
@@ -21,11 +22,9 @@ public class ShopID {
   }
 
   public static void SetEquipmentShop(){ //set shop equipment
-    shopEquipment.add(new ShopEquipment(Shop1,0,EquipmentID.InitialHead,EquipmentPartID.Head,1,0,0,300));
-    shopEquipment.add(new ShopEquipment(Shop1,1,EquipmentID.InitialArmor,EquipmentPartID.Armor,1,0,0,300));
-    shopEquipment.add(new ShopEquipment(Shop1,2,EquipmentID.InitialGloves,EquipmentPartID.Gloves,1,0,0,300));
-    shopEquipment.add(new ShopEquipment(Shop1,3,EquipmentID.InitialLeg,EquipmentPartID.Leg,1,0,0,300));
-    shopEquipment.add(new ShopEquipment(Shop1,4,EquipmentID.InitialSword,EquipmentPartID.Weapon,1,0,0,300));
-    shopEquipment.add(new ShopEquipment(Shop1,5,EquipmentID.InitialShield,EquipmentPartID.Secondary_Weapon,1,0,0,300));
+    int i = 0;
+    for (EquipmentType e : EquipmentID.EquipmentInformation){
+      shopEquipment.add(new ShopEquipment(Shop1, i, e, 1 , 0, 0));
+    }
   }
 }

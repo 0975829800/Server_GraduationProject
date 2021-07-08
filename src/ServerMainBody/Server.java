@@ -20,6 +20,7 @@ public class Server {
   public final static int ServerPort = 8001;
   public final static int ActionPort = 8002;
   public final static int MapPort    = 8003;
+  public final static int MessagePort = 8004;
 
   public static int[] LocationSum = new int[8];
 
@@ -30,7 +31,8 @@ public class Server {
     ServerSocket  serverSocket;
     ServerSocket  actionSocket;
     ServerSocket  mapSocket;
-    Socket        ss,as,ms;
+    ServerSocket  messageSocket;
+    Socket        ss,as,ms,mss;
     int ID = 0;
 
     ShopID.SetItemShop();
@@ -40,6 +42,7 @@ public class Server {
       serverSocket = new ServerSocket(ServerPort);
       actionSocket = new ServerSocket(ActionPort);
       mapSocket = new ServerSocket(MapPort);
+      messageSocket = new ServerSocket(MessagePort);
       System.out.println("ServerMainBody.Server Waiting Request...");
       Thread broadcast = new Thread(new Broadcast());
       broadcast.start();
@@ -47,8 +50,9 @@ public class Server {
         ss = serverSocket.accept();
         as = actionSocket.accept();
         ms = mapSocket.accept();
-        User.add(new SocketType(ID, ss, as, ms));
-        Thread userSocket = new Thread(new UserSocket(ID, ss));
+        mss = messageSocket.accept();
+        User.add(new SocketType(ID, ss, as, ms, mss));
+        Thread userSocket = new Thread(new UserSocket(ID, ss, mss));
         userSocket.start();
         System.out.printf("ID: %06d in!\n", ID);
         ID++;

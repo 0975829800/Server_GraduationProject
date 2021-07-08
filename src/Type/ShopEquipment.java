@@ -15,15 +15,15 @@ public class ShopEquipment {
   public int Skill2;
   public int Price;
 
-  public ShopEquipment(int ShopID, int order, int EquipmentID, int part, int Rarity, int Skill1, int Skill2, int Price){
-    this.EquipmentID = EquipmentID;
+  public ShopEquipment(int ShopID, int order, EquipmentType e, int Rarity, int Skill1, int Skill2){
+    this.EquipmentID = e.EID;
     this.order = order;
-    this.part = part;
+    this.part = e.part;
     this.Rarity = Rarity;
     this.ShopID = ShopID;
     this.Skill1 = Skill1;
     this.Skill2 = Skill2;
-    this.Price = Price;
+    this.Price = e.price;
   }
 
   public byte[] getByte(){

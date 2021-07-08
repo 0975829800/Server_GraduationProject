@@ -19,6 +19,16 @@ public class Status {
   public int Skill_Point;
   public int State;
 
+  //Equipment sum values
+  public int EMAX_HP;
+  public int EMAX_MP;
+  public int ESTR;
+  public int EMG;
+  public int EAGI;
+  public int ELUC;
+  public int ELevel;
+  public int Ecoin;
+
   public Status(){
 
   }
