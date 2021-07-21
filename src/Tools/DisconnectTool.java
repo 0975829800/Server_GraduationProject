@@ -1,17 +1,17 @@
 package Tools;
 
 import DBS.DBConnection;
+import ID.ActionID;
 import ID.TypeID;
 import ServerMainBody.Server;
-import Type.EquipmentBoxType;
-import Type.ItemType;
-import Type.PlayerInformation;
-import Type.Status;
+import Type.*;
 
 import java.util.ArrayList;
 
 public class DisconnectTool {
   public static void PlayerDisconnect(int SocketID, int PID,PlayerInformation playerInformation) {
+    Server.Action.add(new ActionType(ActionID.PLAYER_LEAVE,playerInformation.MapID,playerInformation.PID,0,0,0,0));
+
     Server.online.removeIf(id -> id == PID);
     Server.User.removeIf(socket -> socket.ID == SocketID);                      //remove socket about player
     Server.Map.removeIf(m -> m.TypeID == TypeID.PLAYER && m.BelongID == PID);   //remove map information about player

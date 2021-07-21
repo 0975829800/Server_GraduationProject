@@ -9,6 +9,10 @@ public class MonsterType {
   public int    Location;   //地區(用來判定生成
   public int[]  Skills = new int[10];
 
+  public int exp;
+  public int coin;
+  public int[] drop;
+
   public boolean Fighting = false; //是否在戰鬥狀態
 
   public int    HatredPlayer;     //仇恨對象
@@ -33,16 +37,17 @@ public class MonsterType {
     String[] items = Line.split(",");
     MonsterID = Integer.parseInt(items[0]);
     MonsterName = items[1];
-    AttackSpeed = Double.parseDouble(items[2]);
-    Attack = Double.parseDouble(items[3]);
-    Defence = Double.parseDouble(items[4]);
-    Critical = Double.parseDouble(items[5]);
-    MagicAttack = Double.parseDouble(items[6]);
-    MagicDefence = Double.parseDouble(items[7]);
-    MAX_HP = Double.parseDouble(items[8]);
-    MAX_MP = Double.parseDouble(items[9]);
-    for(int i = 10; i < items.length; i++){
-      Skills[i-10] = Integer.parseInt(items[i]);
+    exp = Integer.parseInt(items[3]);
+    coin = Integer.parseInt(items[4]);
+    AttackSpeed = Double.parseDouble(items[5]);
+    Attack = Double.parseDouble(items[6]);
+    Defence = Double.parseDouble(items[7]);
+    Critical = Double.parseDouble(items[8]);
+    MagicAttack = Double.parseDouble(items[9]);
+    MagicDefence = Double.parseDouble(items[10]);
+    MAX_HP = Double.parseDouble(items[11]);
+    for(int i = 12; i < items.length; i++){
+      Skills[i-12] = Integer.parseInt(items[i]);
     }
   }
 

@@ -19,7 +19,7 @@ public class Move {
         act.MoverMapID = m.MapObjectID;
       }
     }
-    act.ActionID = ActionID.MOVE;
+    act.ActionID = ActionID.PLAYER_MOVE;
     act.MoverID = PID;
     act.TargetMapID = 0;
     act.TargetID = 0;

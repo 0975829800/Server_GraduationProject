@@ -1,6 +1,7 @@
 package Action;
 
 import Control.MonsterFighting;
+import ID.ActionID;
 import ID.SkillID;
 import ID.TypeID;
 import ServerMainBody.Server;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public class Attack {
 
-  public void Attack(OutputStream out, PlayerInformation playerInformation,byte[] Data){
+  public void attack(OutputStream out, PlayerInformation playerInformation,byte[] Data){
     int MapID = ByteArrayTransform.ToInt(Data,0);
     int skill = ByteArrayTransform.ToInt(Data,4);
     MonsterType tmp = null;
@@ -50,7 +51,7 @@ public class Attack {
             i.DamageStatistic[length] += damage;
           }
 
-          //Server.Action.add(new ActionType());
+          Server.Action.add(new ActionType(ActionID.PLAYER_ATTACK,playerInformation.MapID,playerInformation.PID,i.MapObjectID,i.MonsterID,damage,0));
         }
 
         tmp = i;
@@ -68,11 +69,12 @@ public class Attack {
                   if(s.SkillID == skill){ //哪個技能
                     playerInformation.status.MP -= s.MP;
 
-                    p.status.HP += playerInformation.status.MG*s.DamagePercent;
+                    double heal = playerInformation.status.MG*s.DamagePercent;
+                    p.status.HP += heal;
                     if(p.status.HP > p.status.MAX_HP){
                       p.status.HP = p.status.MAX_HP;
                     }
-                    //Server.Action.add(); //治療動作發送
+                    Server.Action.add(new ActionType(ActionID.PLAYER_HEAL,playerInformation.MapID,playerInformation.PID,p.MapID,p.PID,heal,0));
                     break;
                   }
                 }
@@ -110,7 +112,9 @@ public class Attack {
 
       }
     }
-
+    if(damage < 0){
+      damage = 0;
+    }
     return damage;
   }
 }
