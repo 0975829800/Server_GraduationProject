@@ -18,6 +18,7 @@ public class Status {
   public int coin;
   public int Skill_Point;
   public int State;
+  public int exp;
 
   //Equipment sum values
   public int EMAX_HP;
@@ -76,6 +77,8 @@ public class Status {
     System.arraycopy(temp,0,ans,44,4);
     temp = ToCSharpTool.ToCSharp(State);
     System.arraycopy(temp,0,ans,48,4);
+    temp = ToCSharpTool.ToCSharp(exp);
+    System.arraycopy(temp,0,ans,52,4);
     return ans;
   }
 }

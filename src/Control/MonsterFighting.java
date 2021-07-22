@@ -2,8 +2,10 @@ package Control;
 
 
 import ID.ActionID;
+import ID.MessageID;
 import ID.SkillID;
 import ServerMainBody.Server;
+import Tools.ToCSharpTool;
 import Type.ActionType;
 import Type.MonsterType;
 import Type.PlayerInformation;
@@ -18,7 +20,7 @@ public class MonsterFighting extends Thread{
   }
 
   public void run(){
-    if(monster.HP <= 0){
+    if(monster.HP <= 0){ //怪獸死亡
       Reward();
       removeMonster();
       System.exit(0);
@@ -49,16 +51,14 @@ public class MonsterFighting extends Thread{
       }
       //攻擊仇恨對象
       double damage = MonsterDamage(player);
-      if(damage > player.status.HP){
+      if(damage > player.status.HP){ //若玩家死亡
         player.status.HP = 0;
         CleanDamage(player.PID);
         PlayerDead(player);
-      }else{
+      }else{                        //正常攻擊
         player.status.HP-=damage;
-        MonsterAttack(player,damage);
+        MonsterAttack(player,damage,monster.Skills[0]);
       }
-
-
 
       sleep((long) sleepTime);
     } catch (Exception e) {
@@ -67,7 +67,34 @@ public class MonsterFighting extends Thread{
 
   }
 
+
+
+
   public void Reward(){
+    byte[] buf;
+    try {
+      for(int i = 0; i < 10; i++){
+        if (monster.DamagePID[i] != 0){
+          for (PlayerInformation p: Server.Information){
+            //金幣發送
+            p.status.coin+=monster.coin;
+            buf = new byte[12];
+            System.arraycopy(ToCSharpTool.ToCSharp(MessageID.COIN),0,buf,0,4);
+            System.arraycopy(ToCSharpTool.ToCSharp(monster.MonsterID),0,buf,4,4);
+            System.arraycopy(ToCSharpTool.ToCSharp(monster.coin),0,buf,8,4);
+            p.mss.getOutputStream().write(buf);
+
+            //經驗發送
+            //LevelControl()
+
+            //裝備發送
+          }
+        }
+      }
+
+    }catch (Exception e){
+
+    }
 
   }
 
@@ -76,8 +103,8 @@ public class MonsterFighting extends Thread{
     Server.Monster.removeIf(m -> m == monster);
   }
 
-  public void MonsterAttack(PlayerInformation p,double damage){
-    Server.Action.add(new ActionType(ActionID.MONSTER_ATTACK,monster.MapObjectID,monster.MonsterID,p.MapID,p.PID,damage,0)); //通知怪獸攻擊動畫
+  public void MonsterAttack(PlayerInformation p,double damage,int SkillID){
+    Server.Action.add(new ActionType(ActionID.MONSTER_ATTACK,monster.MapObjectID,monster.MonsterID,p.MapID,p.PID,damage,(double) SkillID)); //通知怪獸攻擊動畫
   }
 
   public void CleanDamage(int PID){

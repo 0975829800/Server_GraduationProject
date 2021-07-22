@@ -51,7 +51,7 @@ public class Attack {
             i.DamageStatistic[length] += damage;
           }
 
-          Server.Action.add(new ActionType(ActionID.PLAYER_ATTACK,playerInformation.MapID,playerInformation.PID,i.MapObjectID,i.MonsterID,damage,0));
+          Server.Action.add(new ActionType(ActionID.PLAYER_ATTACK,playerInformation.MapID,playerInformation.PID,i.MapObjectID,i.MonsterID,damage,skill));
         }
 
         tmp = i;
@@ -74,7 +74,7 @@ public class Attack {
                     if(p.status.HP > p.status.MAX_HP){
                       p.status.HP = p.status.MAX_HP;
                     }
-                    Server.Action.add(new ActionType(ActionID.PLAYER_HEAL,playerInformation.MapID,playerInformation.PID,p.MapID,p.PID,heal,0));
+                    Server.Action.add(new ActionType(ActionID.PLAYER_HEAL,playerInformation.MapID,playerInformation.PID,p.MapID,p.PID,heal,s.SkillID));
                     break;
                   }
                 }
