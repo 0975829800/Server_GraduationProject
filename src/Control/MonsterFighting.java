@@ -5,11 +5,9 @@ import ID.ActionID;
 import ID.MessageID;
 import ID.SkillID;
 import ServerMainBody.Server;
+import Tools.LevelTool;
 import Tools.ToCSharpTool;
-import Type.ActionType;
-import Type.MonsterType;
-import Type.PlayerInformation;
-import Type.SkillType;
+import Type.*;
 
 public class MonsterFighting extends Thread{
   MonsterType monster;
@@ -85,9 +83,21 @@ public class MonsterFighting extends Thread{
             p.mss.getOutputStream().write(buf);
 
             //經驗發送
-            //LevelControl()
+            buf = new byte[12];
+            System.arraycopy(ToCSharpTool.ToCSharp(MessageID.EXP),0,buf,0,4);
+            System.arraycopy(ToCSharpTool.ToCSharp(monster.MonsterID),0,buf,4,4);
+            System.arraycopy(ToCSharpTool.ToCSharp(monster.exp),0,buf,8,4);
+            p.mss.getOutputStream().write(buf);
+            // 升等
+            if (LevelTool.expControl(p,monster.exp) == 1){
+              buf = new byte[4+ Status.SendSize];
+              System.arraycopy(ToCSharpTool.ToCSharp(MessageID.LEVEL_UP),0,buf,0,4);
+              System.arraycopy(p.status.getByte(),0,buf,4,Status.SendSize);
+              p.mss.getOutputStream().write(buf);
+            }
 
             //裝備發送
+
           }
         }
       }

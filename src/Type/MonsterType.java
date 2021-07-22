@@ -46,9 +46,7 @@ public class MonsterType {
     MagicAttack = Double.parseDouble(items[9]);
     MagicDefence = Double.parseDouble(items[10]);
     MAX_HP = Double.parseDouble(items[11]);
-    for(int i = 12; i < items.length; i++){
-      Skills[i-12] = Integer.parseInt(items[i]);
-    }
+    Skills[0] = Integer.parseInt(items[12]);
   }
 
 }
