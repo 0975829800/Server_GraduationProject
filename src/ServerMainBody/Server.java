@@ -38,6 +38,7 @@ public class Server {
     ShopID.SetItemShop();
     ShopID.SetEquipmentShop();
     MonsterID.GetMonsterInformation();
+
     try {
       serverSocket = new ServerSocket(ServerPort);
       actionSocket = new ServerSocket(ActionPort);

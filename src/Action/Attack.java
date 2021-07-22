@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class Attack {
 
-  public void attack(OutputStream out, PlayerInformation playerInformation,byte[] Data){
+  public static void attack(PlayerInformation playerInformation,byte[] Data){
     int MapID = ByteArrayTransform.ToInt(Data,0);
     int skill = ByteArrayTransform.ToInt(Data,4);
     MonsterType tmp = null;
@@ -51,7 +51,7 @@ public class Attack {
             i.DamageStatistic[length] += damage;
           }
 
-          Server.Action.add(new ActionType(ActionID.PLAYER_ATTACK,playerInformation.MapID,playerInformation.PID,i.MapObjectID,i.MonsterID,damage,0));
+          Server.Action.add(new ActionType(ActionID.PLAYER_ATTACK,playerInformation.MapID,playerInformation.PID,i.MapObjectID,i.MonsterID,damage,skill));
         }
 
         tmp = i;
@@ -74,7 +74,7 @@ public class Attack {
                     if(p.status.HP > p.status.MAX_HP){
                       p.status.HP = p.status.MAX_HP;
                     }
-                    Server.Action.add(new ActionType(ActionID.PLAYER_HEAL,playerInformation.MapID,playerInformation.PID,p.MapID,p.PID,heal,0));
+                    Server.Action.add(new ActionType(ActionID.PLAYER_HEAL,playerInformation.MapID,playerInformation.PID,p.MapID,p.PID,heal,s.SkillID));
                     break;
                   }
                 }
@@ -94,7 +94,7 @@ public class Attack {
 
 
 
-  public double Skill_Damage(PlayerInformation playerInformation, int Skill, MonsterType monster){
+  public static double Skill_Damage(PlayerInformation playerInformation, int Skill, MonsterType monster){
     double damage = 0;
 
     for(SkillType s: SkillID.SkillInformation){
