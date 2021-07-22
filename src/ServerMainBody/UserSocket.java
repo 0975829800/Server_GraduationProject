@@ -111,6 +111,9 @@ public class UserSocket extends Thread{
           case ProtocolID.GET_TEAM:
             Community.getTeam(out,PlayerID,data.data);
             break;
+          case ProtocolID.ATTACK:
+            Attack.attack(playerInformation,data.data);
+            break;
         }
 
       }

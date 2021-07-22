@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class Attack {
 
-  public void attack(OutputStream out, PlayerInformation playerInformation,byte[] Data){
+  public static void attack(PlayerInformation playerInformation,byte[] Data){
     int MapID = ByteArrayTransform.ToInt(Data,0);
     int skill = ByteArrayTransform.ToInt(Data,4);
     MonsterType tmp = null;
@@ -94,7 +94,7 @@ public class Attack {
 
 
 
-  public double Skill_Damage(PlayerInformation playerInformation, int Skill, MonsterType monster){
+  public static double Skill_Damage(PlayerInformation playerInformation, int Skill, MonsterType monster){
     double damage = 0;
 
     for(SkillType s: SkillID.SkillInformation){
