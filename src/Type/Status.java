@@ -3,7 +3,7 @@ package Type;
 import Tools.ToCSharpTool;
 
 public class Status {
-  public static final int SendSize = 52;
+  public static final int SendSize = 56;
 
   public int PlayID;
   public int HP;
@@ -18,6 +18,7 @@ public class Status {
   public int coin;
   public int Skill_Point;
   public int State;
+  public int EXP;
 
   //Equipment sum values
   public int EMAX_HP;
@@ -32,7 +33,7 @@ public class Status {
   public Status(){
 
   }
-  public Status(int playID, int HP, int MAX_HP, int MP, int MAX_MP, int STR, int MG, int AGI, int LUC, int level,int coin, int skill_point, int state) {
+  public Status(int playID, int HP, int MAX_HP, int MP, int MAX_MP, int STR, int MG, int AGI, int LUC, int level,int coin, int skill_point, int state,int EXP) {
   	this.PlayID = playID;
   	this.HP = HP;
   	this.MAX_HP = MAX_HP;
@@ -46,6 +47,7 @@ public class Status {
   	this.coin = coin;
   	this.Skill_Point = skill_point;
   	this.State = state;
+    this.EXP = EXP;
   }
   public byte[] getByte(){
     byte[] temp;
@@ -76,6 +78,8 @@ public class Status {
     System.arraycopy(temp,0,ans,44,4);
     temp = ToCSharpTool.ToCSharp(State);
     System.arraycopy(temp,0,ans,48,4);
+    temp = ToCSharpTool.ToCSharp(EXP);
+    System.arraycopy(temp,0,ans,52,4);
     return ans;
   }
 }

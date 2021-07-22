@@ -1,8 +1,11 @@
 package Action;
 
 import DBS.DBConnection;
+import ID.NoticeID;
+import ServerMainBody.Server;
 import Tools.ToCSharpTool;
 import Type.FriendType;
+import Type.NoticeType;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -115,7 +118,17 @@ public class Community {
       DBConnection con = new DBConnection();
       if (con.setTeam(PID,teamID)){
         buf = ToCSharpTool.ToCSharp(con.getTeam(teamID)[1]);
-//        buf = ToCSharpTool.ToCSharp(1);
+        /*
+        * add notice in list
+        * */
+        ArrayList<Integer> member = con.getTeamMem(teamID);
+        for (int m : member){
+          if(m != PID){
+            Server.Notice.add(new NoticeType(m, NoticeID.TeamIn,PID+" join in!"));
+          }
+        }
+
+        //buf = ToCSharpTool.ToCSharp(1);
       }
       else{
         buf = ToCSharpTool.ToCSharp(-1);
@@ -149,9 +162,13 @@ public class Community {
       String[] teamInfo = con.getTeam(PID); //[0] = teamID ,[1] = teamName
       if (teamInfo != null){
         if (PID == Integer.parseInt(teamInfo[0])){ //leader
+          System.out.println(PID + "Leader leave");
           if (con.getTeamNum(Integer.parseInt(teamInfo[0])) > 1){ //not only 1 member
             if (con.setTeam(PID,0) && con.replaceTeamLeader(PID)){
               buf = ToCSharpTool.ToCSharp(1);
+              /*
+               * notice
+               * */
             }
             else{
               buf = ToCSharpTool.ToCSharp(-1);
