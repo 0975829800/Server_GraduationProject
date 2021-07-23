@@ -25,7 +25,7 @@ public class DisconnectTool {
     try {
       DBConnection con = new DBConnection();
       con.updateStatus(status.PlayID,status.HP,status.MAX_HP,status.MP,status.MAX_MP,
-              status.STR,status.MG,status.AGI,status.LUC,status.Level,status.Skill_Point,status.State,status.coin);
+              status.STR,status.MG,status.AGI,status.LUC,status.Level,status.Skill_Point,status.State,status.coin,status.EXP);
     }catch (Exception e){
       System.err.println(e);
     }

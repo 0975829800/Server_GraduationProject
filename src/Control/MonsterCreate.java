@@ -10,16 +10,15 @@ public class MonsterCreate extends Thread{
 
   public void run() {
 
-    for(MonsterType m: Server.Monster){
-      Server.LocationSum[m.Location]++;
-    }
-
-    for(int i = 1; i < Server.LocationSum.length; i++){
-      while(Server.LocationSum[i] < 50){
-        CreateMonster(i);
-        Server.LocationSum[i]++;
+    while (true){
+      for(int i = 1; i < Server.LocationSum.length; i++){
+        while(Server.LocationSum[i] < 20){
+          CreateMonster(i);
+          Server.LocationSum[i]++;
+        }
       }
     }
+
   }
 
   //怪物生成數值賦予(需在map上同步
