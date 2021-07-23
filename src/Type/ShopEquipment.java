@@ -37,7 +37,7 @@ public class ShopEquipment {
     System.arraycopy(temp,0,ans,8,4);
     temp = ToCSharpTool.ToCSharp(part);
     System.arraycopy(temp,0,ans,12,4);
-    temp = ToCSharpTool.ToCSharp(order);
+    temp = ToCSharpTool.ToCSharp(Rarity);
     System.arraycopy(temp,0,ans,16,4);
     temp = ToCSharpTool.ToCSharp(Skill1);
     System.arraycopy(temp,0,ans,20,4);

@@ -24,7 +24,8 @@ public class ShopID {
   public static void SetEquipmentShop(){ //set shop equipment
     int i = 0;
     for (EquipmentType e : EquipmentID.EquipmentInformation){
-      shopEquipment.add(new ShopEquipment(Shop1, i, e, 1 , 0, 0));
+      shopEquipment.add(new ShopEquipment(Shop1, i, e, 0 , 0, 0));
+      i++;
     }
   }
 }
