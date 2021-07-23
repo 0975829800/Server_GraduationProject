@@ -1,5 +1,6 @@
 package ServerMainBody;
 
+import ID.EquipmentID;
 import ID.MonsterID;
 import ID.ShopID;
 import Type.*;
@@ -35,6 +36,7 @@ public class Server {
     Socket        ss,as,ms,mss;
     int ID = 0;
 
+    EquipmentID.setEquipmentInformation();
     ShopID.SetItemShop();
     ShopID.SetEquipmentShop();
     MonsterID.GetMonsterInformation();
