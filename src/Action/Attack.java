@@ -19,9 +19,12 @@ public class Attack {
     int skill = ByteArrayTransform.ToInt(Data,4);
     MonsterType tmp = null;
 
+    System.out.println("PID:" + playerInformation.PID + "Attack " + MapID);
+
     for (MonsterType i : Server.Monster){
       if(i.MapObjectID == MapID){
         if(!i.Fighting){
+          System.out.println("MID: " + i.MapObjectID + "is Fighting");
           Thread t = new Thread(new MonsterFighting(i));
           t.start();
           i.Fighting = true;

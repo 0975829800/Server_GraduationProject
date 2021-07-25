@@ -1,6 +1,8 @@
 package ServerMainBody;
 
+import Control.MonsterCreate;
 import ID.EquipmentID;
+import ID.LocationID;
 import ID.MonsterID;
 import ID.ShopID;
 import Type.*;
@@ -23,7 +25,7 @@ public class Server {
   public final static int MapPort    = 8003;
   public final static int MessagePort = 8004;
 
-  public static int[] LocationSum = new int[8];
+
 
   public static boolean   debug = false; //debug時改成true
 
@@ -37,6 +39,7 @@ public class Server {
     int ID = 0;
 
     EquipmentID.setEquipmentInformation();
+    LocationID.setLocation();
     ShopID.SetItemShop();
     ShopID.SetEquipmentShop();
     MonsterID.GetMonsterInformation();
@@ -48,7 +51,9 @@ public class Server {
       messageSocket = new ServerSocket(MessagePort);
       System.out.println("ServerMainBody.Server Waiting Request...");
       Thread broadcast = new Thread(new Broadcast());
+      Thread MonsterCreate = new Thread(new MonsterCreate());
       broadcast.start();
+      MonsterCreate.start();
       while (true){
         ss = serverSocket.accept();
         as = actionSocket.accept();

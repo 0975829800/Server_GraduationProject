@@ -1,11 +1,29 @@
 package ID;
 
+import Type.LocationType;
+import Type.MonsterType;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class LocationID {
-  public static final int Location1 = 1;
-  public static final int Location2 = 2;
-  public static final int Location3 = 3;
-  public static final int Location4 = 4;
-  public static final int Location5 = 5;
-  public static final int Location6 = 6;
-  public static final int Location7 = 7;
+  public static Queue<LocationType> location = new LinkedList<>();
+
+  public static void setLocation() {
+    try{
+      InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream("src\\ID\\Location.csv"));
+      BufferedReader reader = new BufferedReader(inputStreamReader);
+
+      String line = null;
+      while ((line = reader.readLine())!= null){
+        location.add(new LocationType(line));
+      }
+      reader.close();
+    }catch (Exception e){
+      System.out.println(e);
+    }
+  }
 }

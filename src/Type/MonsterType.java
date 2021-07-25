@@ -1,5 +1,7 @@
 package Type;
 
+import java.util.Arrays;
+
 public class MonsterType {
   public int    MapObjectID;
   public int    MonsterID;     //狀態
@@ -49,4 +51,34 @@ public class MonsterType {
     Skills[0] = Integer.parseInt(items[12]);
   }
 
+
+  public String ToString() {
+    return "MonsterType{" +
+            "MapObjectID=" + MapObjectID +
+            ", MonsterID=" + MonsterID +
+            ", MonsterName='" + MonsterName + '\'' +
+            ", Longitude=" + Longitude +
+            ", Latitude=" + Latitude +
+            ", Location=" + Location +
+            ", Skills=" + Arrays.toString(Skills) +
+            ", exp=" + exp +
+            ", coin=" + coin +
+            ", drop=" + Arrays.toString(drop) +
+            ", Fighting=" + Fighting +
+            ", HatredPlayer=" + HatredPlayer +
+            ", DamagePID=" + Arrays.toString(DamagePID) +
+            ", DamageStatistic=" + Arrays.toString(DamageStatistic) +
+            ", AttackSpeed=" + AttackSpeed +
+            ", HP=" + HP +
+            ", MAX_HP=" + MAX_HP +
+            ", MP=" + MP +
+            ", MAX_MP=" + MAX_MP +
+            ", State=" + State +
+            ", Attack=" + Attack +
+            ", Defence=" + Defence +
+            ", Critical=" + Critical +
+            ", MagicAttack=" + MagicAttack +
+            ", MagicDefence=" + MagicDefence +
+            '}';
+  }
 }
