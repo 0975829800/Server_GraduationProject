@@ -41,4 +41,19 @@ public class PlayerInformation {
     }
     return -1;
   }
+
+  @Override
+  public String toString() {
+    return "PlayerInformation{" +
+            "PID=" + PID +
+            ", MapID=" + MapID +
+            ", Dead=" + Dead +
+            ", sc=" + sc +
+            ", mss=" + mss +
+            ", status=" + status.toString() +
+            ", item=" + item +
+            ", equipment=" + equipment +
+            ", progress=" + progress +
+            '}';
+  }
 }

@@ -51,6 +51,20 @@ public class MonsterType {
     Skills[0] = Integer.parseInt(items[12]);
   }
 
+  public void MonsterCopy(MonsterType m){
+    MonsterID = m.MonsterID;
+    exp = m.exp;
+    coin = m.coin;
+    AttackSpeed = m.AttackSpeed;
+    Attack = m.Attack;
+    Defence = m.Defence;
+    Critical = m.Critical;
+    MagicAttack = m.MagicAttack;
+    MagicDefence = m.MagicDefence;
+    MAX_HP = m.MAX_HP;
+    Skills[0] = m.Skills[0];
+  }
+
 
   public String ToString() {
     return "MonsterType{" +

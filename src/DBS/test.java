@@ -38,7 +38,7 @@ public class test {
 
 //        System.out.println(con.addStatus(31240985,1,2,3,4,5,6,7,8,9,10,11,0,80));
 //        System.out.println(con.getStatus(31240985).EXP);
-//        System.out.println(con.updateStatus(146937808,1,2,3,4,5,6,7,8,9,10,11,70));
+        System.out.println(con.updateStatus(144906270,100,100,100,100,10,10,10,10,1,10,0,7000, 0));
 //        System.out.println(con.delStatus(146937808));
 
 //        System.out.println(con.addProgress(31240985,1));

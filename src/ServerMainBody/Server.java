@@ -1,10 +1,7 @@
 package ServerMainBody;
 
 import Control.MonsterCreate;
-import ID.EquipmentID;
-import ID.LocationID;
-import ID.MonsterID;
-import ID.ShopID;
+import ID.*;
 import Type.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -38,6 +35,7 @@ public class Server {
     Socket        ss,as,ms,mss;
     int ID = 0;
 
+    SkillID.setSkillInformation();
     EquipmentID.setEquipmentInformation();
     LocationID.setLocation();
     ShopID.SetItemShop();
@@ -68,6 +66,12 @@ public class Server {
     }
     catch (Exception e){
      System.err.println(e);
+    }
+  }
+
+  public static void PrintPlayerInformation(){
+    for(PlayerInformation p : Information){
+      System.out.println(p.toString());
     }
   }
 }

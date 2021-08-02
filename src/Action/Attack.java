@@ -19,12 +19,14 @@ public class Attack {
     int skill = ByteArrayTransform.ToInt(Data,4);
     MonsterType tmp = null;
 
-    System.out.println("PID:" + playerInformation.PID + "Attack " + MapID);
+    Server.PrintPlayerInformation();
+    System.out.println("PID: " + playerInformation.PID + " Attack " + MapID);
 
     for (MonsterType i : Server.Monster){
       if(i.MapObjectID == MapID){
         if(!i.Fighting){
-          System.out.println("MID: " + i.MapObjectID + "is Fighting");
+          System.out.println("MID: " + i.MapObjectID + " is Fighting");
+          i.DamagePID[0] = playerInformation.PID;
           Thread t = new Thread(new MonsterFighting(i));
           t.start();
           i.Fighting = true;
@@ -52,6 +54,14 @@ public class Attack {
           if(!flag){
             i.DamagePID[length] = playerInformation.PID;
             i.DamageStatistic[length] += damage;
+          }
+
+          MapType update = new MapType(i);
+          MapType.MapIDCounter--;
+          for(MapType mapType:Server.Map){
+            if(mapType.MapObjectID == i.MapObjectID){
+              mapType.MapCopy(update);
+            }
           }
 
           Server.Action.add(new ActionType(ActionID.PLAYER_ATTACK,playerInformation.MapID,playerInformation.PID,i.MapObjectID,i.MonsterID,damage,skill));
@@ -92,7 +102,7 @@ public class Attack {
       }
     }
 
-
+    System.out.println(tmp.ToString());
   }
 
 
@@ -103,13 +113,12 @@ public class Attack {
     for(SkillType s: SkillID.SkillInformation){
       if(s.SkillID == Skill){
         playerInformation.status.MP -= s.MP;
-
         if(s.DamageSource.compareTo("ATK") == 0){
-          damage = (double)((playerInformation.status.STR+playerInformation.status.ESTR)*0.5+(playerInformation.status.AGI+playerInformation.status.EAGI))*s.DamagePercent;
-          damage -= (double)(monster.Defence);
+          damage = (((double)playerInformation.status.STR+(double)playerInformation.status.ESTR)*0.5+((double)playerInformation.status.AGI+(double)playerInformation.status.EAGI))*s.DamagePercent;
+          damage -= (double)monster.Defence;
         }
         else if(s.DamageSource.compareTo("MATK") == 0){
-          damage = (double)(playerInformation.status.MG+playerInformation.status.EMG)*s.DamagePercent;
+          damage = ((double)playerInformation.status.MG+(double)playerInformation.status.EMG)*s.DamagePercent;
           damage -= (double)(monster.MagicDefence);
         }
 
@@ -118,6 +127,7 @@ public class Attack {
     if(damage < 0){
       damage = 0;
     }
+    System.out.println("Deal Damage : " + damage);
     return damage;
   }
 }

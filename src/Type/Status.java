@@ -82,4 +82,32 @@ public class Status {
     System.arraycopy(temp,0,ans,52,4);
     return ans;
   }
+
+  @Override
+  public String toString() {
+    return "Status{" +
+            "PlayID=" + PlayID +
+            ", HP=" + HP +
+            ", MAX_HP=" + MAX_HP +
+            ", MP=" + MP +
+            ", MAX_MP=" + MAX_MP +
+            ", STR=" + STR +
+            ", MG=" + MG +
+            ", AGI=" + AGI +
+            ", LUC=" + LUC +
+            ", Level=" + Level +
+            ", coin=" + coin +
+            ", Skill_Point=" + Skill_Point +
+            ", State=" + State +
+            ", EXP=" + EXP +
+            ", EMAX_HP=" + EMAX_HP +
+            ", EMAX_MP=" + EMAX_MP +
+            ", ESTR=" + ESTR +
+            ", EMG=" + EMG +
+            ", EAGI=" + EAGI +
+            ", ELUC=" + ELUC +
+            ", ELevel=" + ELevel +
+            ", Ecoin=" + Ecoin +
+            '}';
+  }
 }

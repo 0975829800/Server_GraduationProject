@@ -18,51 +18,74 @@ public class MonsterFighting extends Thread{
   }
 
   public void run(){
-    if(monster.HP <= 0){ //怪獸死亡
-      Reward();
-      removeMonster();
-      System.exit(0);
-    }
-    try {
-      int max = 0;
-      int pos = -1;
-      //找仇恨最大值
-      for(int i = 0; i < monster.DamagePID.length; i++){
-        if(monster.DamageStatistic[i] > max){
-          max = monster.DamageStatistic[i];
-          pos = i;
+    while (true){
+
+      for(int i = 0; i < 10; i++){ //確保攻擊目標是否離線
+        boolean flag = true; //代表是否離線
+        if(monster.DamagePID[i] != 0){
+          for(PlayerInformation p: Server.Information){
+            if(p.PID == monster.DamagePID[i]){
+              flag = false;
+              break;
+            }
+          }
+          if(flag){
+            monster.DamagePID[i] = 0;
+            monster.DamageStatistic[i] = 0;
+          }
         }
       }
 
-      //若無仇恨對象
-      if(pos == -1){
-        monster.Fighting = false;
-        System.exit(0);
+      if(monster.HP <= 0){ //怪獸死亡
+        Reward();
+        removeMonster();
+        break;
       }
-
-      //設定仇恨玩家
-      PlayerInformation player = null;
-      for(PlayerInformation p: Server.Information){
-        if(p.PID == monster.DamageStatistic[max]){
-          player = p;
+      try {
+        int max = -1;
+        int pos = -1;
+        //找仇恨最大值
+        for(int i = 0; i < monster.DamagePID.length; i++){
+          if(monster.DamageStatistic[i] > max && monster.DamagePID[i] != 0){
+            max = monster.DamageStatistic[i];
+            pos = i;
+          }
         }
-      }
-      //攻擊仇恨對象
-      double damage = MonsterDamage(player);
-      if(damage > player.status.HP){ //若玩家死亡
-        player.status.HP = 0;
-        CleanDamage(player.PID);
-        PlayerDead(player);
-      }else{                        //正常攻擊
-        player.status.HP-=damage;
-        MonsterAttack(player,damage,monster.Skills[0]);
+
+        //若無仇恨對象
+        if(pos == -1){
+          monster.Fighting = false;
+          break;
+        }
+        //設定仇恨玩家
+        PlayerInformation player = null;
+        for(PlayerInformation p: Server.Information){
+          if(p.PID == monster.DamagePID[pos]){
+            player = p;
+          }
+        }
+        //攻擊仇恨對象
+        if(player != null){
+          double damage = MonsterDamage(player);
+          if(damage > player.status.HP){ //若玩家死亡
+            player.status.HP = 0;
+            CleanDamage(player.PID);
+            PlayerDead(player);
+          }else{                        //正常攻擊
+            System.out.println("Monster " + monster.MapObjectID + " Attack " + player.PID);
+            player.status.HP-=damage;
+            MonsterAttack(player,damage,monster.Skills[0]);
+          }
+        }
+
+
+        sleep((long) sleepTime);
+      } catch (Exception e) {
+        e.printStackTrace();
       }
 
-      sleep((long) sleepTime);
-    } catch (Exception e) {
-      e.printStackTrace();
     }
-
+    System.out.println("Monster " + monster.MapObjectID + " process is close!");
   }
 
 
@@ -103,7 +126,7 @@ public class MonsterFighting extends Thread{
       }
 
     }catch (Exception e){
-
+      e.printStackTrace();
     }
 
   }
@@ -111,6 +134,7 @@ public class MonsterFighting extends Thread{
   public void removeMonster(){
     Server.Action.add(new ActionType(ActionID.MONSTER_DEAD,monster.MapObjectID,monster.MonsterID,0,0,0,0)); //通知怪獸消失動畫
     Server.Monster.removeIf(m -> m == monster);
+    Server.Map.removeIf(m -> m.MapObjectID == monster.MapObjectID);
   }
 
   public void MonsterAttack(PlayerInformation p,double damage,int SkillID){

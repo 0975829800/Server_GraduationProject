@@ -46,6 +46,16 @@ public class MapType {
     MapIDCounter++;
   }
 
+  public void MapCopy(MapType m){
+    TypeID = m.TypeID;
+    BelongID = m.BelongID;
+    Longitude = m.Longitude;
+    Latitude = m.Latitude;
+    HP = m.HP;
+    MP = m.MP;
+    state = m.state;
+  }
+
   public String toString(){
     return String.format("%d %d %d %d %d %d %d %f %f", MapObjectID, TypeID, BelongID, Level, HP, MP, state, Longitude, Latitude);
   }

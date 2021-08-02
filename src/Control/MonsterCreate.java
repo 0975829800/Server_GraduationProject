@@ -14,12 +14,13 @@ public class MonsterCreate extends Thread{
 
     while (true){
       for(LocationType l: LocationID.location){
-        if(l.Sum < 5){
+        while (l.Sum < 5){
           l.Sum++;
           double[] tmp = l.CreateRandomPosition();
           CreateMonster(l.locationID,tmp[0],tmp[1]);
         }
       }
+
       try {
         sleep(10000);
       }catch (Exception e){
@@ -31,13 +32,13 @@ public class MonsterCreate extends Thread{
 
   //怪物生成數值賦予(需在map上同步
   public void CreateMonster(int Location,double x,double y){
-    MonsterType newMonster;
+    MonsterType newMonster = new MonsterType();
     for(MonsterType m : MonsterID.MonsterInformation){
       if(m.MonsterID == Location){
-        newMonster = m;
-        newMonster.HP = m.MAX_HP;
-        newMonster.MP = m.MAX_MP;
+        newMonster.MonsterCopy(m);
         newMonster.State = 0; //common
+        newMonster.HP = m.MAX_HP;
+
         newMonster.Location = Location;
         newMonster.Latitude = x;
         newMonster.Longitude = y;

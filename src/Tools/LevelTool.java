@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class LevelTool {
   public static int expControl(PlayerInformation p , int exp){
-    double level1 = 50;
+    double level1 = 10;
     double rate = 1.5;
     int level_up = 0;
     p.status.EXP += exp;
