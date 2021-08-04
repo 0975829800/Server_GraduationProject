@@ -19,7 +19,6 @@ public class Attack {
     int skill = ByteArrayTransform.ToInt(Data,4);
     MonsterType tmp = null;
 
-    Server.PrintPlayerInformation();
     System.out.println("PID: " + playerInformation.PID + " Attack " + MapID);
 
     for (MonsterType i : Server.Monster){
@@ -75,11 +74,11 @@ public class Attack {
     if(tmp == null){//治療
       for (MapType m : Server.Map){
         if(m.MapObjectID == MapID){
-          if(m.TypeID == TypeID.PLAYER){  //是否為玩家
+          if(m.TypeID == TypeID.PLAYER){   //是否為玩家
             for (PlayerInformation p: Server.Information){
-              if(p.PID == m.BelongID){    //哪個玩家
+              if(p.PID == m.BelongID){     //哪個玩家
                 for(SkillType s : SkillID.SkillInformation){
-                  if(s.SkillID == skill){ //哪個技能
+                  if(s.SkillID == skill){  //哪個技能
                     playerInformation.status.MP -= s.MP;
 
                     double heal = playerInformation.status.MG*s.DamagePercent;
@@ -102,7 +101,9 @@ public class Attack {
       }
     }
 
-    System.out.println(tmp.ToString());
+    if(tmp != null){
+      System.out.println(tmp.ToString());
+    }
   }
 
 

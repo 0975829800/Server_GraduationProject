@@ -1,7 +1,9 @@
 package Control;
 
 
+import Action.MessageSender;
 import ID.ActionID;
+import ID.LocationID;
 import ID.MessageID;
 import ID.SkillID;
 import ServerMainBody.Server;
@@ -18,6 +20,12 @@ public class MonsterFighting extends Thread{
   }
 
   public void run(){
+    try {
+      sleep((long) sleepTime);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+
     while (true){
 
       for(int i = 0; i < 10; i++){ //確保攻擊目標是否離線
@@ -69,11 +77,21 @@ public class MonsterFighting extends Thread{
           double damage = MonsterDamage(player);
           if(damage > player.status.HP){ //若玩家死亡
             player.status.HP = 0;
+
+            if(player.MapAddress!=null){
+              player.MapAddress.HP = 0;
+            }
+
             CleanDamage(player.PID);
             PlayerDead(player);
           }else{                        //正常攻擊
             System.out.println("Monster " + monster.MapObjectID + " Attack " + player.PID);
             player.status.HP-=damage;
+
+            if(player.MapAddress != null){
+              player.MapAddress.HP = player.status.HP;
+            }
+
             MonsterAttack(player,damage,monster.Skills[0]);
           }
         }
@@ -99,24 +117,15 @@ public class MonsterFighting extends Thread{
           for (PlayerInformation p: Server.Information){
             //金幣發送
             p.status.coin+=monster.coin;
-            buf = new byte[12];
-            System.arraycopy(ToCSharpTool.ToCSharp(MessageID.COIN),0,buf,0,4);
-            System.arraycopy(ToCSharpTool.ToCSharp(monster.MonsterID),0,buf,4,4);
-            System.arraycopy(ToCSharpTool.ToCSharp(monster.coin),0,buf,8,4);
-            p.mss.getOutputStream().write(buf);
+            MessageSender.Coin(p,monster.MonsterID,monster.coin);
 
             //經驗發送
-            buf = new byte[12];
-            System.arraycopy(ToCSharpTool.ToCSharp(MessageID.EXP),0,buf,0,4);
-            System.arraycopy(ToCSharpTool.ToCSharp(monster.MonsterID),0,buf,4,4);
-            System.arraycopy(ToCSharpTool.ToCSharp(monster.exp),0,buf,8,4);
-            p.mss.getOutputStream().write(buf);
+            MessageSender.EXP(p,monster.MonsterID,monster.exp);
             // 升等
             if (LevelTool.expControl(p,monster.exp) == 1){
-              buf = new byte[4+ Status.SendSize];
-              System.arraycopy(ToCSharpTool.ToCSharp(MessageID.LEVEL_UP),0,buf,0,4);
-              System.arraycopy(p.status.getByte(),0,buf,4,Status.SendSize);
-              p.mss.getOutputStream().write(buf);
+              MessageSender.LevelUp(p);
+            }else {
+              MessageSender.StatusUpdate(p);
             }
 
             //裝備發送
@@ -133,6 +142,11 @@ public class MonsterFighting extends Thread{
 
   public void removeMonster(){
     Server.Action.add(new ActionType(ActionID.MONSTER_DEAD,monster.MapObjectID,monster.MonsterID,0,0,0,0)); //通知怪獸消失動畫
+    for(LocationType l: LocationID.location){
+      if(l.locationID == monster.Location){
+        l.Sum--;
+      }
+    }
     Server.Monster.removeIf(m -> m == monster);
     Server.Map.removeIf(m -> m.MapObjectID == monster.MapObjectID);
   }
@@ -162,11 +176,9 @@ public class MonsterFighting extends Thread{
     for (SkillType s: SkillID.SkillInformation){
       if(s.SkillID == monster.Skills[0]){
         if(s.DamageSource.compareTo("ATK") == 0){
-          damage = (double) ((p.status.AGI + p.status.EAGI) + (p.status.STR + p.status.ESTR)/2) - monster.Defence;
-          damage *= s.DamagePercent;
+          damage = (double) ((p.status.AGI + p.status.EAGI) + (p.status.STR + p.status.ESTR)/2)*s.DamagePercent - monster.Defence;
         }else {
-          damage = (double) (p.status.MG+p.status.EMG) - monster.MagicDefence;
-          damage *= s.DamagePercent;
+          damage = (double) (p.status.MG+p.status.EMG)*s.DamagePercent - monster.MagicDefence;
         }
       }
     }
@@ -179,6 +191,7 @@ public class MonsterFighting extends Thread{
 
   public void PlayerDead(PlayerInformation p){
     Server.Action.add(new ActionType(ActionID.PLAYER_DEAD,p.MapID,p.PID,0,0,0,0));
+    MessageSender.PlayerDead(p);
     p.Dead = true;
   }
 }

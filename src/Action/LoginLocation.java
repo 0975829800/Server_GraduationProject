@@ -7,7 +7,7 @@ import Type.*;
 
 public class LoginLocation {
   //when login add Map information to Server.Map
-  public static int Login_Location (byte[] data, Status status){
+  public static MapType Login_Location (byte[] data, Status status){
     MapType new_information = new MapType();
     new_information.Longitude = ByteArrayTransform.ToDouble(data,0);
     new_information.Latitude = ByteArrayTransform.ToDouble(data,8);
@@ -18,7 +18,7 @@ public class LoginLocation {
     new_information.MP = status.MP;
     new_information.state = status.State;
     Server.Map.add(new_information);
-    return new_information.MapObjectID;
+    return new_information;
   }
 
   public static void Login_Location (double Lo, double La, Status status){

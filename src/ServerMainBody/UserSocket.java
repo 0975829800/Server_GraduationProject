@@ -73,7 +73,8 @@ public class UserSocket extends Thread{
         System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
         switch (data.protocol) {
           case ProtocolID.LOGIN_LOCATION:
-            playerInformation.MapID = LoginLocation.Login_Location(data.data,playerInformation.status);
+            playerInformation.MapAddress = LoginLocation.Login_Location(data.data,playerInformation.status);
+            playerInformation.MapID = playerInformation.MapAddress.MapObjectID;
             break;
           case ProtocolID.MOVE:
             Move.move(PlayerID, data.data);

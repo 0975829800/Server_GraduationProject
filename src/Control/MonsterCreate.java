@@ -22,7 +22,7 @@ public class MonsterCreate extends Thread{
       }
 
       try {
-        sleep(10000);
+        sleep(5000);
       }catch (Exception e){
         e.printStackTrace();
       }
@@ -46,8 +46,6 @@ public class MonsterCreate extends Thread{
         newMonster.MapObjectID = New.MapObjectID;
         Server.Map.add(New);
         Server.Monster.add(newMonster);
-        System.out.println(New);
-        System.out.println(newMonster.ToString());
       }
     }
   }

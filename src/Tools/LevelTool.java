@@ -14,7 +14,9 @@ public class LevelTool {
       p.status.EXP = (int)(level1 * Math.pow(rate,p.status.Level-1)) - p.status.EXP;
       level_up = 1;
       p.status.Skill_Point++;
+      p.status.Level++;
     }
+
     return level_up;
   }
 }

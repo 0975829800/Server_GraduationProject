@@ -68,10 +68,4 @@ public class Server {
      System.err.println(e);
     }
   }
-
-  public static void PrintPlayerInformation(){
-    for(PlayerInformation p : Information){
-      System.out.println(p.toString());
-    }
-  }
 }
