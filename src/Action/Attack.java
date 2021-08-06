@@ -62,7 +62,7 @@ public class Attack {
               mapType.MapCopy(update);
             }
           }
-
+          MessageSender.StatusUpdate(playerInformation); //MP更新
           Server.Action.add(new ActionType(ActionID.PLAYER_ATTACK,playerInformation.MapID,playerInformation.PID,i.MapObjectID,i.MonsterID,damage,skill));
         }
 
@@ -87,6 +87,9 @@ public class Attack {
                       p.status.HP = p.status.MAX_HP;
                     }
                     Server.Action.add(new ActionType(ActionID.PLAYER_HEAL,playerInformation.MapID,playerInformation.PID,p.MapID,p.PID,heal,s.SkillID));
+                    MessageSender.Heal(p,(int)heal);
+                    MessageSender.StatusUpdate(p);
+                    MessageSender.StatusUpdate(playerInformation);
                     break;
                   }
                 }

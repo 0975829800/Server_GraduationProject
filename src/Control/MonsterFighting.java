@@ -83,6 +83,7 @@ public class MonsterFighting extends Thread{
             }
 
             CleanDamage(player.PID);
+            MonsterAttack(player,damage,monster.Skills[0]);
             PlayerDead(player);
           }else{                        //正常攻擊
             System.out.println("Monster " + monster.MapObjectID + " Attack " + player.PID);
@@ -192,6 +193,7 @@ public class MonsterFighting extends Thread{
   public void PlayerDead(PlayerInformation p){
     Server.Action.add(new ActionType(ActionID.PLAYER_DEAD,p.MapID,p.PID,0,0,0,0));
     MessageSender.PlayerDead(p);
+    MessageSender.StatusUpdate(p);
     p.Dead = true;
   }
 }

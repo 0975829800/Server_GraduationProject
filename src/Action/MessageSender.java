@@ -19,7 +19,6 @@ public class MessageSender { //Message傳送方式在這寫
       System.arraycopy(MID,0,buf,4,4);
       System.arraycopy(Exp,0,buf,8,4);
       p.mss.getOutputStream().write(buf);
-      p.mss.getOutputStream().flush();
     }catch (Exception e){
       e.printStackTrace();
     }
@@ -35,7 +34,6 @@ public class MessageSender { //Message傳送方式在這寫
       System.arraycopy(MID,0,buf,4,4);
       System.arraycopy(Coin,0,buf,8,4);
       p.mss.getOutputStream().write(buf);
-      p.mss.getOutputStream().flush();
     }catch (Exception e){
       e.printStackTrace();
     }
@@ -49,7 +47,6 @@ public class MessageSender { //Message傳送方式在這寫
       System.arraycopy(ToCSharpTool.ToCSharp(MonsterID),0,buf,4,4);
       System.arraycopy(equipment.getByte(),0,buf,8,EquipmentBoxType.SendSize);
       p.mss.getOutputStream().write(buf);
-      p.mss.getOutputStream().flush();
     }catch (Exception e){
       e.printStackTrace();
     }
@@ -61,7 +58,6 @@ public class MessageSender { //Message傳送方式在這寫
       byte[] protocol = ToCSharpTool.ToCSharp(4);
       System.arraycopy(protocol,0,buf,0,4);
       p.mss.getOutputStream().write(buf);
-      p.mss.getOutputStream().flush();
     }catch (Exception e){
       e.printStackTrace();
     }
@@ -78,14 +74,12 @@ public class MessageSender { //Message傳送方式在這寫
         start+=4;
       }
       p.mss.getOutputStream().write(buf);
-      p.mss.getOutputStream().flush();
     }catch (Exception e){
       e.printStackTrace();
     }
   }
 
   public static void LevelUp(PlayerInformation p){
-    System.out.println("Level up!");
     buf = new byte[4 + Status.SendSize];
     try {
       byte[] protocol = ToCSharpTool.ToCSharp(6);
@@ -93,7 +87,6 @@ public class MessageSender { //Message傳送方式在這寫
       System.arraycopy(protocol,0,buf,0,4);
       System.arraycopy(status,0,buf,4,Status.SendSize);
       p.mss.getOutputStream().write(buf);
-      p.mss.getOutputStream().flush();
     }catch (Exception e){
       e.printStackTrace();
     }
@@ -103,7 +96,6 @@ public class MessageSender { //Message傳送方式在這寫
   }
 
   public static void StatusUpdate(PlayerInformation p){
-    System.out.println("Status Update");
     buf = new byte[4 + Status.SendSize];
     try {
       byte[] protocol = ToCSharpTool.ToCSharp(8);
@@ -111,7 +103,19 @@ public class MessageSender { //Message傳送方式在這寫
       System.arraycopy(protocol,0,buf,0,4);
       System.arraycopy(status,0,buf,4,Status.SendSize);
       p.mss.getOutputStream().write(buf);
-      p.mss.getOutputStream().flush();
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
+  public static void Heal(PlayerInformation p, int heal){
+    buf = new byte[8];
+    try {
+      byte[] protocol = ToCSharpTool.ToCSharp(9);
+      byte[] healb = ToCSharpTool.ToCSharp(heal);
+      System.arraycopy(protocol,0,buf,0,4);
+      System.arraycopy(healb,0,buf,4,4);
+      p.mss.getOutputStream().write(buf);
     }catch (Exception e){
       e.printStackTrace();
     }
