@@ -7,15 +7,17 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Server {
-  public static Queue<SocketType> 	User        = new LinkedList<>();
-  public static Queue<Integer> 	    online      = new LinkedList<>();
-  public static Queue<NoticeType> 	Notice      = new LinkedList<>();
-  public static Queue<MapType>      Map         = new LinkedList<>();
-  public static Queue<ActionType>   Action      = new LinkedList<>();
-  public static Queue<MonsterType>  Monster     = new LinkedList<>();
-  public static Queue<PlayerInformation> Information = new LinkedList<>();
+  public static BlockingQueue<SocketType>   User        = new LinkedBlockingQueue<>();
+  public static BlockingQueue<Integer> 	    online      = new LinkedBlockingQueue<>();
+  public static BlockingQueue<NoticeType> 	Notice      = new LinkedBlockingQueue<>();
+  public static BlockingQueue<MapType>      Map         = new LinkedBlockingQueue<>();
+  public static BlockingQueue<ActionType>   Action      = new LinkedBlockingQueue<>();
+  public static BlockingQueue<MonsterType>  Monster     = new LinkedBlockingQueue<>();
+  public static BlockingQueue<PlayerInformation> Information = new LinkedBlockingQueue<>();
 
   public final static int ServerPort = 8001;
   public final static int ActionPort = 8002;
@@ -37,6 +39,7 @@ public class Server {
 
     SkillID.setSkillInformation();
     EquipmentID.setEquipmentInformation();
+    ItemID.SetShopItems();
     LocationID.setLocation();
     ShopID.SetItemShop();
     ShopID.SetEquipmentShop();
@@ -65,7 +68,7 @@ public class Server {
       }
     }
     catch (Exception e){
-     System.err.println(e);
+     e.printStackTrace();
     }
   }
 }

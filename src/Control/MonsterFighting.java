@@ -2,10 +2,7 @@ package Control;
 
 
 import Action.MessageSender;
-import ID.ActionID;
-import ID.LocationID;
-import ID.MessageID;
-import ID.SkillID;
+import ID.*;
 import ServerMainBody.Server;
 import Tools.LevelTool;
 import Tools.ToCSharpTool;
@@ -107,9 +104,6 @@ public class MonsterFighting extends Thread{
     System.out.println("Monster " + monster.MapObjectID + " process is close!");
   }
 
-
-
-
   public void Reward(){
     byte[] buf;
     try {
@@ -130,7 +124,75 @@ public class MonsterFighting extends Thread{
             }
 
             //裝備發送
+            int random =(int) (Math.random()*(monster.drop)*8);
+            double tmp = Math.random();
+            int rank;
+            if(tmp < 0.7){
+              rank = 1;
+            }else if(tmp < 0.95){
+              rank = 2;
+            }else{
+              rank = 3;
+            }
+            int part = 0;
+            int index = p.getEmptyEquipmentBoxIndex();
+            for(EquipmentType e:EquipmentID.EquipmentInformation){
+              if(e.EID == random){
+                part = e.part;
+              }
+            }
+            int skill1 = 0;
+            int skill2 = 0;
+            switch (random % 8){
+              case 0:          //盾
+                skill1 = 4;
+                if(rank > 1){
+                  skill2 = rank*4;
+                }
+                break;
+              case 1: case 2:   //頭 身體
+                skill1 = 12;
+                if(rank > 1){
+                  skill2 = rank*3 + 9;
+                }
+                break;
+              case 3:           //手
+                skill1 = 13;
+                if(rank > 1){
+                  skill2 = rank*3 + 10;
+                }
+                break;
+              case 4:           //腳
+                skill1 = 14;
+                if(rank > 1){
+                  skill2 = rank*3 + 11;
+                }
+                break;
+              case 5:         //劍
+                skill1 = 1;
+                if(rank > 1){
+                  skill2 = rank*4-3;
+                }
+                break;
+              case 6:         //杖
+                skill1 = 2;
+                if(rank > 1){
+                  skill2 = rank*4-2;
+                }
+                break;
+              case 7:         //弓
+                skill1 = 3;
+                if(rank > 1){
+                  skill2 = rank*4-1;
+                }
+                break;
+            }
 
+            EquipmentBoxType equip = new EquipmentBoxType(p.PID,index,random,
+                    rank,part,1,skill1,skill2);
+            p.equipment.add(equip);
+            MessageSender.EquipDrop(p,monster.MonsterID,equip);
+            MessageSender.EquipBoxUpdate(p);
           }
         }
       }
@@ -153,7 +215,7 @@ public class MonsterFighting extends Thread{
   }
 
   public void MonsterAttack(PlayerInformation p,double damage,int SkillID){
-    Server.Action.add(new ActionType(ActionID.MONSTER_ATTACK,monster.MapObjectID,monster.MonsterID,p.MapID,p.PID,damage,(double) SkillID)); //通知怪獸攻擊動畫
+    Server.Action.add(new ActionType(ActionID.MONSTER_ATTACK,monster.MapObjectID,monster.MonsterID,p.MapID,p.PID,damage, SkillID)); //通知怪獸攻擊動畫
   }
 
   public void CleanDamage(int PID){

@@ -13,7 +13,7 @@ public class MonsterType {
 
   public int exp;
   public int coin;
-  public int[] drop;
+  public int drop;
 
   public boolean Fighting = false; //是否在戰鬥狀態
 
@@ -39,6 +39,7 @@ public class MonsterType {
     String[] items = Line.split(",");
     MonsterID = Integer.parseInt(items[0]);
     MonsterName = items[1];
+    drop = Integer.parseInt(items[2]);
     exp = Integer.parseInt(items[3]);
     coin = Integer.parseInt(items[4]);
     AttackSpeed = Double.parseDouble(items[5]);
@@ -63,6 +64,7 @@ public class MonsterType {
     MagicDefence = m.MagicDefence;
     MAX_HP = m.MAX_HP;
     Skills[0] = m.Skills[0];
+    drop = m.drop;
   }
 
 
@@ -77,7 +79,7 @@ public class MonsterType {
             ", Skills=" + Arrays.toString(Skills) +
             ", exp=" + exp +
             ", coin=" + coin +
-            ", drop=" + Arrays.toString(drop) +
+            ", drop=" + drop +
             ", Fighting=" + Fighting +
             ", HatredPlayer=" + HatredPlayer +
             ", DamagePID=" + Arrays.toString(DamagePID) +

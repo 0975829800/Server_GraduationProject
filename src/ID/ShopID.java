@@ -14,11 +14,7 @@ public class ShopID {
 
 
   public static void SetItemShop(){ //set shop items
-    shopItem.add(new ShopItem(Shop1,0,ItemID.HP_Potion,1,100));
-    shopItem.add(new ShopItem(Shop1,1,ItemID.MP_Potion,1,100));
-    shopItem.add(new ShopItem(Shop1,2,ItemID.HP_Potion,2,300));
-    shopItem.add(new ShopItem(Shop1,3,ItemID.MP_Potion,2,300));
-    shopItem.add(new ShopItem(Shop1,4,20,2,-1000));
+    shopItem.addAll(ItemID.shopItems);
   }
 
   public static void SetEquipmentShop(){ //set shop equipment

@@ -27,8 +27,10 @@ public class EquipmentBoxType {
     this.Level = Level;
     this.Skill_ID_1 = Skill_ID_1;
     this.Skill_ID_2 = Skill_ID_2;
-    if(Equipping == 0)  this.Equipping = false;
-    else                this.Equipping = true;
+    if(Equipping == 0)
+      this.Equipping = false;
+    else
+      this.Equipping = true;
   }
   public EquipmentBoxType(int PID,int EquipmentBox_ID, int Equipment_ID, int Rarity, int Part, int Level, int Skill1, int Skill2){
     this.PlayerID = PID;
@@ -71,5 +73,6 @@ public class EquipmentBoxType {
     System.arraycopy(temp,0,ans,28,4);
     return ans;
   }
+
 
 }

@@ -40,7 +40,7 @@ public class MessageSender { //Message傳送方式在這寫
   }
 
   public static void EquipDrop(PlayerInformation p, int MonsterID, EquipmentBoxType equipment){
-    buf = new byte[4];
+    buf = new byte[8 + EquipmentBoxType.SendSize];
     try {
       byte[] protocol = ToCSharpTool.ToCSharp(3);
       System.arraycopy(protocol,0,buf,0,4);
@@ -115,6 +115,32 @@ public class MessageSender { //Message傳送方式在這寫
       byte[] healb = ToCSharpTool.ToCSharp(heal);
       System.arraycopy(protocol,0,buf,0,4);
       System.arraycopy(healb,0,buf,4,4);
+      p.mss.getOutputStream().write(buf);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
+  public static void HealMP(PlayerInformation p, int heal){
+    buf = new byte[8];
+    try {
+      byte[] protocol = ToCSharpTool.ToCSharp(10);
+      byte[] healb = ToCSharpTool.ToCSharp(heal);
+      System.arraycopy(protocol,0,buf,0,4);
+      System.arraycopy(healb,0,buf,4,4);
+      p.mss.getOutputStream().write(buf);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
+  public static void Stronger(PlayerInformation p, int type, int BuffRange){
+    byte[] buf = new byte[12];
+    try {
+      byte[] protocol = ToCSharpTool.ToCSharp(11);
+      System.arraycopy(protocol,0,buf,0,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(type),0,buf,4,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(BuffRange),0,buf,8,4);
       p.mss.getOutputStream().write(buf);
     }catch (Exception e){
       e.printStackTrace();

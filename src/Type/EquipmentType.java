@@ -1,5 +1,7 @@
 package Type;
 
+import ID.EquipmentPartID;
+
 public class EquipmentType {
   public int EID;
   public double STR;
@@ -22,7 +24,8 @@ public class EquipmentType {
     HP = Double.parseDouble(s[6]);
     MP = Double.parseDouble(s[7]);
     GrowthRate = Double.parseDouble(s[8]);
-    part = Integer.parseInt(s[9]);
+    part = EquipmentPartID.SetPart(s[9]);
     price = Integer.parseInt(s[10]);
   }
+
 }
