@@ -21,14 +21,10 @@ public class Status {
   public int EXP;
 
   //Equipment sum values
-  public int EMAX_HP;
-  public int EMAX_MP;
   public int ESTR;
   public int EMG;
   public int EAGI;
   public int ELUC;
-  public int ELevel;
-  public int Ecoin;
 
   public Status(){
 
@@ -83,6 +79,20 @@ public class Status {
     return ans;
   }
 
+  public void EquipUP(int STR, int MG, int AGI, int LUC){
+    ESTR += STR;
+    EAGI += MG;
+    ELUC += AGI;
+    EMG += LUC;
+  }
+
+  public void EquipStatusReset(){
+    ESTR = 0;
+    EAGI = 0;
+    ELUC = 0;
+    EMG = 0;
+  }
+
   @Override
   public String toString() {
     return "Status{" +
@@ -100,14 +110,10 @@ public class Status {
             ", Skill_Point=" + Skill_Point +
             ", State=" + State +
             ", EXP=" + EXP +
-            ", EMAX_HP=" + EMAX_HP +
-            ", EMAX_MP=" + EMAX_MP +
             ", ESTR=" + ESTR +
             ", EMG=" + EMG +
             ", EAGI=" + EAGI +
             ", ELUC=" + ELUC +
-            ", ELevel=" + ELevel +
-            ", Ecoin=" + Ecoin +
             '}';
   }
 }

@@ -58,7 +58,10 @@ public class UserSocket extends Thread{
       playerInformation.status    = Login.getStatus(PlayerID);
       playerInformation.item      = Login.getItem(PlayerID);
       playerInformation.equipment = Login.getEquipment(PlayerID);
+
       Login.Login_Send(out,PlayerID);
+      Equip.EquipmentStatusUpdate(playerInformation);
+      MessageSender.EquipmentStatusUpdate(playerInformation);
 
       Server.Information.add(playerInformation);
 
@@ -114,6 +117,15 @@ public class UserSocket extends Thread{
             break;
           case ProtocolID.ATTACK:
             Attack.attack(playerInformation,data.data);
+            break;
+          case ProtocolID.USE_ITEM:
+            UseItem.useItem(out,playerInformation,data.data);
+            break;
+          case ProtocolID.EQUIP:
+            Equip.Equip(out,playerInformation,data.data);
+            break;
+          case ProtocolID.DISEQUIP:
+            Equip.DisEquip(out,playerInformation,data.data);
             break;
         }
 

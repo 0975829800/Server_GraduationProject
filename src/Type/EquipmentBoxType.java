@@ -1,5 +1,6 @@
 package Type;
 
+import ID.EquipmentID;
 import Tools.ToCSharpTool;
 
 public class EquipmentBoxType {
@@ -43,12 +44,27 @@ public class EquipmentBoxType {
     this.Rarity = Rarity;
   }
 
+  public int[] getEquipStatus(){
+    int STR = 0, MG = 0, AGI = 0, LUC = 0;
+    double power = 0;
+    if(Rarity == 0){
+      power = 1;
+    }else if(Rarity == 1){
+      power = 1.5;
+    }else if(Rarity == 2){
+      power = 2;
+    }
 
-  public void Equip(int EquipmentBox_ID){
-    Equipping = true;
-  }
-  public void disEquip(int EquipmentBox_ID){
-    Equipping = false;
+    for(EquipmentType e: EquipmentID.EquipmentInformation){
+      if(Equipment_ID == e.EID){
+        STR = (int)(e.STR * power * Math.pow(e.GrowthRate,Level-1));
+        MG = (int)(e.MG * power * Math.pow(e.GrowthRate,Level-1));
+        AGI = (int)(e.AGI * power * Math.pow(e.GrowthRate,Level-1));
+        LUC = (int)(e.LUC * power * Math.pow(e.GrowthRate,Level-1));
+      }
+    }
+    int[] i = {STR,MG,AGI,LUC};
+    return i;
   }
 
   public byte[] getByte(){

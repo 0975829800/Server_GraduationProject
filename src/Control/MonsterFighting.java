@@ -124,7 +124,7 @@ public class MonsterFighting extends Thread{
             }
 
             //裝備發送
-            int random =(int) (Math.random()*(monster.drop)*8);
+            int random = (int) (Math.random()*(monster.drop)*8);
             double tmp = Math.random();
             int rank;
             if(tmp < 0.7){
@@ -188,11 +188,14 @@ public class MonsterFighting extends Thread{
                 break;
             }
 
-            EquipmentBoxType equip = new EquipmentBoxType(p.PID,index,random,
-                    rank,part,1,skill1,skill2);
-            p.equipment.add(equip);
-            MessageSender.EquipDrop(p,monster.MonsterID,equip);
-            MessageSender.EquipBoxUpdate(p);
+            System.out.println("EquipmentID: " + random + " Rank: " + rank);
+            if(random != 0){
+              EquipmentBoxType equip = new EquipmentBoxType(p.PID,index,random,rank,part,1,skill1,skill2);
+              p.equipment.add(equip);
+              MessageSender.EquipDrop(p,monster.MonsterID,equip);
+              MessageSender.EquipBoxUpdate(p);
+            }
+
           }
         }
       }

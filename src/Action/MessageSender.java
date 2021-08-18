@@ -1,10 +1,7 @@
 package Action;
 
 import Tools.ToCSharpTool;
-import Type.EquipmentBoxType;
-import Type.EquipmentType;
-import Type.PlayerInformation;
-import Type.Status;
+import Type.*;
 
 public class MessageSender { //Message傳送方式在這寫
   static byte[] buf;
@@ -71,7 +68,7 @@ public class MessageSender { //Message傳送方式在這寫
       int start = 4;
       for(EquipmentBoxType e:p.equipment){
         System.arraycopy(e.getByte(),0,buf,start,EquipmentBoxType.SendSize);
-        start+=4;
+        start+=EquipmentBoxType.SendSize;
       }
       p.mss.getOutputStream().write(buf);
     }catch (Exception e){
@@ -141,6 +138,65 @@ public class MessageSender { //Message傳送方式在這寫
       System.arraycopy(protocol,0,buf,0,4);
       System.arraycopy(ToCSharpTool.ToCSharp(type),0,buf,4,4);
       System.arraycopy(ToCSharpTool.ToCSharp(BuffRange),0,buf,8,4);
+      p.mss.getOutputStream().write(buf);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
+  public static void EquippedSuccessUpdate(PlayerInformation p, int order){
+    byte[] buf = new byte[24];
+    try {
+      System.arraycopy(ToCSharpTool.ToCSharp(12)      ,0,buf,0,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(order)         ,0,buf,4,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.status.ESTR) ,0,buf,8,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.status.EMG)  ,0,buf,12,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.status.EAGI) ,0,buf,16,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.status.ELUC) ,0,buf,20,4);
+      p.mss.getOutputStream().write(buf);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
+  public static void DisEquippedSuccessUpdate(PlayerInformation p, int order){
+    byte[] buf = new byte[24];
+    try {
+      System.arraycopy(ToCSharpTool.ToCSharp(13)      ,0,buf,0,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(order)         ,0,buf,4,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.status.ESTR) ,0,buf,8,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.status.EMG)  ,0,buf,12,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.status.EAGI) ,0,buf,16,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.status.ELUC) ,0,buf,20,4);
+      p.mss.getOutputStream().write(buf);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
+  public static void EquipmentStatusUpdate(PlayerInformation p){
+    byte[] buf = new byte[20];
+    try {
+      System.arraycopy(ToCSharpTool.ToCSharp(14)      ,0,buf,0,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.status.ESTR) ,0,buf,4,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.status.EMG)  ,0,buf,8,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.status.EAGI) ,0,buf,12,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.status.ELUC) ,0,buf,16,4);
+      p.mss.getOutputStream().write(buf);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
+  public static void ItemBoxUpdate(PlayerInformation p){
+    byte[] buf = new byte[4+p.item.size()* ItemType.SendSize];
+    int start = 4;
+    try {
+      System.arraycopy(ToCSharpTool.ToCSharp(15),0,buf,0,4);
+      for (ItemType i: p.item){
+        System.arraycopy(i.getByte(),0,buf,start,ItemType.SendSize);
+        start += ItemType.SendSize;
+      }
       p.mss.getOutputStream().write(buf);
     }catch (Exception e){
       e.printStackTrace();
