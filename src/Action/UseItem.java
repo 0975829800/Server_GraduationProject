@@ -41,7 +41,6 @@ public class UseItem {
     MessageSender.ItemBoxUpdate(p);
   }
 
-
   public static void HP_potion(OutputStream out, PlayerInformation p,int item,int amount){
     int heal = 0;
     switch (item){

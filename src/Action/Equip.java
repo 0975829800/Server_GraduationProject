@@ -31,6 +31,7 @@ public class Equip {
       }
     }
   }
+
   public static void DisEquip(OutputStream out, PlayerInformation playerInformation, byte[] Data){
     int EquipmentOrder = ByteArrayTransform.ToInt(Data,0);
     boolean success = false;
