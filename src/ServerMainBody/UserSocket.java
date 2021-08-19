@@ -138,6 +138,7 @@ public class UserSocket extends Thread{
       //顯示離開ID
       if (PlayerID == -1){
         System.out.printf("Socket ID: %06d out\n", SocketID);
+        Server.User.removeIf(socket -> socket.ID == SocketID);
       } else {  //玩家退出連線
         System.out.printf("Socket ID: %06d out\t", SocketID);
         System.out.printf("Player ID: %06d out\n", PlayerID);
