@@ -3,17 +3,15 @@ package ServerMainBody;
 import Control.MonsterCreate;
 import ID.*;
 import Type.*;
+
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Server {
   public static BlockingQueue<SocketType>   User        = new LinkedBlockingQueue<>();
   public static BlockingQueue<Integer> 	    online      = new LinkedBlockingQueue<>();
-  public static BlockingQueue<NoticeType> 	Notice      = new LinkedBlockingQueue<>();
   public static BlockingQueue<MapType>      Map         = new LinkedBlockingQueue<>();
   public static BlockingQueue<ActionType>   Action      = new LinkedBlockingQueue<>();
   public static BlockingQueue<MonsterType>  Monster     = new LinkedBlockingQueue<>();

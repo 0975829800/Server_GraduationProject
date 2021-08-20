@@ -236,10 +236,10 @@ public class DBConnection {
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
-        String sql = "SELECT PlayID FROM player WHERE TeamID = "+TID;
+        String sql = "SELECT * FROM player WHERE TeamID = "+TID;
         System.out.println(sql);
         ResultSet rs = statement.executeQuery(sql);
-        if (rs.next()){   //has same account
+        while (rs.next()){   //has same account
            member.add(Integer.parseInt(rs.getString("PlayID")));
         }
         return member;
@@ -273,10 +273,11 @@ public class DBConnection {
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
-        String sql = "DELETE FROM `team` WHERE `team`.`TeamID` = '"+TeamID+"' ";
+        String sql = "DELETE FROM `team` WHERE `team`.`TeamID` = "+TeamID+" ";
         System.out.println(sql);
         if (statement.executeUpdate(sql) > 0){
-          sql = "UPDATE `player` SET `TeamID`=NULL WHERE`player`.`TeamID` = '"+TeamID+"'";
+          sql = "UPDATE `player` SET `TeamID`=NULL WHERE`player`.`TeamID` = "+TeamID+"";
+          System.out.println(sql);
           return statement.executeUpdate(sql) > 0;
         }
         return statement.executeUpdate(sql) > 0;

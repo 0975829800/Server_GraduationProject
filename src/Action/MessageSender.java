@@ -202,4 +202,41 @@ public class MessageSender { //Message傳送方式在這寫
       e.printStackTrace();
     }
   }
+
+  public static void JoinTeamNotice(PlayerInformation p, int joinPID){
+    buf = new byte[8];
+    try {
+      byte[] protocol = ToCSharpTool.ToCSharp(16);
+      byte[] PID = ToCSharpTool.ToCSharp(joinPID);
+      System.arraycopy(protocol,0,buf,0,4);
+      System.arraycopy(PID,0,buf,4,4);
+      p.mss.getOutputStream().write(buf);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
+  public static void LeaveTeamNotice(PlayerInformation p, int leavePID){
+    buf = new byte[8];
+    try {
+      byte[] protocol = ToCSharpTool.ToCSharp(17);
+      byte[] PID = ToCSharpTool.ToCSharp(leavePID);
+      System.arraycopy(protocol,0,buf,0,4);
+      System.arraycopy(PID,0,buf,4,4);
+      p.mss.getOutputStream().write(buf);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
+  public static void DelTeamNotice(PlayerInformation p){
+    buf = new byte[4];
+    try {
+      byte[] protocol = ToCSharpTool.ToCSharp(18);
+      System.arraycopy(protocol,0,buf,0,4);
+      p.mss.getOutputStream().write(buf);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+  }
 }

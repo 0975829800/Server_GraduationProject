@@ -1,11 +1,10 @@
 package Action;
 
 import DBS.DBConnection;
-import ID.NoticeID;
 import ServerMainBody.Server;
 import Tools.ToCSharpTool;
 import Type.FriendType;
-import Type.NoticeType;
+import Type.PlayerInformation;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -117,18 +116,21 @@ public class Community {
       byte[] buf;
       DBConnection con = new DBConnection();
       if (con.setTeam(PID,teamID)){
-        buf = ToCSharpTool.ToCSharp(con.getTeam(teamID)[1]);
+        buf = ToCSharpTool.ToCSharp(con.getTeam(teamID)[1]); //name
+
         /*
-        * add notice in list
+        * send notice to members
         * */
         ArrayList<Integer> member = con.getTeamMem(teamID);
         for (int m : member){
           if(m != PID){
-            Server.Notice.add(new NoticeType(m, NoticeID.TeamIn,PID+" join in!"));
+            for (PlayerInformation p : Server.Information){
+              if(p.PID == m){
+                MessageSender.JoinTeamNotice(p,PID);
+              }
+            }
           }
         }
-
-        //buf = ToCSharpTool.ToCSharp(1);
       }
       else{
         buf = ToCSharpTool.ToCSharp(-1);
@@ -143,7 +145,23 @@ public class Community {
     try {
       byte[] buf;
       DBConnection con = new DBConnection();
+      ArrayList<Integer> member = con.getTeamMem(teamID);
+      for (int m : member){
+        System.out.println(m);
+      }
       if (con.delTeam(teamID)){
+        /*
+         * notice
+         * */
+        for (int m : member){
+          if (m != PID) {
+            for (PlayerInformation p : Server.Information){
+              if(p.PID == m){
+                MessageSender.DelTeamNotice(p);
+              }
+            }
+          }
+        }
         buf = ToCSharpTool.ToCSharp(1);
       }
       else{
@@ -161,14 +179,23 @@ public class Community {
       DBConnection con = new DBConnection();
       String[] teamInfo = con.getTeam(PID); //[0] = teamID ,[1] = teamName
       if (teamInfo != null){
+        int teamID = Integer.parseInt(teamInfo[0]);
         if (PID == Integer.parseInt(teamInfo[0])){ //leader
           System.out.println(PID + "Leader leave");
           if (con.getTeamNum(Integer.parseInt(teamInfo[0])) > 1){ //not only 1 member
+            ArrayList<Integer> member = con.getTeamMem(teamID);
             if (con.setTeam(PID,0) && con.replaceTeamLeader(PID)){
               buf = ToCSharpTool.ToCSharp(1);
               /*
                * notice
                * */
+              for (int m : member){
+                for (PlayerInformation p : Server.Information){
+                  if(p.PID == m){
+                    MessageSender.LeaveTeamNotice(p,PID);
+                  }
+                }
+              }
             }
             else{
               buf = ToCSharpTool.ToCSharp(-1);
@@ -186,6 +213,17 @@ public class Community {
         }
         else{ //member
           if (con.setTeam(PID,0)){
+            /*
+             * notice
+             * */
+            ArrayList<Integer> member = con.getTeamMem(teamID);
+            for (int m : member){
+              for (PlayerInformation p : Server.Information){
+                if(p.PID == m){
+                  MessageSender.LeaveTeamNotice(p,PID);
+                }
+              }
+            }
             buf = ToCSharpTool.ToCSharp(2);
           }
           else {
