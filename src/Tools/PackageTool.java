@@ -4,8 +4,10 @@ import ServerMainBody.Server;
 import Type.ActionType;
 import Type.MapType;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Queue;
 
@@ -39,7 +41,7 @@ public class PackageTool {
   }
 
   public static byte[] MapTypeToByte(){
-    byte[] buf = new byte[Server.Map.size() * MapType.MapTypeSize]; //One MapType Size is 44 Bytes
+    byte[] buf = new byte[Server.Map.size() * MapType.MapTypeSize]; //One MapType Size is 64 Bytes
     byte[] temp4; //save int
     byte[] temp8; //save double
     int start = 0;
@@ -62,7 +64,8 @@ public class PackageTool {
       System.arraycopy(temp8,0,buf,start+28,8);
       temp8 = ToCSharpTool.ToCSharp(mapType.Latitude);                  //write Latitude
       System.arraycopy(temp8,0,buf,start+36,8);
-
+      temp4 = mapType.Name.getBytes(Charset.forName("big5"));
+      System.arraycopy(temp4,0,buf,start+44,temp4.length); //Name
       start += MapType.MapTypeSize;
   }
 

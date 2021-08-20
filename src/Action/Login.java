@@ -99,17 +99,17 @@ public class Login {
 //    return false;
 //  }
 
-//  public static String get_name (int PID) throws SQLException{
-//    try {
-//      DBConnection con = new DBConnection();
-//
-//      String get = con.getName(PID);
-//      return get;
-//    }catch (Exception e){
-//      System.err.println(e);
-//    }
-//    return null;
-//  }
+  public static String get_name (int PID) throws SQLException{
+    try {
+      DBConnection con = new DBConnection();
+
+      String get = con.getName(PID);
+      return get;
+    }catch (Exception e){
+      System.err.println(e);
+    }
+    return null;
+  }
   public static Status getStatus(int PID){
     try {
       DBConnection con = new DBConnection();

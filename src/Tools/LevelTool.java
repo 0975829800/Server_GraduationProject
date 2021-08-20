@@ -13,8 +13,10 @@ public class LevelTool {
     while (p.status.EXP > level1 * Math.pow(rate,p.status.Level-1)){
       p.status.EXP -= (int)(level1 * Math.pow(rate,p.status.Level-1));
       level_up = 1;
-      p.status.Skill_Point++;
+      p.status.Skill_Point += 5;
       p.status.Level++;
+      p.status.HP = p.status.MAX_HP;
+      p.status.MP = p.status.MAX_MP;
     }
 
     return level_up;

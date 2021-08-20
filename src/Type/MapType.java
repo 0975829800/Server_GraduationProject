@@ -3,7 +3,7 @@ package Type;
 import ID.*;
 
 public class MapType {
-  public static final int MapTypeSize = 44; //total bytes
+  public static final int MapTypeSize = 64; //total bytes
   public static int MapIDCounter = 0;
 
   public int    MapObjectID;
@@ -15,6 +15,7 @@ public class MapType {
   public int    state;      //狀態
   public double Longitude;  //經度
   public double Latitude;   //緯度
+  public String Name = "";
 
   public MapType(double longitude,double latitude,int typeID,int belongID, int level, int hp, int mp, int state) {
     MapObjectID = MapIDCounter;
@@ -29,6 +30,11 @@ public class MapType {
     MP = mp;
     this.state = state;
   }
+
+  public void setName(String name){
+    Name = name;
+  }
+
   public MapType(MonsterType m){
     MapObjectID = MapIDCounter;
     MapIDCounter++;

@@ -239,4 +239,26 @@ public class MessageSender { //Message傳送方式在這寫
       e.printStackTrace();
     }
   }
+
+  public static void SetSkillPointSuccess(PlayerInformation p){
+    buf = new byte[4];
+    try {
+      byte[] protocol = ToCSharpTool.ToCSharp(19);
+      System.arraycopy(protocol,0,buf,0,4);
+      p.mss.getOutputStream().write(buf);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
+  public static void SellSuccess(PlayerInformation p){
+    buf = new byte[4];
+    try {
+      byte[] protocol = ToCSharpTool.ToCSharp(20);
+      System.arraycopy(protocol,0,buf,0,4);
+      p.mss.getOutputStream().write(buf);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+  }
 }

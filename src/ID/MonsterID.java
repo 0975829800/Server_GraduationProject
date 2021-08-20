@@ -7,6 +7,7 @@ import Type.MonsterType;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -16,7 +17,7 @@ public class MonsterID {
 
   public static void GetMonsterInformation(){
     try{
-      InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream("src\\ID\\Monster.csv"));
+      InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream("src\\ID\\Monster.csv"), Charset.forName("big5"));
       BufferedReader reader = new BufferedReader(inputStreamReader);
 
       String line = null;

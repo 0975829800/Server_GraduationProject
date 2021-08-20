@@ -4,6 +4,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class PlayerInformation {
+  public String Name;
   public int PID;
   public int MapID;
   public MapType MapAddress;

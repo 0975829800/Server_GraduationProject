@@ -1,6 +1,9 @@
 package Action;
 
+import ID.EquipmentID;
+import ID.ItemID;
 import ID.ShopID;
+import ServerMainBody.Server;
 import Tools.ByteArrayTransform;
 import Tools.ToCSharpTool;
 import Type.*;
@@ -8,7 +11,7 @@ import Type.*;
 import java.io.OutputStream;
 
 public class Buy {
-  public static PlayerInformation BuyEquipment(OutputStream out, PlayerInformation playerInformation, byte[] Data){
+  public static void BuyEquipment(OutputStream out, PlayerInformation playerInformation, byte[] Data){
     byte[] buf;
     int order = ByteArrayTransform.ToInt(Data,0);
     ShopEquipment shopEquipment = ShopID.shopEquipment.get(order);
@@ -38,10 +41,9 @@ public class Buy {
     }catch (Exception e){
       System.err.println(e);
     }
-    return playerInformation;
   }
 
-  public static PlayerInformation BuyItem(OutputStream out, PlayerInformation playerInformation, byte[] Data){
+  public static void BuyItem(OutputStream out, PlayerInformation playerInformation, byte[] Data){
     byte[] buf = new byte[4];
     boolean hasSame = false;
     boolean isFull = false;
@@ -97,6 +99,49 @@ public class Buy {
     }catch (Exception e){
       System.err.println(e);
     }
-    return playerInformation;
+  }
+
+  public static void SellEquipment(OutputStream out, PlayerInformation playerInformation, byte[] data){
+    int order = ByteArrayTransform.ToInt(data,0);
+    for(EquipmentBoxType e: playerInformation.equipment){
+      if(e.EquipmentBox_ID == order){
+        for(EquipmentType f: EquipmentID.EquipmentInformation){
+          if(f.EID == e.Equipment_ID){
+            playerInformation.status.coin += f.price/10;
+            break;
+          }
+        }
+        break;
+      }
+    }
+    playerInformation.equipment.removeIf(e->e.EquipmentBox_ID == order);
+
+    MessageSender.SellSuccess(playerInformation);
+    MessageSender.StatusUpdate(playerInformation);
+    MessageSender.EquipBoxUpdate(playerInformation);
+
+  }
+
+  public static void SellItem(OutputStream out, PlayerInformation playerInformation, byte[] data){
+    int order = ByteArrayTransform.ToInt(data,0);
+    int Amount = ByteArrayTransform.ToInt(data,4);
+    for(ItemType i: playerInformation.item){
+      if(i.ItemBox_ID == order){
+        i.Amount-=Amount;
+        for(ShopItem s: ItemID.shopItems){
+          if(s.ItemID == i.Item_ID){
+            playerInformation.status.coin += s.Price/10;
+          }
+        }
+        if(i.Amount <= 0){
+          playerInformation.item.removeIf(item->item.ItemBox_ID == order);
+        }
+        break;
+      }
+    }
+
+    MessageSender.SellSuccess(playerInformation);
+    MessageSender.StatusUpdate(playerInformation);
+    MessageSender.ItemBoxUpdate(playerInformation);
   }
 }

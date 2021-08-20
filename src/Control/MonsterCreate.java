@@ -44,6 +44,7 @@ public class MonsterCreate extends Thread{
         newMonster.Longitude = y;
         MapType New = new MapType(newMonster);
         newMonster.MapObjectID = New.MapObjectID;
+        New.setName(m.MonsterName);
         Server.Map.add(New);
         Server.Monster.add(newMonster);
       }

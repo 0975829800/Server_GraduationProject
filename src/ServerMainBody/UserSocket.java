@@ -1,5 +1,6 @@
 package ServerMainBody;
 import Action.*;
+import DBS.DBConnection;
 import ID.ProtocolID;
 import Tools.DisconnectTool;
 import Tools.ProtocolTool;
@@ -42,12 +43,12 @@ public class UserSocket extends Thread{
           //have to return PID to UserSocket
           PlayerID = Login.login(out,data.data);
           Server.online.add(PlayerID);
-//          name = Login.get_name(PlayerID);
+          playerInformation.Name = Login.get_name(PlayerID);
         } else if (data.protocol == ProtocolID.REGISTER){
           System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
           PlayerID = Login.register(out,data.data);
           Server.online.add(PlayerID);
-//          name = Login.get_name(PlayerID);
+          playerInformation.Name = Login.get_name(PlayerID);
         } else {
           System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
         }
@@ -76,11 +77,11 @@ public class UserSocket extends Thread{
         System.out.println("SID " + SocketID + ": "+data.protocol + " " + new String(data.data));
         switch (data.protocol) {
           case ProtocolID.LOGIN_LOCATION:
-            playerInformation.MapAddress = LoginLocation.Login_Location(data.data,playerInformation.status);
+            playerInformation.MapAddress = LoginLocation.Login_Location(data.data,playerInformation);
             playerInformation.MapID = playerInformation.MapAddress.MapObjectID;
             break;
           case ProtocolID.MOVE:
-            Move.move(PlayerID, data.data);
+            Move.move(playerInformation, data.data);
             break;
           case ProtocolID.BUY_ITEM:
             Buy.BuyItem(out,playerInformation,data.data);
@@ -126,6 +127,15 @@ public class UserSocket extends Thread{
             break;
           case ProtocolID.DISEQUIP:
             Equip.DisEquip(out,playerInformation,data.data);
+            break;
+          case ProtocolID.SKILL_POINT_ASSIGN:
+            SetSkillPoint.SkillPoint(playerInformation,data.data);
+            break;
+          case ProtocolID.SELL_ITEM:
+            Buy.SellItem(out,playerInformation,data.data);
+            break;
+          case ProtocolID.SELL_EQUIPMENT:
+            Buy.SellEquipment(out,playerInformation,data.data);
             break;
         }
 
