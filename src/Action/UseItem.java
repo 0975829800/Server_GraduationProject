@@ -61,6 +61,9 @@ public class UseItem {
     if(p.status.HP > p.status.MAX_HP){
       p.status.HP = p.status.MAX_HP;
     }
+    if(p.Dead){
+      p.Dead = false;
+    }
     MessageSender.Heal(p,heal);
     MessageSender.StatusUpdate(p);
   }
@@ -110,6 +113,9 @@ public class UseItem {
     p.status.MP += heal;
     if(p.status.MP > p.status.MAX_MP){
       p.status.MP = p.status.MAX_MP;
+    }
+    if(p.Dead){
+      p.Dead = false;
     }
     MessageSender.Heal(p,heal);
     MessageSender.HealMP(p,heal);

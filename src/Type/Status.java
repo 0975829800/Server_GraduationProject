@@ -2,6 +2,8 @@ package Type;
 
 import Tools.ToCSharpTool;
 
+import java.awt.datatransfer.SystemFlavorMap;
+
 public class Status {
   public static final int SendSize = 56;
 
@@ -77,6 +79,15 @@ public class Status {
     temp = ToCSharpTool.ToCSharp(EXP);
     System.arraycopy(temp,0,ans,52,4);
     return ans;
+  }
+
+  public byte[] getEquipByte(){
+    byte[] buf = new byte[16];
+    System.arraycopy(ToCSharpTool.ToCSharp(ESTR),0,buf,0,4);
+    System.arraycopy(ToCSharpTool.ToCSharp(EMG),0,buf,4,4);
+    System.arraycopy(ToCSharpTool.ToCSharp(EAGI),0,buf,8,4);
+    System.arraycopy(ToCSharpTool.ToCSharp(ELUC),0,buf,12,4);
+    return buf;
   }
 
   public void EquipUP(int STR, int MG, int AGI, int LUC){

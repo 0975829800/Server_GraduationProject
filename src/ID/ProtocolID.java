@@ -29,4 +29,5 @@ public class ProtocolID {
   public static final int SKILL_POINT_ASSIGN = 59;
   public static final int SELL_ITEM = 60;
   public static final int SELL_EQUIPMENT = 61;
+  public static final int GET_PLAYER_INFORMATION = 62;
 }

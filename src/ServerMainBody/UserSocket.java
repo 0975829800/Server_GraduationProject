@@ -137,6 +137,9 @@ public class UserSocket extends Thread{
           case ProtocolID.SELL_EQUIPMENT:
             Buy.SellEquipment(out,playerInformation,data.data);
             break;
+          case ProtocolID.GET_PLAYER_INFORMATION:
+            GetOtherPlayerInformation.get(playerInformation,data.data);
+            break;
         }
 
       }
