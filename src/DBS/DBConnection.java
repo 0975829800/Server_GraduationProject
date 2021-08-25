@@ -600,21 +600,21 @@ public class DBConnection {
   }
 
 
-  public boolean addProgress(int PID,int MID) throws SQLException {
+  public boolean addProgress(int PID,int ProgressID,int State,int Information1,int Information2) throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
-      String sql = "INSERT INTO `progress` (`PlayID`, `Mission ID`, `Progress Status`) VALUES ('"+PID+"', '"+MID+"', '0');";
+      String sql = "INSERT INTO `progress` (`PlayID`, `ProgressID`, `State`, `Information1`, `Information2`) VALUES ('"+PID+"', '"+ProgressID+"', '"+State+"', '"+Information1+"','"+Information2+"');";
       System.out.println(sql);
       return statement.executeUpdate(sql) > 0;
     }
     return false;
   }
 
-  public boolean setProgress(int PID,int MID)  {  //throws SQLException or encryption's exception
+  public boolean setProgress(int PID,int ProgressID,int State,int Information1,int Information2)  {  //throws SQLException or encryption's exception
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
-        String sql = "UPDATE `progress` SET `Progress Status` = '"+ 1 + "' WHERE `PlayID` = '"+PID+"' AND `Mission ID` = "+ MID;
+        String sql = "UPDATE `progress` SET `State`="+State+",`Information1`="+Information1+",`Information2`="+Information2+" WHERE `PlayID`="+ PID +" AND `ProgressID`="+ProgressID+"";
         //insert new account
         System.out.println(sql);
 
@@ -637,12 +637,11 @@ public class DBConnection {
 
         while(rs.next()){
           int PlayID = Integer.parseInt(rs.getString("PlayID"));
-          int MID = Integer.parseInt(rs.getString("Mission ID"));
-          int status = Integer.parseInt(rs.getString("Progress Status"));
-          if (status == 0)
-            progress.add(new Progress(PlayID,MID,false));
-          else
-            progress.add(new Progress(PlayID,MID,true));
+          int ProgressID = Integer.parseInt(rs.getString("ProgressID"));
+          int State = Integer.parseInt(rs.getString("State"));
+          int Information1 = Integer.parseInt(rs.getString("Information1"));
+          int Information2 = Integer.parseInt(rs.getString("Information2"));
+          progress.add(new Progress(PlayID,ProgressID,State,Information1,Information2));
         }
         return progress;
       }
