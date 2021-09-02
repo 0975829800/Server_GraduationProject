@@ -2,6 +2,8 @@ package ServerMainBody;
 import Action.*;
 import DBS.DBConnection;
 import ID.ProtocolID;
+import Progress.FinishMission;
+import Progress.TakeMission;
 import Tools.DisconnectTool;
 import Tools.ProtocolTool;
 import Type.PlayerInformation;
@@ -25,7 +27,7 @@ public class UserSocket extends Thread{
   }
   //thread running
   public void run(){
-    ProtocolTool data = null;
+    ProtocolTool data;
     try {
       in = socket.getInputStream();
       out = socket.getOutputStream();
@@ -59,10 +61,12 @@ public class UserSocket extends Thread{
       playerInformation.status    = Login.getStatus(PlayerID);
       playerInformation.item      = Login.getItem(PlayerID);
       playerInformation.equipment = Login.getEquipment(PlayerID);
+      playerInformation.progress  = Login.getProgress(PlayerID);
 
-      Login.Login_Send(out,PlayerID);
+      Login.Login_Send(playerInformation,PlayerID);
       Equip.EquipmentStatusUpdate(playerInformation);
       MessageSender.EquipmentStatusUpdate(playerInformation);
+      MessageSender.QuestUpdate(playerInformation);
 
       Server.Information.add(playerInformation);
 
@@ -140,13 +144,19 @@ public class UserSocket extends Thread{
           case ProtocolID.GET_PLAYER_INFORMATION:
             GetOtherPlayerInformation.get(playerInformation,data.data);
             break;
+          case ProtocolID.TAKE_QUEST:
+            TakeMission.take(playerInformation,data.data);
+            break;
+          case ProtocolID.FINISH_QUEST:
+            FinishMission.finish(playerInformation,data.data);
+            break;
         }
 
       }
     }
     catch (Exception e){
       if (Server.debug){
-        System.err.println(e);
+        e.printStackTrace();
       }
       //顯示離開ID
       if (PlayerID == -1){

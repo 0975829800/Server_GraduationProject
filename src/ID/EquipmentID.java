@@ -1,5 +1,6 @@
 package ID;
 
+import Action.Equip;
 import ServerMainBody.Server;
 import Type.EquipmentType;
 import Type.SkillType;
@@ -18,14 +19,14 @@ public class EquipmentID {
       InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream("src\\ID\\Equipment.csv"));
       BufferedReader reader = new BufferedReader(inputStreamReader);
 
-      String line = null;
+      String line;
       reader.readLine();
       while ((line = reader.readLine())!= null){
         EquipmentInformation.add(new EquipmentType(line));
       }
       reader.close();
     }catch (Exception e){
-      System.out.println(e);
+      e.printStackTrace();
     }
 
     if(Server.debug){
@@ -34,5 +35,14 @@ public class EquipmentID {
                 s.EID,s.STR,s.MG,s.AGI,s.LUC,s.HP,s.MP,s.GrowthRate,s.part,s.price);
       }
     }
+  }
+
+  public static EquipmentType GetEquipmentState(int EquipmentID){
+    for(EquipmentType s : EquipmentInformation){
+      if(s.EID == EquipmentID){
+        return s;
+      }
+    }
+    return null;
   }
 }

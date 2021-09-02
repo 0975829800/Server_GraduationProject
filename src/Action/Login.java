@@ -6,6 +6,7 @@ import ServerMainBody.Server;
 import Tools.ToCSharpTool;
 import Type.*;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -168,6 +169,16 @@ public class Login {
     return new ArrayList<EquipmentBoxType>();
   }
 
+  public static ArrayList<Progress> getProgress(int PID){
+    try {
+      DBConnection con = new DBConnection();
+      return con.getProgress(PID);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+    return new ArrayList<Progress>();
+  }
+
   public static void sendEquipment(OutputStream out, int PID){
     ArrayList<EquipmentBoxType> Equipment = getEquipment(PID);
     byte[] send = new byte[EquipmentBoxType.SendSize * Equipment.size()];
@@ -206,7 +217,13 @@ public class Login {
     }
   }
 
-  public static void Login_Send(OutputStream out, int PID){
+  public static void Login_Send(PlayerInformation p, int PID){
+    OutputStream out = null;
+    try {
+      out = p.sc.getOutputStream();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     sendStatus(out,PID);
     sendItem(out,PID);
     sendEquipment(out,PID);

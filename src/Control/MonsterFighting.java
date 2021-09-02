@@ -110,94 +110,98 @@ public class MonsterFighting extends Thread{
       for(int i = 0; i < 10; i++){
         if (monster.DamagePID[i] != 0){
           for (PlayerInformation p: Server.Information){
-            //金幣發送
-            p.status.coin+=monster.coin;
-            MessageSender.Coin(p,monster.MonsterID,monster.coin);
+            if(p.PID == monster.DamagePID[i]){
+              //任務確認
+              Progress.KillMonster(p,monster.MonsterID);
+              //金幣發送
+              p.status.coin+=monster.coin;
+              MessageSender.Coin(p,monster.MonsterID,monster.coin);
 
-            //經驗發送
-            MessageSender.EXP(p,monster.MonsterID,monster.exp);
-            // 升等
-            if (LevelTool.expControl(p,monster.exp) == 1){
-              MessageSender.LevelUp(p);
-            }else {
-              MessageSender.StatusUpdate(p);
-            }
+              //經驗發送
+              MessageSender.EXP(p,monster.MonsterID,monster.exp);
+              // 升等
+              if (LevelTool.expControl(p,monster.exp) == 1){
+                MessageSender.LevelUp(p);
+              }else {
+                MessageSender.StatusUpdate(p);
+              }
 
-            //裝備發送
-            int random = (int) (Math.random()*(monster.drop)*8);
-            double tmp = Math.random();
-            int rank = 0;
-            if(tmp < 0.2){
-              random = 0;
-            }
-            else if(tmp < 0.7){
-              rank = 1;
-            }else if(tmp < 0.95){
-              rank = 2;
-            }else{
-              rank = 3;
-            }
+              //裝備發送
+              int random = (int) (Math.random()*(monster.drop)*8);
+              double tmp = Math.random();
+              int rank = 0;
+              if(tmp < 0.2){
+                random = 0;
+              }
+              else if(tmp < 0.7){
+                rank = 1;
+              }else if(tmp < 0.95){
+                rank = 2;
+              }else{
+                rank = 3;
+              }
 
-            if(random != 0){
-              int part = 0;
-              int index = p.getEmptyEquipmentBoxIndex();
-              for(EquipmentType e:EquipmentID.EquipmentInformation){
-                if(e.EID == random){
-                  part = e.part;
+              if(random != 0){
+                int part = 0;
+                int index = p.getEmptyEquipmentBoxIndex();
+                for(EquipmentType e:EquipmentID.EquipmentInformation){
+                  if(e.EID == random){
+                    part = e.part;
+                  }
                 }
-              }
-              int skill1 = 0;
-              int skill2 = 0;
-              switch (random % 8){
-                case 0:          //盾
-                  skill1 = 4;
-                  if(rank > 1){
-                    skill2 = rank*4;
-                  }
-                  break;
-                case 1: case 2:   //頭 身體
-                  skill1 = 12;
-                  if(rank > 1){
-                    skill2 = rank*3 + 9;
-                  }
-                  break;
-                case 3:           //手
-                  skill1 = 13;
-                  if(rank > 1){
-                    skill2 = rank*3 + 10;
-                  }
-                  break;
-                case 4:           //腳
-                  skill1 = 14;
-                  if(rank > 1){
-                    skill2 = rank*3 + 11;
-                  }
-                  break;
-                case 5:         //劍
-                  skill1 = 1;
-                  if(rank > 1){
-                    skill2 = rank*4-3;
-                  }
-                  break;
-                case 6:         //杖
-                  skill1 = 2;
-                  if(rank > 1){
-                    skill2 = rank*4-2;
-                  }
-                  break;
-                case 7:         //弓
-                  skill1 = 3;
-                  if(rank > 1){
-                    skill2 = rank*4-1;
-                  }
-                  break;
-              }
+                int skill1 = 0;
+                int skill2 = 0;
+                switch (random % 8){
+                  case 0:          //盾
+                    skill1 = 4;
+                    if(rank > 1){
+                      skill2 = rank*4;
+                    }
+                    break;
+                  case 1: case 2:   //頭 身體
+                    skill1 = 12;
+                    if(rank > 1){
+                      skill2 = rank*3 + 9;
+                    }
+                    break;
+                  case 3:           //手
+                    skill1 = 13;
+                    if(rank > 1){
+                      skill2 = rank*3 + 10;
+                    }
+                    break;
+                  case 4:           //腳
+                    skill1 = 14;
+                    if(rank > 1){
+                      skill2 = rank*3 + 11;
+                    }
+                    break;
+                  case 5:         //劍
+                    skill1 = 1;
+                    if(rank > 1){
+                      skill2 = rank*4-3;
+                    }
+                    break;
+                  case 6:         //杖
+                    skill1 = 2;
+                    if(rank > 1){
+                      skill2 = rank*4-2;
+                    }
+                    break;
+                  case 7:         //弓
+                    skill1 = 3;
+                    if(rank > 1){
+                      skill2 = rank*4-1;
+                    }
+                    break;
+                }
 
-              System.out.println("EquipmentID: " + random + " Rank: " + rank);
-              EquipmentBoxType equip = new EquipmentBoxType(p.PID,index,random,rank,part,1,skill1,skill2);
-              p.equipment.add(equip);
-              MessageSender.EquipDrop(p,monster.MonsterID,equip);
-              MessageSender.EquipBoxUpdate(p);
+                System.out.println("EquipmentID: " + random + " Rank: " + rank);
+                EquipmentBoxType equip = new EquipmentBoxType(p.PID,index,random,rank,part,1,skill1,skill2);
+                p.equipment.add(equip);
+                MessageSender.EquipDrop(p,monster.MonsterID,equip);
+                MessageSender.EquipBoxUpdate(p);
+              }
             }
 
           }

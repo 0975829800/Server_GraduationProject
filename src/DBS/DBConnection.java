@@ -1,5 +1,7 @@
 package DBS;
 
+import ID.ProtocolID;
+import Tools.ProtocolTool;
 import Type.*;
 
 import java.sql.*;
@@ -600,10 +602,21 @@ public class DBConnection {
   }
 
 
-  public boolean addProgress(int PID,int ProgressID,int State,int Information1,int Information2) throws SQLException {
+  public boolean addProgress(Progress progress) throws SQLException {
     if (con != null && !con.isClosed()) {
       Statement statement = con.createStatement();
-      String sql = "INSERT INTO `progress` (`PlayID`, `ProgressID`, `State`, `Information1`, `Information2`) VALUES ('"+PID+"', '"+ProgressID+"', '"+State+"', '"+Information1+"','"+Information2+"');";
+      String sql = "INSERT INTO `progress` (`PlayID`, `ProgressID`, `State`, `Information1`, `Information2`) VALUES ('"
+              +progress.PlayerID+"', '"+progress.missionID+"', '"+progress.state+"', '"+progress.information1+"','"+progress.information2+"');";
+      System.out.println(sql);
+      return statement.executeUpdate(sql) > 0;
+    }
+    return false;
+  }
+
+  public boolean delProgresses(int PlayerID)throws SQLException {
+    if (con != null && !con.isClosed()) {
+      Statement statement = con.createStatement();
+      String sql = "DELETE FROM `progress` WHERE `progress`.`PlayID` = "+PlayerID+"";
       System.out.println(sql);
       return statement.executeUpdate(sql) > 0;
     }

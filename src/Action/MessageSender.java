@@ -61,11 +61,11 @@ public class MessageSender { //Message傳送方式在這寫
   }
 
   public static void EquipBoxUpdate(PlayerInformation p){
-    buf = new byte[4 + p.equipment.size() * EquipmentBoxType.SendSize];
+    buf = new byte[8 + p.equipment.size() * EquipmentBoxType.SendSize];
     try {
-      byte[] protocol = ToCSharpTool.ToCSharp(5);
-      System.arraycopy(protocol,0,buf,0,4);
-      int start = 4;
+      System.arraycopy(ToCSharpTool.ToCSharp(5),0,buf,0,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.equipment.size()),0,buf,4,4);
+      int start = 8;
       for(EquipmentBoxType e:p.equipment){
         System.arraycopy(e.getByte(),0,buf,start,EquipmentBoxType.SendSize);
         start+=EquipmentBoxType.SendSize;
@@ -90,6 +90,15 @@ public class MessageSender { //Message傳送方式在這寫
   }
 
   public static void QuestUpdate(PlayerInformation p){
+    buf = new byte[8 + p.progress.size() * Progress.SendSize];
+    try {
+      System.arraycopy(ToCSharpTool.ToCSharp(7),0,buf,0,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.progress.size()),0,buf,4,4);
+      System.arraycopy(p.getProgressesByte(),0,buf,8,p.progress.size() * Progress.SendSize);
+      p.mss.getOutputStream().write(buf);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
   }
 
   public static void StatusUpdate(PlayerInformation p){
@@ -189,10 +198,11 @@ public class MessageSender { //Message傳送方式在這寫
   }
 
   public static void ItemBoxUpdate(PlayerInformation p){
-    byte[] buf = new byte[4+p.item.size()* ItemType.SendSize];
-    int start = 4;
+    byte[] buf = new byte[8+p.item.size()* ItemType.SendSize];
+    int start = 8;
     try {
       System.arraycopy(ToCSharpTool.ToCSharp(15),0,buf,0,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.item.size()),0,buf,4,4);
       for (ItemType i: p.item){
         System.arraycopy(i.getByte(),0,buf,start,ItemType.SendSize);
         start += ItemType.SendSize;

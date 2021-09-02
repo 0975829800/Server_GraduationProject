@@ -35,4 +35,13 @@ public class ItemID {
       }
     }
   }
+
+  public static ShopItem GetItemState(int ItemID){
+    for(ShopItem s : shopItems){
+      if(s.ItemID == ItemID){
+        return s;
+      }
+    }
+    return null;
+  }
 }

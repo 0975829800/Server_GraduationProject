@@ -1,6 +1,8 @@
 package Type;
 
+import Action.Equip;
 import ID.EquipmentID;
+import ID.SkillID;
 import Tools.ToCSharpTool;
 
 public class EquipmentBoxType {
@@ -19,6 +21,40 @@ public class EquipmentBoxType {
   public EquipmentBoxType(){
 
   }
+  public EquipmentBoxType(int PlayerID,int EquipmentBoxID, EquipmentType e){
+    this.PlayerID = PlayerID;
+    this.EquipmentBox_ID = EquipmentBoxID;
+    Equipment_ID = e.EID;
+    Rarity = 1;
+    Level = 1;
+    int skill1 = 0;
+    switch (e.EID%8){
+      case 0:          //盾
+        skill1 = 4;
+        break;
+      case 1: case 2:   //頭 身體
+        skill1 = 12;
+        break;
+      case 3:           //手
+        skill1 = 13;
+        break;
+      case 4:           //腳
+        skill1 = 14;
+        break;
+      case 5:         //劍
+        skill1 = 1;
+        break;
+      case 6:         //杖
+        skill1 = 2;
+        break;
+      case 7:         //弓
+        skill1 = 3;
+        break;
+    }
+    Skill_ID_1 = skill1;
+    Equipping = false;
+  }
+
   public EquipmentBoxType(int PlayerID,int EquipmentBoxID, int Equipment_ID, int Rarity, int Part, int Level, int Equipping, int Skill_ID_1, int Skill_ID_2){
     this.PlayerID = PlayerID;
     this.EquipmentBox_ID = EquipmentBoxID;
@@ -63,8 +99,8 @@ public class EquipmentBoxType {
         LUC = (int)(e.LUC * power * Math.pow(e.GrowthRate,Level-1));
       }
     }
-    int[] i = {STR,MG,AGI,LUC};
-    return i;
+
+    return new int[]{STR, MG, AGI, LUC};
   }
 
   public byte[] getByte(){

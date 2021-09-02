@@ -19,6 +19,7 @@ public class DisconnectTool {
     StatusUpdate(PID,playerInformation.status);
     ItemUpdate(PID, playerInformation.item);
     EquipmentUpdate(PID,playerInformation.equipment);
+    ProgressUpdate(PID,playerInformation.progress);
   }
 
   public static void StatusUpdate(int PID, Status status){
@@ -27,7 +28,7 @@ public class DisconnectTool {
       con.updateStatus(status.PlayID,status.HP,status.MAX_HP,status.MP,status.MAX_MP,
               status.STR,status.MG,status.AGI,status.LUC,status.Level,status.Skill_Point,status.State,status.coin,status.EXP);
     }catch (Exception e){
-      System.err.println(e);
+      e.printStackTrace();
     }
   }
 
@@ -39,7 +40,7 @@ public class DisconnectTool {
         con.addItem_bag(i.PlayerID,i.ItemBox_ID,i.Item_ID,i.Rarity,i.Amount);
       }
     }catch (Exception e){
-      System.err.println(e);
+      e.printStackTrace();
     }
   }
 
@@ -54,7 +55,19 @@ public class DisconnectTool {
           con.addEquipment_bag(e.PlayerID,e.EquipmentBox_ID,e.Equipment_ID,e.Rarity,e.Part,e.Level,0,e.Skill_ID_1,e.Skill_ID_2);
       }
     }catch (Exception e){
-      System.err.println(e);
+      e.printStackTrace();
+    }
+  }
+
+  public static void ProgressUpdate(int PID, ArrayList<Progress> progresses){
+    try {
+      DBConnection con = new DBConnection();
+      con.delProgresses(PID);
+      for(Progress p: progresses){
+        con.addProgress(p);
+      }
+    }catch (Exception e){
+      e.printStackTrace();
     }
   }
 
@@ -63,7 +76,7 @@ public class DisconnectTool {
       DBConnection con = new DBConnection();
 //      con.setTeam(PID,0);
     }catch (Exception e){
-      System.err.println(e);
+      e.printStackTrace();
     }
   }
 }

@@ -44,6 +44,16 @@ public class PlayerInformation {
     return -1;
   }
 
+  public byte[] getProgressesByte(){
+    byte[] buf = new byte[Progress.SendSize * progress.size()];
+    int start = 0;
+    for(Progress p : progress){
+      System.arraycopy(p.getByte(),0,buf,start,Progress.SendSize);
+      start += Progress.SendSize;
+    }
+    return buf;
+  }
+
   @Override
   public String toString() {
     return "PlayerInformation{" +

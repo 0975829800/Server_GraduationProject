@@ -42,6 +42,7 @@ public class Server {
     ShopID.SetItemShop();
     ShopID.SetEquipmentShop();
     MonsterID.GetMonsterInformation();
+    MissionID.setMissions();
 
     try {
       serverSocket = new ServerSocket(ServerPort);
