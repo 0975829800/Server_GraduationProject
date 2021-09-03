@@ -83,11 +83,11 @@ public class EquipmentBoxType {
   public int[] getEquipStatus(){
     int STR = 0, MG = 0, AGI = 0, LUC = 0;
     double power = 0;
-    if(Rarity == 0){
+    if(Rarity == 1){
       power = 1;
-    }else if(Rarity == 1){
-      power = 1.5;
     }else if(Rarity == 2){
+      power = 1.5;
+    }else if(Rarity == 3){
       power = 2;
     }
 
