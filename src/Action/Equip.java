@@ -1,5 +1,6 @@
 package Action;
 
+import ID.EquipmentPartID;
 import Tools.ByteArrayTransform;
 import Tools.ToCSharpTool;
 import Type.EquipmentBoxType;
@@ -17,10 +18,19 @@ public class Equip {
         if(e.Equipping){
           break;
         }
+        int WeaponCount = 0;
+        EquipmentBoxType tmp = null;
         for(EquipmentBoxType f: playerInformation.equipment){
-          if(f.Part == e.Part && f.Equipping){
+          if(f.Part == e.Part && f.Equipping && f.Part != EquipmentPartID.Weapon){
             f.Equipping = false;
           }
+          if(f.Part == e.Part && f.Part == EquipmentPartID.Weapon){
+            WeaponCount++;
+            tmp = f;
+          }
+        }
+        if(WeaponCount == 2 && tmp != null){
+          tmp.Equipping = false;
         }
         e.Equipping = true;
         EquipmentStatusUpdate(playerInformation);
