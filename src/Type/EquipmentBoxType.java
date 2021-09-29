@@ -93,10 +93,10 @@ public class EquipmentBoxType {
 
     for(EquipmentType e: EquipmentID.EquipmentInformation){
       if(Equipment_ID == e.EID){
-        STR = (int)(e.STR * power * Math.pow(e.GrowthRate,Level-1));
-        MG = (int)(e.MG * power * Math.pow(e.GrowthRate,Level-1));
-        AGI = (int)(e.AGI * power * Math.pow(e.GrowthRate,Level-1));
-        LUC = (int)(e.LUC * power * Math.pow(e.GrowthRate,Level-1));
+        STR = (int)(e.STR * power);
+        MG = (int)(e.MG * power);
+        AGI = (int)(e.AGI * power);
+        LUC = (int)(e.LUC * power);
       }
     }
 
