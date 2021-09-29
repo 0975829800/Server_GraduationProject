@@ -115,9 +115,11 @@ public class Buy {
       }
     }
     playerInformation.equipment.removeIf(e->e.EquipmentBox_ID == order);
+    Equip.EquipmentStatusUpdate(playerInformation);
 
     MessageSender.SellSuccess(playerInformation);
     MessageSender.StatusUpdate(playerInformation);
+    MessageSender.EquipmentStatusUpdate(playerInformation);
     MessageSender.EquipBoxUpdate(playerInformation);
 
   }
