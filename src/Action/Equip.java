@@ -24,13 +24,13 @@ public class Equip {
           if(f.Part == e.Part && f.Equipping && f.Part != EquipmentPartID.Weapon){
             f.Equipping = false;
           }
-          if(f.Part == e.Part && f.Part == EquipmentPartID.Weapon){
+          if(f.Part == e.Part && f.Part == EquipmentPartID.Weapon && f.Equipping){
+            if(WeaponCount > 0){
+              tmp.Equipping = false;
+            }
             WeaponCount++;
             tmp = f;
           }
-        }
-        if(WeaponCount == 2 && tmp != null){
-          tmp.Equipping = false;
         }
         e.Equipping = true;
         EquipmentStatusUpdate(playerInformation);
