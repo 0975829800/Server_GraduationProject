@@ -10,7 +10,7 @@ public class SetSkillPoint {
     int STR    = ByteArrayTransform.ToInt(data,8);
     int MG     = ByteArrayTransform.ToInt(data,12);
     int AGI    = ByteArrayTransform.ToInt(data,16);
-    int LUC    = ByteArrayTransform.ToInt(data,24);
+    int LUC    = ByteArrayTransform.ToInt(data,20);
     p.status.Skill_Point -= MAX_HP + MAX_MP + STR + MG + AGI + LUC;
     p.status.MAX_HP += MAX_HP * 10;
     p.status.MAX_MP += MAX_MP * 5;
