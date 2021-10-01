@@ -23,8 +23,9 @@ public class test {
 //        System.out.println(con.delTeam(408417096));
 //        System.out.println(con.getTeamNum(1));
 
-        System.out.println(con.delItem_bag(144906270));
-        System.out.println(con.delEquipment_bag(144906270));
+//        System.out.println(con.delItem_bag(144906270));
+//        System.out.println(con.delEquipment_bag(144906270));
+        System.out.println(con.delProgresses(144906270));
 
 //        System.out.println(con.addEquipment_bag(663828321,4,8,2,3,100,1,1,0));
 //        System.out.println(con.getEquipment_bag(663828321).get(0).EquipmentBox_ID);

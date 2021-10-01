@@ -224,9 +224,9 @@ public class Login {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    sendStatus(out,PID);
-    sendItem(out,PID);
-    sendEquipment(out,PID);
+    MessageSender.StatusUpdate(p);
+    MessageSender.EquipBoxUpdate(p);
+    MessageSender.ItemBoxUpdate(p);
     sendShopInformation(out);
   }
 
