@@ -1,7 +1,5 @@
 package DBS;
 
-import Action.Login;
-
 import java.sql.SQLException;
 
 public class test {
@@ -47,9 +45,9 @@ public class test {
 //        System.out.println(con.updateStatus(144906270,100,100,100,100,20,10,20,10,1,10,0,7000, 0));
 //        System.out.println(con.delStatus(146937808));
 
-//        System.out.println(con.addProgress(31240985,2,3,7,8));
-//        System.out.println(con.setProgress(31240985,2,7,7,7));
-//        System.out.println(con.getProgress(31240985).get(1).information2);
+//        System.out.println(con.addProgress(144906270, 2, 0, 0,1));
+//        System.out.println(con.setProgress(144906270, 2, 0, 0,3));
+//        System.out.println(con.getProgress(144906270).get(0).information2);
 //        System.out.println(con);
       } catch (Exception e) {
         e.printStackTrace();
