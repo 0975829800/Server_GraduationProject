@@ -150,6 +150,9 @@ public class UserSocket extends Thread{
           case ProtocolID.FINISH_QUEST:
             FinishMission.finish(playerInformation,data.data);
             break;
+          case ProtocolID.CREATE_MONSTER:
+            CreateMonster.create(playerInformation,data.data);
+            break;
         }
 
       }

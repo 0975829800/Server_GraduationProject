@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/src/ID/Equipment.csv" charset="Big5" />
+    <file url="file://$PROJECT_DIR$/src/ID/Equipment.csv" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/ID/Item.csv" charset="Big5" />
     <file url="file://$PROJECT_DIR$/src/ID/Mission.csv" charset="Big5" />
     <file url="file://$PROJECT_DIR$/src/ID/Monster.csv" charset="Big5" />

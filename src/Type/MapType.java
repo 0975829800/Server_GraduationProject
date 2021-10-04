@@ -43,7 +43,7 @@ public class MapType {
     Longitude = m.Longitude;
     Latitude = m.Latitude;
     HP = (int)m.HP;
-    MP = (int)m.MP;
+    MP = (int)m.MAX_HP;
     state = m.State;
 
   }
