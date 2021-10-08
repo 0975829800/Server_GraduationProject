@@ -33,4 +33,5 @@ public class ProtocolID {
   public static final int TAKE_QUEST = 62;
   public static final int FINISH_QUEST = 63;
   public static final int CREATE_MONSTER = 64;
+  public static final int CREATE_NPC = 65;
 }

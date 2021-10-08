@@ -24,8 +24,8 @@ public class DisconnectTool {
 
   public static void StatusUpdate(int PID, Status status){
     try {
-      DBConnection con = new DBConnection();
-      con.updateStatus(status.PlayID,status.HP,status.MAX_HP,status.MP,status.MAX_MP,
+
+      DBConnection.updateStatus(status.PlayID,status.HP,status.MAX_HP,status.MP,status.MAX_MP,
               status.STR,status.MG,status.AGI,status.LUC,status.Level,status.Skill_Point,status.State,status.coin,status.EXP);
     }catch (Exception e){
       e.printStackTrace();
@@ -34,10 +34,10 @@ public class DisconnectTool {
 
   public static void ItemUpdate(int PID, ArrayList<ItemType> items){
     try {
-      DBConnection con = new DBConnection();
-      con.delItem_bag(PID);
+
+      DBConnection.delItem_bag(PID);
       for(ItemType i : items){
-        con.addItem_bag(i.PlayerID,i.ItemBox_ID,i.Item_ID,i.Rarity,i.Amount);
+        DBConnection.addItem_bag(i.PlayerID,i.ItemBox_ID,i.Item_ID,i.Rarity,i.Amount);
       }
     }catch (Exception e){
       e.printStackTrace();
@@ -46,13 +46,13 @@ public class DisconnectTool {
 
   public static void EquipmentUpdate(int PID, ArrayList<EquipmentBoxType> equipments){
     try{
-      DBConnection con = new DBConnection();
-      con.delEquipment_bag(PID);
+
+      DBConnection.delEquipment_bag(PID);
       for(EquipmentBoxType e : equipments){
         if(e.Equipping)
-          con.addEquipment_bag(e.PlayerID,e.EquipmentBox_ID,e.Equipment_ID,e.Rarity,e.Part,e.Level,1,e.Skill_ID_1,e.Skill_ID_2);
+          DBConnection.addEquipment_bag(e.PlayerID,e.EquipmentBox_ID,e.Equipment_ID,e.Rarity,e.Part,e.Level,1,e.Skill_ID_1,e.Skill_ID_2);
         else
-          con.addEquipment_bag(e.PlayerID,e.EquipmentBox_ID,e.Equipment_ID,e.Rarity,e.Part,e.Level,0,e.Skill_ID_1,e.Skill_ID_2);
+          DBConnection.addEquipment_bag(e.PlayerID,e.EquipmentBox_ID,e.Equipment_ID,e.Rarity,e.Part,e.Level,0,e.Skill_ID_1,e.Skill_ID_2);
       }
     }catch (Exception e){
       e.printStackTrace();
@@ -61,10 +61,10 @@ public class DisconnectTool {
 
   public static void ProgressUpdate(int PID, ArrayList<Progress> progresses){
     try {
-      DBConnection con = new DBConnection();
-      con.delProgresses(PID);
+
+      DBConnection.delProgresses(PID);
       for(Progress p: progresses){
-        con.addProgress(p);
+        DBConnection.addProgress(p);
       }
     }catch (Exception e){
       e.printStackTrace();
@@ -73,7 +73,7 @@ public class DisconnectTool {
 
   public static void leaveTeam(int PID){
     try{
-      DBConnection con = new DBConnection();
+
 //      con.setTeam(PID,0);
     }catch (Exception e){
       e.printStackTrace();

@@ -1,6 +1,7 @@
 package ServerMainBody;
 
 import Control.MonsterCreate;
+import DBS.DBConnection;
 import ID.*;
 import Type.*;
 
@@ -43,6 +44,7 @@ public class Server {
     ShopID.SetEquipmentShop();
     MonsterID.GetMonsterInformation();
     MissionID.setMissions();
+    DBConnection.init();
 
     try {
       serverSocket = new ServerSocket(ServerPort);

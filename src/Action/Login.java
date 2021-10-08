@@ -23,13 +23,12 @@ public class Login {
   public static int login (OutputStream out, byte[] data) throws SQLException{
     try {
       byte[] buf;
-      DBConnection con = new DBConnection();
       String info = new String(data);
       String account = info.substring(0,9).trim();
       String password = info.substring(10,19).trim();
 
       System.out.println(account +"."+ password);
-      int get = con.login(account,password);
+      int get = DBConnection.login(account,password);
       if (get >= 0 && !isOnline(get)){
         System.out.println(get + " login");
         buf = ToCSharpTool.ToCSharp(get);
@@ -52,7 +51,6 @@ public class Login {
 
   public static int register (OutputStream out, byte[] data) throws SQLException{
     try {
-      DBConnection con = new DBConnection();
       byte[] buf;
 
       String info = new String(data);
@@ -60,7 +58,7 @@ public class Login {
       String password = info.substring(10,19).trim();
       String name = info.substring(20,29).trim();
       System.out.println(account +"."+ password+'.'+name);
-      int get = con.register(account,password,name);
+      int get = DBConnection.register(account,password,name);
       if (get >= 0){
         System.out.println(get + " register");
         buf = ToCSharpTool.ToCSharp(get);
@@ -102,9 +100,8 @@ public class Login {
 
   public static String get_name (int PID) throws SQLException{
     try {
-      DBConnection con = new DBConnection();
 
-      String get = con.getName(PID);
+      String get = DBConnection.getName(PID);
       return get;
     }catch (Exception e){
       System.err.println(e);
@@ -113,30 +110,17 @@ public class Login {
   }
   public static Status getStatus(int PID){
     try {
-      DBConnection con = new DBConnection();
-      return con.getStatus(PID);
+      return DBConnection.getStatus(PID);
     }catch (Exception e){
       System.err.println(e);
     }
     return new Status();
   }
 
-  public static void sendStatus(OutputStream out,int PID){
-    try {
-      DBConnection con = new DBConnection();
-      Status status = con.getStatus(PID);
-      byte[] buf = status.getByte();
-      out.write(buf);
-      out.flush();
-    }catch (Exception e){
-      System.err.println(e);
-    }
-  }
 
   public static ArrayList<ItemType> getItem(int PID){
     try{
-      DBConnection con = new DBConnection();
-      return con.getItem_bag(PID);
+      return DBConnection.getItem_bag(PID);
     }catch (Exception e){
       System.err.println(e);
     }
@@ -161,8 +145,7 @@ public class Login {
 
   public static ArrayList<EquipmentBoxType> getEquipment(int PID){
     try{
-      DBConnection con = new DBConnection();
-      return con.getEquipment_bag(PID);
+      return DBConnection.getEquipment_bag(PID);
     }catch (Exception e){
       System.err.println(e);
     }
@@ -171,8 +154,7 @@ public class Login {
 
   public static ArrayList<Progress> getProgress(int PID){
     try {
-      DBConnection con = new DBConnection();
-      return con.getProgress(PID);
+      return DBConnection.getProgress(PID);
     }catch (Exception e){
       e.printStackTrace();
     }

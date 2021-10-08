@@ -46,15 +46,16 @@ public class GetOtherPlayerInformation {
     }
     if(!flag){
       try {
-        DBConnection con = new DBConnection();
+
         byte[] buf = new byte[20 + Status.SendSize + 6*EquipmentBoxType.SendSize];
-        byte[] Name = con.getName(OtherPID).getBytes(Charset.forName("big5"));
+        byte[] Name = DBConnection.getName(OtherPID).getBytes(Charset.forName("big5"));
+        System.out.println(DBConnection.getName(OtherPID));
         System.arraycopy(Name,0,buf,start,Name.length);
         start += 20;
-        byte[] status = con.getStatus(OtherPID).getByte();
+        byte[] status = DBConnection.getStatus(OtherPID).getByte();
         System.arraycopy(status,0,buf,start,Status.SendSize);
         start += Status.SendSize;
-        for(EquipmentBoxType e: con.getEquipment_bag(OtherPID)){
+        for(EquipmentBoxType e: DBConnection.getEquipment_bag(OtherPID)){
           if(e.Equipping){
             System.arraycopy(e.getByte(),0,buf,start,EquipmentBoxType.SendSize);
             start += EquipmentBoxType.SendSize;

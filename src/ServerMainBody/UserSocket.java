@@ -153,6 +153,9 @@ public class UserSocket extends Thread{
           case ProtocolID.CREATE_MONSTER:
             CreateMonster.create(playerInformation,data.data);
             break;
+          case ProtocolID.CREATE_NPC:
+            CreateNPC.create(playerInformation,data.data);
+            break;
         }
 
       }
