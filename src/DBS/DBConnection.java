@@ -1,7 +1,5 @@
 package DBS;
 
-import ID.ProtocolID;
-import Tools.ProtocolTool;
 import Type.*;
 
 import java.sql.*;
@@ -172,6 +170,24 @@ public class DBConnection {
       e.printStackTrace();
     }
     return null;
+  }
+
+  public static boolean hasAccount(int PID)  {  //throws SQLException or encryption's exception
+    try {
+      if(con != null && !con.isClosed()){
+        Statement statement = con.createStatement();
+        String sql = "SELECT * FROM `player` WHERE `PlayID` = " + PID;
+        System.out.println(sql);
+        ResultSet rs = statement.executeQuery(sql);
+
+        if (rs.next()) {   //has same account
+          return true;
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return false;
   }
 
   public static boolean setName(int PID,String name)  {  //throws SQLException or encryption's exception

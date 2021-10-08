@@ -1,18 +1,17 @@
 package DBS;
 
-import java.sql.SQLException;
-
 public class test {
   public static void main(String[] args) {
     try {
       DBConnection con = new DBConnection();
+      con.init();
 //      System.out.println(Arrays.toString(c.getAccountInform("2")));
       try {
 //        Thread.sleep(7000);
 //        System.out.println(con.register("4568","zzzz","e04"));
 //        System.out.println(con.login("456789","zzzzzz"));
-//        System.out.println(con.setName(31240985,"????"));
-
+//        System.out.println(con.setName(31240985,new String("哈哈".getBytes("Big5"))));
+        System.out.println(con.hasAccount(354354));
 //        System.out.println(con.createTeam(144906270,"test"));
 //        System.out.println(con.setTeam(408417096,144906270));
 //        System.out.println(con.setTeam(719616367,144906270));
@@ -21,7 +20,7 @@ public class test {
 //        System.out.println(con.delTeam(408417096));
 //        System.out.println(con.getTeamNum(1));
 
-        System.out.println(con.delItem_bag(408417096));
+//        System.out.println(con.delItem_bag(408417096));
 //        System.out.println(con.delEquipment_bag(144906270));
 //        System.out.println(con.delProgresses(144906270));
 
@@ -35,8 +34,10 @@ public class test {
 //        System.out.println(con.updateItem_bag(663828321,1,4,5,3));
 //        System.out.println(con.delItem_bag(663828321,1));
 
-//        System.out.println(con.addFriend(663828321,144906270));
-//        System.out.println(con.confirmFriend(663828321,144906270));
+//        System.out.println(con.addFriend(408417096,144906270,0));
+//        System.out.println(con.addFriend(144906270,408417096,2));
+//        System.out.println(con.acceptFriend(408417096,144906270));
+//        System.out.println(con.acceptFriend(144906270,408417096));
 //        System.out.println(con.delFriend(663828321,144906270));
 //        System.out.println(con.getFriend(663828321).get(0).State);
 
