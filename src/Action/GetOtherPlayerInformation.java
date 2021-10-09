@@ -45,29 +45,39 @@ public class GetOtherPlayerInformation {
       }
     }
     if(!flag){
-      try {
-
-        byte[] buf = new byte[20 + Status.SendSize + 6*EquipmentBoxType.SendSize];
-        byte[] Name = DBConnection.getName(OtherPID).getBytes(Charset.forName("big5"));
-        System.out.println(DBConnection.getName(OtherPID));
-        System.arraycopy(Name,0,buf,start,Name.length);
-        start += 20;
-        byte[] status = DBConnection.getStatus(OtherPID).getByte();
-        System.arraycopy(status,0,buf,start,Status.SendSize);
-        start += Status.SendSize;
-        for(EquipmentBoxType e: DBConnection.getEquipment_bag(OtherPID)){
-          if(e.Equipping){
-            System.arraycopy(e.getByte(),0,buf,start,EquipmentBoxType.SendSize);
-            start += EquipmentBoxType.SendSize;
-            length++;
+      if(DBConnection.hasAccount(OtherPID)){
+        try {
+          byte[] buf = new byte[20 + Status.SendSize + 6*EquipmentBoxType.SendSize];
+          byte[] Name = DBConnection.getName(OtherPID).getBytes(Charset.forName("big5"));
+          System.out.println(DBConnection.getName(OtherPID));
+          System.arraycopy(Name,0,buf,start,Name.length);
+          start += 20;
+          byte[] status = DBConnection.getStatus(OtherPID).getByte();
+          System.arraycopy(status,0,buf,start,Status.SendSize);
+          start += Status.SendSize;
+          for(EquipmentBoxType e: DBConnection.getEquipment_bag(OtherPID)){
+            if(e.Equipping){
+              System.arraycopy(e.getByte(),0,buf,start,EquipmentBoxType.SendSize);
+              start += EquipmentBoxType.SendSize;
+              length++;
+            }
           }
+          byte[] ans = new byte[Status.SendSize + 20 + length*EquipmentBoxType.SendSize];
+          System.arraycopy(buf,0,ans,0,ans.length);
+          p.sc.getOutputStream().write(ans);
+        } catch (Exception e) {
+          e.printStackTrace();
         }
-        byte[] ans = new byte[Status.SendSize + 20 + length*EquipmentBoxType.SendSize];
-        System.arraycopy(buf,0,ans,0,ans.length);
-        p.sc.getOutputStream().write(ans);
-      } catch (Exception e) {
-        e.printStackTrace();
+      }else {
+        try {
+          byte[] buf = new byte[1];
+
+          p.sc.getOutputStream().write(buf);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
       }
+
     }
 
   }
