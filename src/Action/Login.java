@@ -53,7 +53,7 @@ public class Login {
     try {
       byte[] buf;
 
-      String info = new String(data);
+      String info = new String(data,"big5");
       String account = info.substring(0,9).trim();
       String password = info.substring(10,19).trim();
       String name = info.substring(20,29).trim();

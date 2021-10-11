@@ -12,7 +12,7 @@ public class DBConnection {
     try {
       boolean connection = false;
 
-      String url = "jdbc:mysql://220.132.211.121:3306/dungeondatabase";
+      String url = "jdbc:mysql://220.132.211.121:3306/dungeondatabase?useUnicode=true&characterEncoding=Big5";
       String user = "Admin";
       String password = "Zi8xkHTckRmweytR";
 

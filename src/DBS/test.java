@@ -11,7 +11,7 @@ public class test {
 //        System.out.println(con.register("4568","zzzz","e04"));
 //        System.out.println(con.login("456789","zzzzzz"));
 //        System.out.println(con.setName(31240985,new String("哈哈".getBytes("Big5"))));
-        System.out.println(con.hasAccount(354354));
+//        System.out.println(con.hasAccount(354354));
 //        System.out.println(con.createTeam(144906270,"test"));
 //        System.out.println(con.setTeam(408417096,144906270));
 //        System.out.println(con.setTeam(719616367,144906270));
@@ -28,6 +28,7 @@ public class test {
 //        System.out.println(con.getEquipment_bag(663828321).get(0).EquipmentBox_ID);
 //        System.out.println(con.updateEquipment_bag(663828321,1,3,4,5,1,1,1,1));
 //        System.out.println(con.delEquipment_bag(663828321,1));
+        System.out.println(DBConnection.getName(267566541));
 
 //        System.out.println(con.addItem_bag(663828321,3,3,1,8));
 //        System.out.println(con.getItem_bag(663828321).get(0).PlayerID);
