@@ -271,4 +271,16 @@ public class MessageSender { //Message傳送方式在這寫
       e.printStackTrace();
     }
   }
+
+  public static void sendName(PlayerInformation p){
+    buf = new byte[14];
+    try{
+      byte[] protocol = ToCSharpTool.ToCSharp(21);
+      System.arraycopy(protocol,0,buf,0,4);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.Name), 0, buf, 4, 10);
+      p.mss.getOutputStream().write(buf);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+  }
 }

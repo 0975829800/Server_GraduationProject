@@ -65,6 +65,7 @@ public class UserSocket extends Thread{
 
       Login.Login_Send(playerInformation,PlayerID);
       Equip.EquipmentStatusUpdate(playerInformation);
+      MessageSender.sendName(playerInformation);
       MessageSender.EquipmentStatusUpdate(playerInformation);
       MessageSender.QuestUpdate(playerInformation);
 

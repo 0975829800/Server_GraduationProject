@@ -1,6 +1,7 @@
 package Tools;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 
 public class ToCSharpTool {
 
@@ -19,7 +20,7 @@ public class ToCSharpTool {
     return trans;
   }
   public static byte[] ToCSharp(String data){
-    return data.getBytes();
+    return data.getBytes(Charset.forName("big5"));
   }
 
   public static byte[] ToCSharp(double data){
