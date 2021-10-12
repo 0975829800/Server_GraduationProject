@@ -21,7 +21,7 @@ public class ShopID {
     int i = 0;
     for (EquipmentType e : EquipmentID.EquipmentInformation){
       int skill1 = 0;
-      switch (e.EID%8){
+      switch ((e.EID + 1)%8){
         case 0:          //盾
           skill1 = 4;
           break;
