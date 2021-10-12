@@ -277,7 +277,7 @@ public class MessageSender { //Message傳送方式在這寫
     try{
       byte[] protocol = ToCSharpTool.ToCSharp(21);
       System.arraycopy(protocol,0,buf,0,4);
-      System.arraycopy(ToCSharpTool.ToCSharp(p.Name), 0, buf, 4, 10);
+      System.arraycopy(ToCSharpTool.ToCSharp(p.Name), 0, buf, 4, ToCSharpTool.ToCSharp(p.Name).length);
       p.mss.getOutputStream().write(buf);
     }catch (Exception e){
       e.printStackTrace();

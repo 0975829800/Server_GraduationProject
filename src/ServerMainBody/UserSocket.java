@@ -64,12 +64,16 @@ public class UserSocket extends Thread{
       playerInformation.progress  = Login.getProgress(PlayerID);
 
       Login.Login_Send(playerInformation,PlayerID);
-      Equip.EquipmentStatusUpdate(playerInformation);
       MessageSender.sendName(playerInformation);
-      MessageSender.EquipmentStatusUpdate(playerInformation);
       MessageSender.QuestUpdate(playerInformation);
+      Equip.EquipmentStatusUpdate(playerInformation);
+      MessageSender.EquipmentStatusUpdate(playerInformation);
 
       Server.Information.add(playerInformation);
+
+      if(playerInformation.status.HP == 0){
+        MessageSender.PlayerDead(playerInformation);
+      }
 
       //read client action
       while (true) {

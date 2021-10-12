@@ -15,6 +15,7 @@ public class Move {
     ActionType act = new ActionType();
     double Longitude = ByteArrayTransform.ToDouble(Data,0);
     double Latitude = ByteArrayTransform.ToDouble(Data,8);
+    act.MoverMapID = p.MapID;
     act.Information1 = Longitude;
     act.Information2 = Latitude;
     p.MapAddress.Longitude = Longitude;

@@ -227,6 +227,7 @@ public class MonsterFighting extends Thread{
 
   public void MonsterAttack(PlayerInformation p,double damage,int SkillID){
     Server.Action.add(new ActionType(ActionID.MONSTER_ATTACK,monster.MapObjectID,monster.MonsterID,p.MapID,p.PID,damage, SkillID)); //通知怪獸攻擊動畫
+    MessageSender.StatusUpdate(p);
   }
 
   public void CleanDamage(int PID){

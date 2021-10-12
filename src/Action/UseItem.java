@@ -1,6 +1,9 @@
 package Action;
 
+import ID.ActionID;
+import ServerMainBody.Server;
 import Tools.ByteArrayTransform;
+import Type.ActionType;
 import Type.ItemType;
 import Type.PlayerInformation;
 
@@ -65,6 +68,7 @@ public class UseItem {
       p.Dead = false;
     }
     MessageSender.Heal(p,heal);
+    Server.Action.add(new ActionType(ActionID.PLAYER_HEAL,p.MapID,p.PID,0,0,heal,0));
     MessageSender.StatusUpdate(p);
   }
   public static void MP_potion(OutputStream out, PlayerInformation p,int item,int amount){
@@ -118,6 +122,7 @@ public class UseItem {
       p.Dead = false;
     }
     MessageSender.Heal(p,heal);
+    Server.Action.add(new ActionType(ActionID.PLAYER_HEAL,p.MapID,p.PID,0,0,heal,0));
     MessageSender.HealMP(p,heal);
     MessageSender.StatusUpdate(p);
   }
