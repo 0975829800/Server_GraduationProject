@@ -20,7 +20,7 @@ public class UseItem {
         if(i.Amount < 1){
           p.item.removeIf(it->it == i);
         }
-        item = i.Item_ID;
+        item = i.Item_ID + 1;
         break;
       }
     }
