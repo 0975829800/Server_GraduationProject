@@ -152,43 +152,43 @@ public class MonsterFighting extends Thread{
                 int skill1 = 0;
                 int skill2 = 0;
                 switch (random % 8){
-                  case 0:          //盾
+                  case 7:          //盾
                     skill1 = 4;
                     if(rank > 1){
                       skill2 = rank*4;
                     }
                     break;
-                  case 1: case 2:   //頭 身體
+                  case 0: case 1:   //頭 身體
                     skill1 = 12;
                     if(rank > 1){
                       skill2 = rank*3 + 9;
                     }
                     break;
-                  case 3:           //手
+                  case 2:           //手
                     skill1 = 13;
                     if(rank > 1){
                       skill2 = rank*3 + 10;
                     }
                     break;
-                  case 4:           //腳
+                  case 3:           //腳
                     skill1 = 14;
                     if(rank > 1){
                       skill2 = rank*3 + 11;
                     }
                     break;
-                  case 5:         //劍
+                  case 4:         //劍
                     skill1 = 1;
                     if(rank > 1){
                       skill2 = rank*4-3;
                     }
                     break;
-                  case 6:         //杖
+                  case 5:         //杖
                     skill1 = 2;
                     if(rank > 1){
                       skill2 = rank*4-2;
                     }
                     break;
-                  case 7:         //弓
+                  case 6:         //弓
                     skill1 = 3;
                     if(rank > 1){
                       skill2 = rank*4-1;
