@@ -1,12 +1,12 @@
 package ServerMainBody;
 import Action.*;
-import DBS.DBConnection;
 import ID.ProtocolID;
 import Progress.FinishMission;
 import Progress.TakeMission;
 import Tools.DisconnectTool;
 import Tools.ProtocolTool;
 import Type.PlayerInformation;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -124,6 +124,9 @@ public class UserSocket extends Thread{
             break;
           case ProtocolID.GET_TEAM:
             Community.getTeam(out,PlayerID,data.data);
+            break;
+          case ProtocolID.GET_TEAMMATE:
+            Community.sendTeammate(out,PlayerID);
             break;
           case ProtocolID.ATTACK:
             Attack.attack(playerInformation,data.data);

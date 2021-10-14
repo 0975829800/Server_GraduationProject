@@ -254,8 +254,8 @@ public class DBConnection {
     return -1;
   }
 
-  public static ArrayList<Integer> getTeamMem(int TID)  {  //throws SQLException or encryption's exception
-    ArrayList<Integer> member = new ArrayList<>();
+  public static ArrayList<TeammateType> getTeamMem(int TID)  {  //throws SQLException or encryption's exception
+    ArrayList<TeammateType> member = new ArrayList<>();
     try {
       if(con != null && !con.isClosed()){
         Statement statement = con.createStatement();
@@ -263,7 +263,7 @@ public class DBConnection {
         System.out.println(sql);
         ResultSet rs = statement.executeQuery(sql);
         while (rs.next()){   //has same account
-           member.add(Integer.parseInt(rs.getString("PlayID")));
+           member.add(new TeammateType(Integer.parseInt(rs.getString("PlayID"))));
         }
         return member;
       }

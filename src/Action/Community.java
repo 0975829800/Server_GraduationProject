@@ -5,6 +5,7 @@ import ServerMainBody.Server;
 import Tools.ToCSharpTool;
 import Type.FriendType;
 import Type.PlayerInformation;
+import Type.TeammateType;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -121,11 +122,11 @@ public class Community {
         /*
         * send notice to members
         * */
-        ArrayList<Integer> member = con.getTeamMem(teamID);
-        for (int m : member){
-          if(m != PID){
+        ArrayList<TeammateType> member = con.getTeamMem(teamID);
+        for (TeammateType m : member){
+          if(m.TMID != PID){
             for (PlayerInformation p : Server.Information){
-              if(p.PID == m){
+              if(p.PID == m.TMID){
                 MessageSender.JoinTeamNotice(p,PID);
               }
             }
@@ -145,18 +146,18 @@ public class Community {
     try {
       byte[] buf;
       DBConnection con = new DBConnection();
-      ArrayList<Integer> member = con.getTeamMem(teamID);
-      for (int m : member){
-        System.out.println(m);
+      ArrayList<TeammateType> member = con.getTeamMem(teamID);
+      for (TeammateType m : member){
+        System.out.println(m.TMID);
       }
       if (con.delTeam(teamID)){
         /*
          * notice
          * */
-        for (int m : member){
-          if (m != PID) {
+        for (TeammateType m : member){
+          if (m.TMID != PID) {
             for (PlayerInformation p : Server.Information){
-              if(p.PID == m){
+              if(p.PID == m.TMID){
                 MessageSender.DelTeamNotice(p);
               }
             }
@@ -183,15 +184,15 @@ public class Community {
         if (PID == Integer.parseInt(teamInfo[0])){ //leader
           System.out.println(PID + "Leader leave");
           if (con.getTeamNum(Integer.parseInt(teamInfo[0])) > 1){ //not only 1 member
-            ArrayList<Integer> member = con.getTeamMem(teamID);
+            ArrayList<TeammateType> member = con.getTeamMem(teamID);
             if (con.setTeam(PID,0) && con.replaceTeamLeader(PID)){
               buf = ToCSharpTool.ToCSharp(1);
               /*
                * notice
                * */
-              for (int m : member){
+              for (TeammateType m : member){
                 for (PlayerInformation p : Server.Information){
-                  if(p.PID == m){
+                  if(p.PID == m.TMID){
                     MessageSender.LeaveTeamNotice(p,PID);
                   }
                 }
@@ -216,10 +217,10 @@ public class Community {
             /*
              * notice
              * */
-            ArrayList<Integer> member = con.getTeamMem(teamID);
-            for (int m : member){
+            ArrayList<TeammateType> member = con.getTeamMem(teamID);
+            for (TeammateType m : member){
               for (PlayerInformation p : Server.Information){
-                if(p.PID == m){
+                if(p.PID == m.TMID){
                   MessageSender.LeaveTeamNotice(p,PID);
                 }
               }
@@ -254,6 +255,31 @@ public class Community {
       out.write(buf);
     } catch (Exception e) {
       e.printStackTrace();
+    }
+  }
+
+  public static ArrayList<TeammateType> getTeammate(int PID){
+    try {
+      DBConnection con = new DBConnection();
+      return con.getTeamMem(PID);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return new ArrayList<TeammateType>();
+  }
+
+  public static void sendTeammate(OutputStream out, int PID){
+    ArrayList<TeammateType> teammate = getTeammate(PID);
+    byte[] send = new byte[TeammateType.SendSize * teammate.size()];
+    if(teammate.size() == 0) send = new byte[1];
+    for(int i = 0; i < teammate.size(); i++){
+      byte[] temp = teammate.get(i).getByte();
+      System.arraycopy(temp,0,send,i*TeammateType.SendSize,TeammateType.SendSize);
+    }
+    try {
+      out.write(send);
+    }catch (Exception e){
+      System.err.println(e);
     }
   }
 }
