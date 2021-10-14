@@ -125,7 +125,7 @@ public class DBConnection {
 
         if(statement.executeUpdate(sql) > 0){
           //initialize status
-          if(addStatus(PID,100,100,100,100,10,10,10,10,10,0,0,0,0)){
+          if(addStatus(PID,100,100,100,100,10,10,10,10,10,1000,0,0,0)){
             System.out.println("register success");
           }
           else{
