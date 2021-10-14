@@ -92,9 +92,9 @@ public class Status {
 
   public void EquipUP(int STR, int MG, int AGI, int LUC){
     ESTR += STR;
-    EAGI += MG;
-    ELUC += AGI;
-    EMG += LUC;
+    EAGI += AGI;
+    ELUC += LUC;
+    EMG += MG;
   }
 
   public void EquipStatusReset(){
