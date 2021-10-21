@@ -262,7 +262,7 @@ public class DBConnection {
         String sql = "SELECT * FROM player WHERE TeamID = "+TID;
         System.out.println(sql);
         ResultSet rs = statement.executeQuery(sql);
-        while (rs.next()){   //has same account
+        while (rs.next()){
            member.add(new TeammateType(Integer.parseInt(rs.getString("PlayID"))));
         }
         return member;
@@ -271,6 +271,24 @@ public class DBConnection {
       e.printStackTrace();
     }
     return member;
+  }
+
+  public static boolean hasTeam(int TID)  {  //throws SQLException or encryption's exception
+    try {
+      if(con != null && !con.isClosed()){
+        Statement statement = con.createStatement();
+        String sql = "SELECT * FROM `team` WHERE `TeamID` = " + TID;
+        System.out.println(sql);
+        ResultSet rs = statement.executeQuery(sql);
+
+        if (rs.next()) {   //has same account
+          return true;
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return false;
   }
 
   public static boolean createTeam(int PID,String Name)  {  //throws SQLException or encryption's exception

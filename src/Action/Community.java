@@ -9,6 +9,7 @@ import Type.TeammateType;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Community {
 
@@ -116,26 +117,32 @@ public class Community {
     try {
       byte[] buf;
       DBConnection con = new DBConnection();
-      if (con.setTeam(PID,teamID)){
-        buf = ToCSharpTool.ToCSharp(con.getTeam(teamID)[1]); //name
+      if(con.hasTeam(teamID)){
+        if (con.setTeam(PID,teamID)){
+          buf = ToCSharpTool.ToCSharp(con.getTeam(teamID)[1]); //name
 
-        /*
-        * send notice to members
-        * */
-        ArrayList<TeammateType> member = con.getTeamMem(teamID);
-        for (TeammateType m : member){
-          if(m.TMID != PID){
-            for (PlayerInformation p : Server.Information){
-              if(p.PID == m.TMID){
-                MessageSender.JoinTeamNotice(p,PID);
+          /*
+           * send notice to members
+           * */
+          ArrayList<TeammateType> member = con.getTeamMem(teamID);
+          for (TeammateType m : member){
+            if(m.TMID != PID){
+              for (PlayerInformation p : Server.Information){
+                if(p.PID == m.TMID){
+                  MessageSender.JoinTeamNotice(p,PID);
+                }
               }
             }
           }
         }
+        else{
+          buf = ToCSharpTool.ToCSharp(-1); //join fail
+        }
       }
       else{
-        buf = ToCSharpTool.ToCSharp(-1);
+        buf = ToCSharpTool.ToCSharp(-2); //team not exist
       }
+
       out.write(buf);
     } catch (Exception e) {
       e.printStackTrace();
@@ -258,10 +265,10 @@ public class Community {
     }
   }
 
-  public static ArrayList<TeammateType> getTeammate(int PID){
+  public static ArrayList<TeammateType> getTeammate(int TID){
     try {
       DBConnection con = new DBConnection();
-      return con.getTeamMem(PID);
+      return con.getTeamMem(TID);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -269,7 +276,8 @@ public class Community {
   }
 
   public static void sendTeammate(OutputStream out, int PID){
-    ArrayList<TeammateType> teammate = getTeammate(PID);
+    int TID = Integer.parseInt(Objects.requireNonNull(DBConnection.getTeam(PID))[0]);
+    ArrayList<TeammateType> teammate = getTeammate(TID);
     byte[] send = new byte[TeammateType.SendSize * teammate.size()];
     if(teammate.size() == 0) send = new byte[1];
     for(int i = 0; i < teammate.size(); i++){
