@@ -8,6 +8,7 @@ import Type.PlayerInformation;
 import Type.TeammateType;
 
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -94,8 +95,8 @@ public class Community {
     }
   }
 
-  public static void createTeam(OutputStream out, int PID,byte[] data){
-    String teamName = new String(data).trim();
+  public static void createTeam(OutputStream out, int PID,byte[] data) throws UnsupportedEncodingException {
+    String teamName = new String(data,"big5").trim();
     try {
       byte[] buf;
       DBConnection con = new DBConnection();
