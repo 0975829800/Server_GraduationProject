@@ -114,31 +114,38 @@ public class Community {
   }
 
   public static void joinTeam(OutputStream out, int PID,byte[] data){
+    int teamSize = 20;
     int teamID = Integer.parseInt(new String(data).trim());
     try {
       byte[] buf;
       DBConnection con = new DBConnection();
       if(con.hasTeam(teamID)){
-        if (con.setTeam(PID,teamID)){
-          buf = ToCSharpTool.ToCSharp(con.getTeam(teamID)[1]); //name
+        if(DBConnection.getTeamNum(teamID) < teamSize){
+          if (con.setTeam(PID,teamID)){
+            buf = ToCSharpTool.ToCSharp(con.getTeam(teamID)[1]); //name
 
-          /*
-           * send notice to members
-           * */
-          ArrayList<TeammateType> member = con.getTeamMem(teamID);
-          for (TeammateType m : member){
-            if(m.TMID != PID){
-              for (PlayerInformation p : Server.Information){
-                if(p.PID == m.TMID){
-                  MessageSender.JoinTeamNotice(p,PID);
+            /*
+             * send notice to members
+             * */
+            ArrayList<TeammateType> member = con.getTeamMem(teamID);
+            for (TeammateType m : member){
+              if(m.TMID != PID){
+                for (PlayerInformation p : Server.Information){
+                  if(p.PID == m.TMID){
+                    MessageSender.JoinTeamNotice(p,PID);
+                  }
                 }
               }
             }
           }
+          else{
+            buf = ToCSharpTool.ToCSharp(-1); //join fail
+          }
         }
         else{
-          buf = ToCSharpTool.ToCSharp(-1); //join fail
+          buf = ToCSharpTool.ToCSharp(-3); //Team full
         }
+
       }
       else{
         buf = ToCSharpTool.ToCSharp(-2); //team not exist
